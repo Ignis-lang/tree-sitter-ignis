@@ -1,0 +1,38 @@
+=======
+variable
+=======
+
+let a: int = 10;
+let b: string = "hello";
+let c: boolean = true;
+let d: float = -1.3;
+
+---
+
+(program
+  (variable_declaration
+    (identifier)
+    (type_identifier)
+    (expression
+      (literal
+        (integer_literal))))
+  (variable_declaration
+    (identifier)
+    (type_identifier)
+    (expression
+      (literal
+        (string_literal))))
+  (variable_declaration
+    (identifier)
+    (type_identifier)
+    (expression
+      (literal
+        (boolean_literal))))
+  (variable_declaration
+    (identifier)
+    (type_identifier)
+    (expression
+      (literal
+        (float_literal))))
+)
+
