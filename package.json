@@ -20,7 +20,7 @@
         "ign"
       ],
       "highlights": [
-        "queries/highlights.scm"
+        "./queries/highlights.scm"
       ]
     }
   ]

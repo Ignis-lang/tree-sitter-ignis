@@ -1,15 +1,15 @@
-=======
-variable
-=======
+================================================================================
+VALID - variable and data type
+================================================================================
 
 let a: int = 10;
 let b: string = "hello";
 let c: boolean = true;
-let d: float = -1.3;
+let d: float = 1.3;
 
----
+--------------------------------------------------------------------------------
 
-(program
+(source_file
   (variable_declaration
     (identifier)
     (type_identifier)
@@ -33,6 +33,26 @@ let d: float = -1.3;
     (type_identifier)
     (expression
       (literal
-        (float_literal))))
-)
+        (float_literal)))))
 
+================================================================================
+VALID - variable
+================================================================================
+
+let result: int = math.sum(x, y);
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (variable_declaration
+    (identifier)
+    (type_identifier)
+    (expression
+      (method_call_expression
+        (property_access
+          (identifier)
+          (identifier))
+        (expression
+          (identifier))
+        (expression
+          (identifier))))))

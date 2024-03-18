@@ -1,12 +1,16 @@
 ================================================================================
-VALID - Comment
+VALID - Interface declaration
 ================================================================================
 
-// This is a comment
-/* This is a comment */
+interface User {
+  getFullName(): string;
+}
 
 --------------------------------------------------------------------------------
 
 (source_file
-  (comment)
-  (comment))
+  (interface_declaration
+    (identifier)
+    (interface_method_declaration
+      (identifier)
+      (type_identifier))))

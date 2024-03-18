@@ -1,0 +1,55 @@
+================================================================================
+VALID - unary operator
+================================================================================
+
+function main(): void {
+  (10 + -5);
+  !true;
+  i++;
+  ++i;
+  i--;
+  --i;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_declaration
+    (identifier)
+    (type_identifier)
+    (block
+      (expression_statement
+        (expression
+          (group_expression
+            (expression
+              (binary_expression
+                (literal
+                  (integer_literal))
+                (literal
+                  (integer_literal)))))))
+      (expression_statement
+        (expression
+          (prefix_unary_expression
+            (expression
+              (literal
+                (boolean_literal))))))
+      (expression_statement
+        (expression
+          (suffix_unary_expression
+            (expression
+              (identifier)))))
+      (expression_statement
+        (expression
+          (prefix_unary_expression
+            (expression
+              (identifier)))))
+      (expression_statement
+        (expression
+          (suffix_unary_expression
+            (expression
+              (identifier)))))
+      (expression_statement
+        (expression
+          (prefix_unary_expression
+            (expression
+              (identifier))))))))

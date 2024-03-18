@@ -1,0 +1,164 @@
+================================================================================
+VALID - Class declaration
+================================================================================
+
+class User {
+  private name: string;
+  private lastName: string;
+  private age: int;
+
+  public User(firstName: string, lastName: string, age: int) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.age = age;
+  }
+
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (class_declaration
+    (identifier)
+    (property_declaration
+      (method_modifier)
+      (identifier)
+      (type_identifier))
+    (property_declaration
+      (method_modifier)
+      (identifier)
+      (type_identifier))
+    (property_declaration
+      (method_modifier)
+      (identifier)
+      (type_identifier))
+    (constructor_declaration
+      (method_modifier)
+      (identifier)
+      (parameter_declaration
+        (identifier)
+        (type_identifier))
+      (parameter_declaration
+        (identifier)
+        (type_identifier))
+      (parameter_declaration
+        (identifier)
+        (type_identifier))
+      (block
+        (assignment_expression
+          (property_access
+            (this_expression)
+            (identifier))
+          (expression
+            (identifier)))
+        (assignment_expression
+          (property_access
+            (this_expression)
+            (identifier))
+          (expression
+            (identifier)))
+        (assignment_expression
+          (property_access
+            (this_expression)
+            (identifier))
+          (expression
+            (identifier)))))))
+
+================================================================================
+VALID - Class instance
+================================================================================
+
+let user: User = new User();
+let user2: User = new User("John");
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (variable_declaration
+    (identifier)
+    (type_identifier
+      (identifier))
+    (expression
+      (class_instance_expression
+        (identifier))))
+  (variable_declaration
+    (identifier)
+    (type_identifier
+      (identifier))
+    (expression
+      (class_instance_expression
+        (identifier)
+        (expression
+          (literal
+            (string_literal)))))))
+
+================================================================================
+VALID - Class method declaration
+================================================================================
+
+class User {
+  public getName(): string {
+    return this.name;
+  }
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (class_declaration
+    (identifier)
+    (method_declaration
+      (method_modifier)
+      (identifier)
+      (type_identifier)
+      (block
+        (return_statement
+          (expression
+            (get_expression
+              (property_access
+                (this_expression)
+                (identifier)))))))))
+
+================================================================================
+VALID - Class method call
+================================================================================
+
+user.getName()
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (expression
+    (method_call_expression
+      (property_access
+        (identifier)
+        (identifier)))))
+
+================================================================================
+VALID - Class implement interface
+================================================================================
+
+class User implements IUser {
+  public getName(): string {
+    return this.name;
+  }
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (class_declaration
+    (identifier)
+    (implement_statement
+      (identifier))
+    (method_declaration
+      (method_modifier)
+      (identifier)
+      (type_identifier)
+      (block
+        (return_statement
+          (expression
+            (get_expression
+              (property_access
+                (this_expression)
+                (identifier)))))))))

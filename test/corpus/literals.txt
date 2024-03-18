@@ -1,0 +1,237 @@
+================================================================================
+VALID - numeric literals
+================================================================================
+1
+
+20
+1.0
+3.34
+1_000_000
+-1
+-1_000
+-3.5
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (expression
+    (literal
+      (integer_literal)))
+  (expression
+    (literal
+      (integer_literal)))
+  (expression
+    (literal
+      (float_literal)))
+  (expression
+    (literal
+      (float_literal)))
+  (expression
+    (literal
+      (integer_literal)))
+  (expression
+    (literal
+      (integer_literal)))
+  (expression
+    (literal
+      (integer_literal)))
+  (expression
+    (literal
+      (float_literal))))
+
+================================================================================
+VALID - string literals
+================================================================================
+
+"hello"
+"world"
+"hello world"
+"hello\nworld"
+"hello\tworld"
+"hello\rworld"
+"hello\"world"
+"hello\\world"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (expression
+    (literal
+      (string_literal)))
+  (expression
+    (literal
+      (string_literal)))
+  (expression
+    (literal
+      (string_literal)))
+  (expression
+    (literal
+      (string_literal)))
+  (expression
+    (literal
+      (string_literal)))
+  (expression
+    (literal
+      (string_literal)))
+  (expression
+    (literal
+      (string_literal)))
+  (expression
+    (literal
+      (string_literal))))
+
+================================================================================
+VALID - boolean literals
+================================================================================
+
+true
+false
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (expression
+    (literal
+      (boolean_literal)))
+  (expression
+    (literal
+      (boolean_literal))))
+
+================================================================================
+VALID - null literal
+================================================================================
+
+null
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (expression
+    (literal
+      (null_literal))))
+
+================================================================================
+VALID - array literal
+================================================================================
+
+[]
+[1, 2, 3]
+[1, 2, 3, 4, 5]
+[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+["hello", "world"]
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (expression
+    (literal
+      (array_literal)))
+  (expression
+    (literal
+      (array_literal
+        (expression
+          (literal
+            (integer_literal)))
+        (expression
+          (literal
+            (integer_literal)))
+        (expression
+          (literal
+            (integer_literal))))))
+  (expression
+    (literal
+      (array_literal
+        (expression
+          (literal
+            (integer_literal)))
+        (expression
+          (literal
+            (integer_literal)))
+        (expression
+          (literal
+            (integer_literal)))
+        (expression
+          (literal
+            (integer_literal)))
+        (expression
+          (literal
+            (integer_literal))))))
+  (expression
+    (literal
+      (array_literal
+        (expression
+          (literal
+            (integer_literal)))
+        (expression
+          (literal
+            (integer_literal)))
+        (expression
+          (literal
+            (integer_literal)))
+        (expression
+          (literal
+            (integer_literal)))
+        (expression
+          (literal
+            (integer_literal)))
+        (expression
+          (literal
+            (integer_literal)))
+        (expression
+          (literal
+            (integer_literal)))
+        (expression
+          (literal
+            (integer_literal)))
+        (expression
+          (literal
+            (integer_literal)))
+        (expression
+          (literal
+            (integer_literal))))))
+  (expression
+    (literal
+      (array_literal
+        (expression
+          (literal
+            (integer_literal)))
+        (expression
+          (literal
+            (integer_literal)))
+        (expression
+          (literal
+            (integer_literal)))
+        (expression
+          (literal
+            (integer_literal)))
+        (expression
+          (literal
+            (integer_literal)))
+        (expression
+          (literal
+            (integer_literal)))
+        (expression
+          (literal
+            (integer_literal)))
+        (expression
+          (literal
+            (integer_literal)))
+        (expression
+          (literal
+            (integer_literal)))
+        (expression
+          (literal
+            (integer_literal)))
+        (expression
+          (literal
+            (integer_literal))))))
+  (expression
+    (literal
+      (array_literal
+        (expression
+          (literal
+            (string_literal)))
+        (expression
+          (literal
+            (string_literal)))))))

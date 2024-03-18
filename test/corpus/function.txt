@@ -1,0 +1,78 @@
+================================================================================
+VALID - function
+================================================================================
+
+function main(): void {
+  let a: number = 10;
+
+  println(a);
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_declaration
+    (identifier)
+    (type_identifier)
+    (block
+      (variable_declaration
+        (identifier)
+        (type_identifier
+          (identifier))
+        (expression
+          (literal
+            (integer_literal))))
+      (expression_statement
+        (expression
+          (call_expression
+            (identifier)
+            (expression
+              (identifier))))))))
+
+================================================================================
+VALID - function generic params
+================================================================================
+
+function sum<T>(a: T, b: T): T {
+  return a + b;
+}
+
+sum<int>(1, 2)
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_declaration
+    (identifier)
+    (generic_type_declaration
+      (type_identifier
+        (identifier)))
+    (parameter_declaration
+      (identifier)
+      (type_identifier
+        (identifier)))
+    (parameter_declaration
+      (identifier)
+      (type_identifier
+        (identifier)))
+    (type_identifier
+      (identifier))
+    (block
+      (return_statement
+        (expression
+          (binary_expression
+            (expression
+              (identifier))
+            (expression
+              (identifier)))))))
+  (expression
+    (call_expression
+      (identifier)
+      (generic_type_declaration
+        (type_identifier))
+      (expression
+        (literal
+          (integer_literal)))
+      (expression
+        (literal
+          (integer_literal))))))
