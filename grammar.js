@@ -226,7 +226,16 @@ module.exports = grammar({
         ';',
       ),
 
-    parameter_declaration: ($) => seq($.identifier, ':', $.type_identifier),
+    reference_operator: (_) => '$',
+
+    parameter_declaration: ($) =>
+      seq(
+        optional($.reference_operator),
+        optional($.mutable_specifier),
+        $.identifier,
+        ':',
+        $.type_identifier,
+      ),
 
     block: ($) => seq('{', repeat($._statement), '}'),
 
@@ -341,7 +350,7 @@ module.exports = grammar({
 
     type_identifier: ($) =>
       seq(
-        choice('int', 'float', 'boolean', 'char', 'string', 'void', 'unknown', $.identifier),
+        choice($.primitive_keyword, $.identifier),
         optional('[]'),
       ),
 
@@ -352,6 +361,8 @@ module.exports = grammar({
     method_modifier: (_) => choice('public', 'private', 'static', 'final', 'abstract', 'extern'),
 
     other_keyword: (_) => choice('in', 'const', 'as', 'readonly', 'export', 'extern', 'super'),
+
+    primitive_keyword: (_) => choice(...primitiveTypes),
 
     literal: ($) =>
       choice(

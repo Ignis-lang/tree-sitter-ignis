@@ -13,7 +13,8 @@ function main(): void {
 (source_file
   (function_declaration
     (identifier)
-    (type_identifier)
+    (type_identifier
+      (primitive_keyword))
     (block
       (variable_declaration
         (identifier)
@@ -69,10 +70,69 @@ sum<int>(1, 2)
     (call_expression
       (identifier)
       (generic_type_declaration
-        (type_identifier))
+        (type_identifier
+          (primitive_keyword)))
       (expression
         (literal
           (integer_literal)))
       (expression
         (literal
           (integer_literal))))))
+
+================================================================================
+VALID - Mut params
+================================================================================
+
+function fibonacci(mut num: int): int {
+  if (num < 2) {
+    return num;
+  }
+
+  return fibonacci(num - 1) + fibonacci(num - 2);
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameter_declaration
+      (mutable_specifier)
+      (identifier)
+      (type_identifier
+        (primitive_keyword)))
+    (type_identifier
+      (primitive_keyword))
+    (block
+      (if_statement
+        (expression
+          (binary_expression
+            (expression
+              (identifier))
+            (literal
+              (integer_literal))))
+        (block
+          (return_statement
+            (expression
+              (identifier)))))
+      (return_statement
+        (expression
+          (binary_expression
+            (expression
+              (call_expression
+                (identifier)
+                (expression
+                  (binary_expression
+                    (expression
+                      (identifier))
+                    (literal
+                      (integer_literal))))))
+            (expression
+              (call_expression
+                (identifier)
+                (expression
+                  (binary_expression
+                    (expression
+                      (identifier))
+                    (literal
+                      (integer_literal))))))))))))

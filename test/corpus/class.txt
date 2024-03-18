@@ -23,27 +23,33 @@ class User {
     (property_declaration
       (method_modifier)
       (identifier)
-      (type_identifier))
+      (type_identifier
+        (primitive_keyword)))
     (property_declaration
       (method_modifier)
       (identifier)
-      (type_identifier))
+      (type_identifier
+        (primitive_keyword)))
     (property_declaration
       (method_modifier)
       (identifier)
-      (type_identifier))
+      (type_identifier
+        (primitive_keyword)))
     (constructor_declaration
       (method_modifier)
       (identifier)
       (parameter_declaration
         (identifier)
-        (type_identifier))
+        (type_identifier
+          (primitive_keyword)))
       (parameter_declaration
         (identifier)
-        (type_identifier))
+        (type_identifier
+          (primitive_keyword)))
       (parameter_declaration
         (identifier)
-        (type_identifier))
+        (type_identifier
+          (primitive_keyword)))
       (block
         (assignment_expression
           (property_access
@@ -110,7 +116,8 @@ class User {
     (method_declaration
       (method_modifier)
       (identifier)
-      (type_identifier)
+      (type_identifier
+        (primitive_keyword))
       (block
         (return_statement
           (expression
@@ -154,7 +161,8 @@ class User implements IUser {
     (method_declaration
       (method_modifier)
       (identifier)
-      (type_identifier)
+      (type_identifier
+        (primitive_keyword))
       (block
         (return_statement
           (expression

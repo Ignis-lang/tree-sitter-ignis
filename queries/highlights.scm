@@ -8,8 +8,6 @@
 
 (null_literal) @constant
 
-(type_identifier) @type
-
 ["=" "<" "<=" ">" ">=" "!" "++" "--" "||" "&&" "/" "*" "+" "%" "&" "|" "=="] @operator
 
 (expression (identifier) @variable.property)
@@ -57,8 +55,6 @@
     
 (parameter_declaration (identifier) @variable.parameter)
 
-
-
 [ "(" ")" "{" "}" "[" "]" ] @punctuation.bracket
 
 [":" "." "," ";" ] @punctuation.delimiter
@@ -80,6 +76,7 @@
   "extends"
   (mutable_specifier)
   (this_expression)
+  (primitive_keyword)
   "public"
   "private"
   "new"
@@ -99,5 +96,3 @@
   "continue"
   "unknown"
 ] @keyword
-
-

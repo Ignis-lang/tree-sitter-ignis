@@ -13,4 +13,5 @@ interface User {
     (identifier)
     (interface_method_declaration
       (identifier)
-      (type_identifier))))
+      (type_identifier
+        (primitive_keyword)))))

@@ -1230,9 +1230,37 @@
         }
       ]
     },
+    "reference_operator": {
+      "type": "STRING",
+      "value": "$"
+    },
     "parameter_declaration": {
       "type": "SEQ",
       "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "reference_operator"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "mutable_specifier"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
         {
           "type": "SYMBOL",
           "name": "identifier"
@@ -2205,32 +2233,8 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "STRING",
-              "value": "int"
-            },
-            {
-              "type": "STRING",
-              "value": "float"
-            },
-            {
-              "type": "STRING",
-              "value": "boolean"
-            },
-            {
-              "type": "STRING",
-              "value": "char"
-            },
-            {
-              "type": "STRING",
-              "value": "string"
-            },
-            {
-              "type": "STRING",
-              "value": "void"
-            },
-            {
-              "type": "STRING",
-              "value": "unknown"
+              "type": "SYMBOL",
+              "name": "primitive_keyword"
             },
             {
               "type": "SYMBOL",
@@ -2341,6 +2345,39 @@
         {
           "type": "STRING",
           "value": "super"
+        }
+      ]
+    },
+    "primitive_keyword": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "int"
+        },
+        {
+          "type": "STRING",
+          "value": "float"
+        },
+        {
+          "type": "STRING",
+          "value": "boolean"
+        },
+        {
+          "type": "STRING",
+          "value": "char"
+        },
+        {
+          "type": "STRING",
+          "value": "string"
+        },
+        {
+          "type": "STRING",
+          "value": "void"
+        },
+        {
+          "type": "STRING",
+          "value": "unknown"
         }
       ]
     },

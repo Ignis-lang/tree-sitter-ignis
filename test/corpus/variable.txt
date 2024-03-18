@@ -12,25 +12,29 @@ let d: float = 1.3;
 (source_file
   (variable_declaration
     (identifier)
-    (type_identifier)
+    (type_identifier
+      (primitive_keyword))
     (expression
       (literal
         (integer_literal))))
   (variable_declaration
     (identifier)
-    (type_identifier)
+    (type_identifier
+      (primitive_keyword))
     (expression
       (literal
         (string_literal))))
   (variable_declaration
     (identifier)
-    (type_identifier)
+    (type_identifier
+      (primitive_keyword))
     (expression
       (literal
         (boolean_literal))))
   (variable_declaration
     (identifier)
-    (type_identifier)
+    (type_identifier
+      (primitive_keyword))
     (expression
       (literal
         (float_literal)))))
@@ -46,7 +50,8 @@ let result: int = math.sum(x, y);
 (source_file
   (variable_declaration
     (identifier)
-    (type_identifier)
+    (type_identifier
+      (primitive_keyword))
     (expression
       (method_call_expression
         (property_access

@@ -900,6 +900,14 @@
           "named": true
         },
         {
+          "type": "mutable_specifier",
+          "named": true
+        },
+        {
+          "type": "reference_operator",
+          "named": true
+        },
+        {
           "type": "type_identifier",
           "named": true
         }
@@ -920,6 +928,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "primitive_keyword",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "property_access",
@@ -1053,10 +1066,14 @@
     "fields": {},
     "children": {
       "multiple": false,
-      "required": false,
+      "required": true,
       "types": [
         {
           "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "primitive_keyword",
           "named": true
         }
       ]
@@ -1388,6 +1405,10 @@
   {
     "type": "readonly",
     "named": false
+  },
+  {
+    "type": "reference_operator",
+    "named": true
   },
   {
     "type": "return",
