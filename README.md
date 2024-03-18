@@ -31,3 +31,18 @@ parser_config["ignis"] = {
 ```
 
 And then run `:TSUpdate` or `:TSInstall ignis` in Neovim.
+
+## Usage
+
+After installing the grammar in your editor, Ignis files should automatically start benefiting from
+syntax highlighting and other features provided by Tree-sitter.
+
+## Contribute
+
+Contributions are welcome! If you encounter any problems or have suggestions for improvement,
+please open an issue or send a pull request.
+
+## License
+
+[MIT](LICENSE) © Ignacio Perez
+
