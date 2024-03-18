@@ -8,7 +8,7 @@
 
 (null_literal) @constant
 
-["=" "<" "<=" ">" ">=" "!" "++" "--" "||" "&&" "/" "*" "+" "%" "&" "|" "=="] @operator
+["-" "=" "<" "<=" ">" ">=" "!" "++" "--" "||" "&&" "/" "*" "+" "%" "&" "|" "=="] @operator
 
 (expression (identifier) @variable.property)
 
