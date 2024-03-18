@@ -7,15 +7,9 @@
         "<!@(node -p \"require('nan').include_dirs\")",
         "src"
       ],
-      "dependencies": [
-        "<!(node -e \"require('nan')\")"
-      ],
       "sources": [
         "bindings/node/binding.cc",
         "src/parser.c"
-      ],
-      "cflags_c": [
-        "-std=c99"
       ]
     }
   ]

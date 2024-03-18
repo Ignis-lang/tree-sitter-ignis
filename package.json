@@ -1,17 +1,25 @@
 {
   "name": "tree-sitter-ignis",
   "version": "0.0.1",
-  "description": "",
-  "main": "grammar.js",
+  "description": "Ignis grammar for tree-sitter",
+  "main": "bindings/node",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Ignis-lang/tree-sitter-ignis.git"
+  },
+  "keywords": [
+    "parser",
+    "ignis"
+  ],
   "scripts": {
     "build": "tree-sitter build-wasm && node-gyp rebuild",
     "generate": "tree-sitter generate"
   },
-  "keywords": [],
   "author": "Ignacio Perez",
   "license": "MIT",
   "dependencies": {
-    "nan": "^2.19.0"
+    "nan": "^2.19.0",
+    "sharp": "^0.33.2"
   },
   "files": [
     "src/**/*",
@@ -31,5 +39,8 @@
         "queries/highlights.scm"
       ]
     }
-  ]
+  ],
+  "engines": {
+    "node": "14.21.3"
+  }
 }
