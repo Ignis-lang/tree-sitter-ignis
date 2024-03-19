@@ -1,6 +1,5 @@
 (comment) @comment
 
-;; Literal
 (string_literal) @string
 (char_literal) @string
 (integer_literal) @number
@@ -55,6 +54,12 @@
     
 (parameter_declaration (identifier) @variable.parameter)
 
+(array_access_expression (identifier) @variable)
+
+(for_variable_declaration (identifier) @variable)
+
+(for_of_statement left: (identifier) @variable)
+
 [ "(" ")" "{" "}" "[" "]" ] @punctuation.bracket
 
 [":" "." "," ";" ] @punctuation.delimiter
@@ -96,3 +101,4 @@
   "continue"
   "unknown"
 ] @keyword
+
