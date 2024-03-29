@@ -100,5 +100,6 @@
   "extern"
   "continue"
   "unknown"
+  "type"
 ] @keyword
 

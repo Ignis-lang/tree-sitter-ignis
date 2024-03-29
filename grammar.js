@@ -61,8 +61,11 @@ module.exports = grammar({
         $.variable_declaration,
         $.interface_declaration,
         $.enum_declaration,
+        $.type_definition,
         $.expression,
       ),
+
+    type_definition: ($) => seq('type', $.identifier, '=', $.type_identifier, ';'),
 
     export_statement: ($) => seq('export', choice($.class_declaration, $.function_declaration)),
 
@@ -348,11 +351,7 @@ module.exports = grammar({
 
     identifier: (_) => /[a-zA-Z_]\w*/,
 
-    type_identifier: ($) =>
-      seq(
-        choice($.primitive_keyword, $.identifier),
-        optional('[]'),
-      ),
+    type_identifier: ($) => seq(choice($.primitive_keyword, $.identifier), optional('[]')),
 
     loop_control: (_) => choice('break', 'continue'),
 
