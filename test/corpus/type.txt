@@ -1,0 +1,67 @@
+================================================================================
+VALID - Type definition
+================================================================================
+
+type StringArray = string[];
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (type_definition
+    (identifier)
+    (type_identifier
+      (primitive_keyword))))
+
+================================================================================
+VALID - Type definition with union type
+================================================================================
+
+type StringArray = string[] | string;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (type_definition
+    (identifier)
+    (union_type
+      (type_identifier
+        (primitive_keyword))
+      (type_identifier
+        (primitive_keyword)))))
+
+================================================================================
+VALID - Type definition number
+================================================================================
+
+type Int = int;
+type IntArray = int[];
+type Float = float;
+type FloatArray = float[];
+type Number = int | float;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (type_definition
+    (identifier)
+    (type_identifier
+      (primitive_keyword)))
+  (type_definition
+    (identifier)
+    (type_identifier
+      (primitive_keyword)))
+  (type_definition
+    (identifier)
+    (type_identifier
+      (primitive_keyword)))
+  (type_definition
+    (identifier)
+    (type_identifier
+      (primitive_keyword)))
+  (type_definition
+    (identifier)
+    (union_type
+      (type_identifier
+        (primitive_keyword))
+      (type_identifier
+        (primitive_keyword)))))

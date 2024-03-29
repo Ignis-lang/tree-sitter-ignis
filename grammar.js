@@ -26,6 +26,14 @@ function commaSep(rule) {
   return optional(commaSep1(rule));
 }
 
+function pipeSepRepeat(rule) {
+  return seq(rule, repeat(seq('|', rule)));
+}
+
+function optionalPipeSep(rule) {
+  return optional(pipeSepRepeat(rule));
+}
+
 const primitiveTypes = ['int', 'float', 'boolean', 'char', 'string', 'void', 'unknown'];
 
 module.exports = grammar({
@@ -65,7 +73,7 @@ module.exports = grammar({
         $.expression,
       ),
 
-    type_definition: ($) => seq('type', $.identifier, '=', $.type_identifier, ';'),
+    type_definition: ($) => seq('type', $.identifier, '=', choice($.type_identifier, $.union_type), ';'),
 
     export_statement: ($) => seq('export', choice($.class_declaration, $.function_declaration)),
 
@@ -352,6 +360,17 @@ module.exports = grammar({
     identifier: (_) => /[a-zA-Z_]\w*/,
 
     type_identifier: ($) => seq(choice($.primitive_keyword, $.identifier), optional('[]')),
+
+    union_type: ($) => prec.left(seq($.type_identifier, repeat1(seq('|', $.type_identifier)))),
+
+    type_expression: ($) =>
+      choice(
+        $.type_identifier,
+        $.union_type,
+        $.array_type,
+      ),
+
+    array_type: ($) => seq($.type_identifier, '[]'),
 
     loop_control: (_) => choice('break', 'continue'),
 

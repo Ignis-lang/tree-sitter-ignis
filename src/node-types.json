@@ -34,6 +34,21 @@
     }
   },
   {
+    "type": "array_type",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "type_identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "assignment_expression",
     "named": true,
     "fields": {},
@@ -1079,6 +1094,10 @@
         {
           "type": "type_identifier",
           "named": true
+        },
+        {
+          "type": "union_type",
+          "named": true
         }
       ]
     }
@@ -1097,6 +1116,21 @@
         },
         {
           "type": "primitive_keyword",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "union_type",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "type_identifier",
           "named": true
         }
       ]
