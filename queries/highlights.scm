@@ -14,6 +14,12 @@
 (generic_type_declaration
   "<" @punctuation.bracket
   ">" @punctuation.bracket)
+  
+((identifier) @constant
+ (#match? @constant "^[A-Z][A-Z\\d_]+$"))
+
+(call_expression
+  function: (identifier) @function.call)
 
 (cast (identifier) @variable)
 
@@ -22,12 +28,12 @@
   
 (call_expression
 	  arguments: (expression (identifier) @variable.parameter))
+
+(method_call_expression
+  function: (property_access name: (identifier) @keword))
   
 (method_call_expression
-  function: (property_access name: (identifier) @method))
-  
-(method_call_expression
-	  function: (property_access (identifier) @variable))
+	  function: (property_access) @variable)
       
 (method_call_expression
 	  arguments: (expression (identifier) @variable.parameter))
