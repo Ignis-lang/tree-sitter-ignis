@@ -65,3 +65,41 @@ type Number = int | float;
         (primitive_keyword))
       (type_identifier
         (primitive_keyword)))))
+
+================================================================================
+VALID - Type cast
+================================================================================
+
+type Int = int;
+
+function main(): void {
+  let x: Int = 1;
+
+  x as int;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (type_definition
+    (identifier)
+    (type_identifier
+      (primitive_keyword)))
+  (function_declaration
+    (identifier)
+    (type_identifier
+      (primitive_keyword))
+    (block
+      (variable_declaration
+        (identifier)
+        (type_identifier
+          (identifier))
+        (expression
+          (literal
+            (integer_literal))))
+      (expression_statement
+        (expression
+          (cast
+            (identifier)
+            (type_identifier
+              (primitive_keyword))))))))

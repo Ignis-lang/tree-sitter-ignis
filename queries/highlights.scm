@@ -15,11 +15,8 @@
   "<" @punctuation.bracket
   ">" @punctuation.bracket)
 
-((identifier) @type
-   (#match? @type "^[A-Z]"))
-
 (cast (identifier) @variable)
-   
+
 (call_expression
   function: (identifier) @function.call)
   
@@ -27,7 +24,7 @@
 	  arguments: (expression (identifier) @variable.parameter))
   
 (method_call_expression
-  function: (property_access name: (identifier) @function.call))
+  function: (property_access name: (identifier) @method))
   
 (method_call_expression
 	  function: (property_access (identifier) @variable))
@@ -38,7 +35,7 @@
 (interface_declaration
 	(interface_method_declaration function: (identifier) @function.method))
     
-(method_declaration (identifier) @function.method)
+(method_declaration (identifier) @method)
 
 (property_declaration (identifier) @class.property)
 
@@ -62,7 +59,7 @@
 
 (for_of_statement left: (identifier) @variable)
 
-[ "(" ")" "{" "}" "[" "]" ] @punctuation.bracket
+["(" ")" "{" "}" "[" "]"] @punctuation.bracket
 
 [":" "." "," ";" ] @punctuation.delimiter
 
@@ -104,4 +101,5 @@
   "unknown"
   "type"
 ] @keyword
+
 

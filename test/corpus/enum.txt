@@ -5,7 +5,7 @@ VALID - Enum declaration
 enum Status {
   PENDING,
   ACTIVE,
-  INACTIVE
+  INACTIVE,
 }
 
 --------------------------------------------------------------------------------
@@ -27,7 +27,7 @@ VALID - Enum declaration with values
 enum Status {
   PENDING = 1,
   ACTIVE = 2,
-  INACTIVE = 3
+  INACTIVE = 3,
 }
 
 --------------------------------------------------------------------------------
@@ -58,7 +58,7 @@ VALID - Enum declaration with string values
 enum Status {
   PENDING = "PENDING",
   ACTIVE = "ACTIVE",
-  INACTIVE = "INACTIVE"
+  INACTIVE = "INACTIVE",
 }
 
 --------------------------------------------------------------------------------
@@ -88,7 +88,7 @@ VALID - Enum declaration with generic values
 
 enum Result<O, E> {
   OK(O),
-  ERR(E)
+  ERR(E),
 }
 
 --------------------------------------------------------------------------------

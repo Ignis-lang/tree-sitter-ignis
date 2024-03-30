@@ -19,7 +19,7 @@ const PREC = {
 };
 
 function commaSep1(rule) {
-  return seq(rule, repeat(seq(',', rule)));
+  return seq(rule, repeat(seq(',', rule)), optional(','));
 }
 
 function commaSep(rule) {
@@ -56,6 +56,8 @@ module.exports = grammar({
       [$.method_call_expression, $.call_expression],
       [$.array_access_expression, $.expression],
       [$.for_statement, $.expression],
+
+      [$.interface_method_declaration],
     ]),
 
   rules: {
@@ -83,7 +85,7 @@ module.exports = grammar({
         $.identifier,
         optional($.generic_type_declaration),
         '{',
-        commaSep1($.enum_member_declaration),
+        commaSep($.enum_member_declaration),
         '}',
       ),
 
@@ -366,12 +368,7 @@ module.exports = grammar({
 
     union_type: ($) => prec.left(seq($.type_identifier, repeat1(seq('|', $.type_identifier)))),
 
-    type_expression: ($) =>
-      choice(
-        $.type_identifier,
-        $.union_type,
-        $.array_type,
-      ),
+    type_expression: ($) => choice($.type_identifier, $.union_type, $.array_type),
 
     array_type: ($) => seq($.type_identifier, '[]'),
 
