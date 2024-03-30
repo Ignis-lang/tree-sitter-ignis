@@ -314,7 +314,10 @@ module.exports = grammar({
         $.get_expression,
         $.method_call_expression,
         $.array_access_expression,
+        $.cast,
       ),
+
+    cast: ($) => seq($.identifier, 'as', $.type_identifier),
 
     prefix_unary_expression: ($) => prec(PREC.UNARY, seq(choice('!', '++', '--'), $.expression)),
 

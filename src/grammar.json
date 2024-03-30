@@ -1727,6 +1727,27 @@
         {
           "type": "SYMBOL",
           "name": "array_access_expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "cast"
+        }
+      ]
+    },
+    "cast": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
+        },
+        {
+          "type": "STRING",
+          "value": "as"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "type_identifier"
         }
       ]
     },

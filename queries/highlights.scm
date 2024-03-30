@@ -17,6 +17,8 @@
 
 ((identifier) @type
    (#match? @type "^[A-Z]"))
+
+(cast (identifier) @variable)
    
 (call_expression
   function: (identifier) @function.call)
