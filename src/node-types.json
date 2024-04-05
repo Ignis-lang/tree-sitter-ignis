@@ -892,17 +892,24 @@
   {
     "type": "method_declaration",
     "named": true,
-    "fields": {},
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
       "types": [
         {
           "type": "block",
-          "named": true
-        },
-        {
-          "type": "identifier",
           "named": true
         },
         {
@@ -1030,6 +1037,94 @@
     }
   },
   {
+    "type": "record_declaration",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "record_method_declaration",
+          "named": true
+        },
+        {
+          "type": "record_modifier",
+          "named": true
+        },
+        {
+          "type": "record_property_declaration",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "record_method_declaration",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "parameter_declaration",
+          "named": true
+        },
+        {
+          "type": "type_identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "record_modifier",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "record_property_declaration",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "type_identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "return_statement",
     "named": true,
     "fields": {},
@@ -1074,6 +1169,10 @@
         },
         {
           "type": "interface_declaration",
+          "named": true
+        },
+        {
+          "type": "record_declaration",
           "named": true
         },
         {
@@ -1319,6 +1418,10 @@
     "named": false
   },
   {
+    "type": "?",
+    "named": false
+  },
+  {
     "type": "[",
     "named": false
   },
@@ -1484,6 +1587,10 @@
   },
   {
     "type": "readonly",
+    "named": false
+  },
+  {
+    "type": "record",
     "named": false
   },
   {

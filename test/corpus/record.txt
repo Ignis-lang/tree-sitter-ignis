@@ -1,0 +1,76 @@
+================================================================================
+VALID - Record declaration
+================================================================================
+
+record User {
+  name: string;
+  email: string;
+  getName(): string;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (record_declaration
+    (identifier)
+    (record_property_declaration
+      (identifier)
+      (type_identifier
+        (primitive_keyword)))
+    (record_property_declaration
+      (identifier)
+      (type_identifier
+        (primitive_keyword)))
+    (record_method_declaration
+      (identifier)
+      (type_identifier
+        (primitive_keyword)))))
+
+================================================================================
+VALID - Export record
+================================================================================
+
+export record FFIConfig {
+  language: IgnisLanguageSupported;
+  type: ExternDeclarationType;
+  name: string;
+  params: FFIParam[];
+  returnType: LanguegeType;
+  requireImport: boolean;
+  file?: FFIFile;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (record_declaration
+    (record_modifier)
+    (identifier)
+    (record_property_declaration
+      (identifier)
+      (type_identifier
+        (identifier)))
+    (record_property_declaration
+      (identifier)
+      (type_identifier
+        (identifier)))
+    (record_property_declaration
+      (identifier)
+      (type_identifier
+        (primitive_keyword)))
+    (record_property_declaration
+      (identifier)
+      (type_identifier
+        (identifier)))
+    (record_property_declaration
+      (identifier)
+      (type_identifier
+        (identifier)))
+    (record_property_declaration
+      (identifier)
+      (type_identifier
+        (primitive_keyword)))
+    (record_property_declaration
+      (identifier)
+      (type_identifier
+        (identifier)))))

@@ -72,6 +72,7 @@ module.exports = grammar({
         $.interface_declaration,
         $.enum_declaration,
         $.type_definition,
+        $.record_declaration,
         $.expression,
       ),
 
@@ -193,13 +194,38 @@ module.exports = grammar({
     method_declaration: ($) =>
       seq(
         optional($.method_modifier),
-        $.identifier,
+        field('name', $.identifier),
         '(',
         optional(commaSep1($.parameter_declaration)),
         ')',
         ':',
         $.type_identifier,
         $.block,
+      ),
+
+    record_property_declaration: ($) =>
+      seq(field('name', $.identifier), optional('?'), ':', $.type_identifier, ';'),
+
+    record_method_declaration: ($) =>
+      seq(
+        field('name', $.identifier),
+        '(',
+        optional(commaSep1($.parameter_declaration)),
+        ')',
+        optional('?'),
+        ':',
+        $.type_identifier,
+        ';',
+      ),
+
+    record_declaration: ($) =>
+      seq(
+        optional($.record_modifier),
+        'record',
+        $.identifier,
+        '{',
+        repeat(choice($.record_property_declaration, $.record_method_declaration)),
+        '}',
       ),
 
     // #endregion
@@ -374,9 +400,11 @@ module.exports = grammar({
 
     loop_control: (_) => choice('break', 'continue'),
 
-    class_modifier: (_) => choice('export', 'extern', 'abstract'),
+    class_modifier: (_) => choice('export', 'abstract'),
 
-    method_modifier: (_) => choice('public', 'private', 'static', 'final', 'abstract', 'extern'),
+    method_modifier: (_) => choice('public', 'private', 'static', 'final', 'abstract'),
+
+    record_modifier: (_) => choice('export'),
 
     other_keyword: (_) => choice('in', 'const', 'as', 'readonly', 'export', 'extern', 'super'),
 

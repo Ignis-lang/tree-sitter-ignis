@@ -7,7 +7,7 @@
 
 (null_literal) @constant
 
-["-" "=" "<" "<=" ">" ">=" "!" "++" "--" "||" "&&" "/" "*" "+" "%" "&" "|" "=="] @operator
+["-" "=" "<" "<=" ">" ">=" "!" "++" "--" "||" "&&" "/" "*" "+" "%" "&" "|" "==" "?"] @operator
 
 (expression (identifier) @variable.property)
 
@@ -17,6 +17,8 @@
   
 ((identifier) @constant
  (#match? @constant "^[A-Z][A-Z\\d_]+$"))
+ 
+(type_identifier (identifier) @type)
 
 (call_expression
   function: (identifier) @function.call)
@@ -65,6 +67,12 @@
 
 (for_of_statement left: (identifier) @variable)
 
+(record_declaration (identifier) @type)
+   
+(record_property_declaration name: (identifier) @property)
+
+(record_method_declaration name: (identifier) @method)
+
 ["(" ")" "{" "}" "[" "]"] @punctuation.bracket
 
 [":" "." "," ";" ] @punctuation.delimiter
@@ -106,6 +114,6 @@
   "continue"
   "unknown"
   "type"
+  "record"
+  "export"
 ] @keyword
-
-
