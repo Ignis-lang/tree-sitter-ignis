@@ -73,6 +73,7 @@ module.exports = grammar({
         $.enum_declaration,
         $.type_definition,
         $.record_declaration,
+        $.extern_declaration,
         $.expression,
       ),
 
@@ -228,6 +229,9 @@ module.exports = grammar({
         '}',
       ),
 
+    extern_declaration: ($) =>
+      seq(optional($.record_modifier), 'extern', $.identifier, '{', $._definition, '}'),
+
     // #endregion
     // #region Function
     generic_type_declaration: ($) => seq('<', commaSep1($.type_identifier), '>'),
@@ -243,6 +247,7 @@ module.exports = grammar({
         ':',
         $.type_identifier,
         optional($.block),
+        optional(';'),
       ),
 
     return_statement: ($) => seq('return', $.expression, ';'),
@@ -406,7 +411,7 @@ module.exports = grammar({
 
     record_modifier: (_) => choice('export'),
 
-    other_keyword: (_) => choice('in', 'const', 'as', 'readonly', 'export', 'extern', 'super'),
+    other_keyword: (_) => choice('in', 'const', 'as', 'readonly', 'export', 'super'),
 
     primitive_keyword: (_) => choice(...primitiveTypes),
 

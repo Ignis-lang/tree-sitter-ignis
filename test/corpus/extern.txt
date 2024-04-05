@@ -1,0 +1,21 @@
+================================================================================
+VALID - Extern
+================================================================================
+
+extern io {
+  function println(s: unknown): void;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (extern_declaration
+    (identifier)
+    (function_declaration
+      (identifier)
+      (parameter_declaration
+        (identifier)
+        (type_identifier
+          (primitive_keyword)))
+      (type_identifier
+        (primitive_keyword)))))

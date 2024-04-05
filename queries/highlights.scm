@@ -73,6 +73,9 @@
 
 (record_method_declaration name: (identifier) @method)
 
+(extern_declaration
+  (identifier) @type.extern)
+
 ["(" ")" "{" "}" "[" "]"] @punctuation.bracket
 
 [":" "." "," ";" ] @punctuation.delimiter
