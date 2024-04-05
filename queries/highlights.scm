@@ -1,122 +1,79 @@
 (comment) @comment
 
-(string_literal) @string
-(char_literal) @string
-(integer_literal) @number
-(float_literal) @number
+[
+  (string_literal)
+  (char_literal)
+] @string
+
+[
+  (integer_literal)
+  (float_literal)
+] @number
+
+(object_literal key: (identifier) @object.key)
 
 (null_literal) @constant
 
-["-" "=" "<" "<=" ">" ">=" "!" "++" "--" "||" "&&" "/" "*" "+" "%" "&" "|" "==" "?"] @operator
+["-" "=" "<" "<=" ">" ">=" "!" "++" "--" "||" "&&" "/" "*" "+" "%" "&" "|" "==" "?" "@"] @operator
 
-(expression (identifier) @variable.property)
-
-(generic_type_declaration
-  "<" @punctuation.bracket
-  ">" @punctuation.bracket)
-  
-((identifier) @constant
- (#match? @constant "^[A-Z][A-Z\\d_]+$"))
- 
 (type_identifier (identifier) @type)
 
 (call_expression
   function: (identifier) @function.call)
 
-(cast (identifier) @variable)
-
 (call_expression
-  function: (identifier) @function.call)
-  
-(call_expression
-	  arguments: (expression (identifier) @variable.parameter))
+  arguments: (expression (identifier) @variable.parameter))
 
 (method_call_expression
-  function: (property_access name: (identifier) @keword))
-  
+  function: (property_access name: (identifier) @method)
+)
+
 (method_call_expression
-	  function: (property_access) @variable)
-      
-(method_call_expression
-	  arguments: (expression (identifier) @variable.parameter))
-  
+  arguments: (expression (identifier) @variable.parameter))
+
 (interface_declaration
-	(interface_method_declaration function: (identifier) @function.method))
-    
+  (interface_method_declaration function: (identifier) @function.interface)
+)
+
 (method_declaration (identifier) @method)
 
-(property_declaration (identifier) @class.property)
+(property_declaration (identifier) @property)
 
-(get_expression (property_access name: (identifier) @class.property))
+(class_instance_expression (identifier) @type.class)
 
-(get_expression (property_access (identifier) @variable))
-
-(class_instance_expression (identifier) @variable.class)
-
-(function_declaration (identifier) @function.declaration)
-    
-(assignment_expression (property_access name: (identifier) @variable))
+(function_declaration (identifier) @function)
 
 (variable_declaration (identifier) @variable)
-    
-(parameter_declaration (identifier) @variable.parameter)
 
-(array_access_expression (identifier) @variable)
+(parameter_declaration (identifier) @parameter)
 
-(for_variable_declaration (identifier) @variable)
+(array_access_expression (identifier) @variable.array)
 
-(for_of_statement left: (identifier) @variable)
+(for_variable_declaration (identifier) @variable.loop)
 
-(record_declaration (identifier) @type)
+(for_of_statement left: (identifier) @variable.loop)
+
+(record_declaration (identifier) @type.record)
    
 (record_property_declaration name: (identifier) @property)
 
 (record_method_declaration name: (identifier) @method)
 
-(extern_declaration
-  (identifier) @type.extern)
+(extern_declaration (identifier) @type.extern)
+  
+(decorator_declaration (identifier) @decorator)
 
 ["(" ")" "{" "}" "[" "]"] @punctuation.bracket
 
 [":" "." "," ";" ] @punctuation.delimiter
 
 [
-  "if"
-  "else"
-  "let"
-  "return"
-  "function"
-  "import"
-  "from"
-  "for"
-  "enum"
-  "export"
-  "while"
-  "of"
-  "interface"
-  "extends"
-  (mutable_specifier)
-  (this_expression)
-  (primitive_keyword)
-  "public"
-  "private"
-  "new"
-  "class"
-  "implements"
-  "super"
-  "static"
-  "final"
-  "readonly"
-  "in"
-  "const"
-  "as"
-  "break"
-  "export"
-  "void"
-  "extern"
-  "continue"
-  "unknown"
-  "type"
-  "record"
-  "export"
+  "if" "else" "let" "return" "function" "import" "from" "for" "enum" "export"
+  "while" "of" "interface" "extends" (mutable_specifier) (this_expression)
+  "public" "private" "new" "class" "implements" "super" "static" "final"
+  "readonly" "in" "const" "as" "break" "void" "extern" "continue" "unknown"
+  "type" "record"
 ] @keyword
+
+(boolean_literal) @boolean
+

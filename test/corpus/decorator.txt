@@ -1,0 +1,114 @@
+================================================================================
+VALID - Decorator
+================================================================================
+
+@Only
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decorator_declaration
+    (identifier)))
+
+================================================================================
+VALID - Decorator with params
+================================================================================
+
+
+@Only(IgnisLanguageSupported.LUA)
+
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decorator_declaration
+    (identifier))
+  (expression
+    (group_expression
+      (expression
+        (get_expression
+          (property_access
+            (identifier)
+            (identifier)))))))
+
+================================================================================
+VALID - Decorator with multi params
+================================================================================
+
+@Only("test", "test1")
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decorator_declaration
+    (identifier)
+    (literal
+      (string_literal))
+    (literal
+      (string_literal))))
+
+================================================================================
+VALID - Decorator with record param
+================================================================================
+
+@Language({
+  language: IgnisLanguageSupported.LUA,
+  type: ExternDeclarationType.FUNCTION,
+  name: "print",
+  params: [
+    { name: "s", type: LuaType.ANY }
+  ],
+  returnType: LuaType.NONE,
+  requireImport: false,
+})
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decorator_declaration
+    (identifier)
+    (literal
+      (object_literal
+        (identifier)
+        (expression
+          (get_expression
+            (property_access
+              (identifier)
+              (identifier))))
+        (identifier)
+        (expression
+          (get_expression
+            (property_access
+              (identifier)
+              (identifier))))
+        (identifier)
+        (expression
+          (literal
+            (string_literal)))
+        (identifier)
+        (expression
+          (literal
+            (array_literal
+              (expression
+                (literal
+                  (object_literal
+                    (identifier)
+                    (expression
+                      (literal
+                        (string_literal)))
+                    (identifier)
+                    (expression
+                      (get_expression
+                        (property_access
+                          (identifier)
+                          (identifier))))))))))
+        (identifier)
+        (expression
+          (get_expression
+            (property_access
+              (identifier)
+              (identifier))))
+        (identifier)
+        (expression
+          (literal
+            (boolean_literal)))))))

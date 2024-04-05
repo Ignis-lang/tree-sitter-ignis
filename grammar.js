@@ -56,8 +56,9 @@ module.exports = grammar({
       [$.method_call_expression, $.call_expression],
       [$.array_access_expression, $.expression],
       [$.for_statement, $.expression],
-
       [$.interface_method_declaration],
+      [$.decorator_declaration],
+      [$.function_declaration],
     ]),
 
   rules: {
@@ -74,6 +75,7 @@ module.exports = grammar({
         $.type_definition,
         $.record_declaration,
         $.extern_declaration,
+        $.decorator_declaration,
         $.expression,
       ),
 
@@ -231,6 +233,9 @@ module.exports = grammar({
 
     extern_declaration: ($) =>
       seq(optional($.record_modifier), 'extern', $.identifier, '{', $._definition, '}'),
+
+    decorator_declaration: ($) =>
+      seq('@', $.identifier, optional(seq('(', optional(commaSep($.literal)), ')'))),
 
     // #endregion
     // #region Function
@@ -424,6 +429,7 @@ module.exports = grammar({
         $.boolean_literal,
         $.null_literal,
         $.array_literal,
+        $.object_literal,
       ),
 
     null_literal: (_) => 'null',
@@ -437,5 +443,13 @@ module.exports = grammar({
     string_literal: (_) => /"([^"\\]|\\.)*"/,
 
     boolean_literal: (_) => choice('true', 'false'),
+
+    object_literal: ($) =>
+      seq(
+        '{',
+        commaSep(seq(field('key', $.identifier), ':', field('value', $.expression))),
+        optional(','),
+        '}',
+      ),
   },
 });
