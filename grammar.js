@@ -57,8 +57,10 @@ module.exports = grammar({
       [$.array_access_expression, $.expression],
       [$.for_statement, $.expression],
       [$.interface_method_declaration],
+      [$.decorator_use],
       [$.decorator_declaration],
       [$.function_declaration],
+      [$.union_type, $.intersection_type]
     ]),
 
   rules: {
@@ -66,6 +68,7 @@ module.exports = grammar({
 
     _definition: ($) =>
       choice(
+        $.export_statement,
         $.import_statement,
         $.class_declaration,
         $.function_declaration,
@@ -76,12 +79,26 @@ module.exports = grammar({
         $.record_declaration,
         $.extern_declaration,
         $.decorator_declaration,
+        $.decorator_use,
         $.expression,
       ),
 
-    type_definition: ($) => seq('type', $.identifier, '=', choice($.type_identifier, $.union_type), ';'),
+    type_definition: ($) => seq('type', $.identifier, '=', choice($.type_identifier, $.union_type, $.intersection_type), ';'),
 
-    export_statement: ($) => seq('export', choice($.class_declaration, $.function_declaration)),
+    export_statement: ($) =>
+      seq(
+        'export',
+        choice(
+          $.class_declaration,
+          $.function_declaration,
+          $.interface_declaration,
+          $.enum_declaration,
+          $.type_definition,
+          $.record_declaration,
+          $.extern_declaration,
+          $.decorator_declaration,
+        ),
+      ),
 
     enum_declaration: ($) =>
       seq(
@@ -223,7 +240,6 @@ module.exports = grammar({
 
     record_declaration: ($) =>
       seq(
-        optional($.record_modifier),
         'record',
         $.identifier,
         '{',
@@ -231,11 +247,18 @@ module.exports = grammar({
         '}',
       ),
 
-    extern_declaration: ($) =>
-      seq(optional($.record_modifier), 'extern', $.identifier, '{', $._definition, '}'),
+    extern_declaration: ($) => seq('extern', $.identifier, '{', $._definition, '}'),
+
+    decorator_use: ($) => seq('@', $.identifier, optional(seq('(', optional(commaSep($.expression)), ')'))),
 
     decorator_declaration: ($) =>
-      seq('@', $.identifier, optional(seq('(', optional(commaSep($.literal)), ')'))),
+      seq(
+        'decorator',
+        $.identifier,
+        optional($.generic_type_declaration),
+        optional(seq('(', optional(commaSep($.type_identifier)), ')')),
+        ';',
+      ),
 
     // #endregion
     // #region Function
@@ -402,19 +425,19 @@ module.exports = grammar({
 
     type_identifier: ($) => seq(choice($.primitive_keyword, $.identifier), optional('[]')),
 
-    union_type: ($) => prec.left(seq($.type_identifier, repeat1(seq('|', $.type_identifier)))),
+    union_type: ($) => prec.left(seq($.type_identifier, repeat(seq('|', $.type_identifier)))),
 
-    type_expression: ($) => choice($.type_identifier, $.union_type, $.array_type),
+    intersection_type: ($) => prec.left(seq($.type_identifier, repeat(seq('&', $.type_identifier)))),
 
-    array_type: ($) => seq($.type_identifier, '[]'),
+    type_expression: ($) => choice($.type_identifier, $.union_type, $.intersection_type, $.array_type),
+
+    array_type: ($) => seq($.type_identifier, '[', ']'),
 
     loop_control: (_) => choice('break', 'continue'),
 
-    class_modifier: (_) => choice('export', 'abstract'),
+    class_modifier: (_) => choice('abstract'),
 
     method_modifier: (_) => choice('public', 'private', 'static', 'final', 'abstract'),
-
-    record_modifier: (_) => choice('export'),
 
     other_keyword: (_) => choice('in', 'const', 'as', 'readonly', 'export', 'super'),
 

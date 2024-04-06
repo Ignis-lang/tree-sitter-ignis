@@ -17,6 +17,17 @@
 ["-" "=" "<" "<=" ">" ">=" "!" "++" "--" "||" "&&" "/" "*" "+" "%" "&" "|" "==" "?" "@"] @operator
 
 (type_identifier (identifier) @type)
+(primitive_keyword) @type
+
+(get_expression (property_access (identifier) @type))
+
+(enum_declaration (identifier) @type)
+
+(type_definition (identifier) @variable)
+
+(interface_declaration (identifier) @variable)
+
+(extern_declaration (identifier) @variable)
 
 (call_expression
   function: (identifier) @function.call)
@@ -39,6 +50,8 @@
 
 (property_declaration (identifier) @property)
 
+(property_access name: (identifier) @property)
+
 (class_instance_expression (identifier) @type.class)
 
 (function_declaration (identifier) @function)
@@ -58,10 +71,16 @@
 (record_property_declaration name: (identifier) @property)
 
 (record_method_declaration name: (identifier) @method)
-
-(extern_declaration (identifier) @type.extern)
   
 (decorator_declaration (identifier) @decorator)
+
+(decorator_use (identifier) @decorator)
+
+(get_expression (property_access name: (identifier) @property))
+
+(enum_member_declaration (identifier) @method)
+
+(expression (identifier) @variable)
 
 ["(" ")" "{" "}" "[" "]"] @punctuation.bracket
 
@@ -72,8 +91,7 @@
   "while" "of" "interface" "extends" (mutable_specifier) (this_expression)
   "public" "private" "new" "class" "implements" "super" "static" "final"
   "readonly" "in" "const" "as" "break" "void" "extern" "continue" "unknown"
-  "type" "record"
+  "type" "record" "decorator"
 ] @keyword
 
 (boolean_literal) @boolean
-

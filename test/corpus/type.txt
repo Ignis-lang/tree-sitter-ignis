@@ -9,8 +9,9 @@ type StringArray = string[];
 (source_file
   (type_definition
     (identifier)
-    (type_identifier
-      (primitive_keyword))))
+    (union_type
+      (type_identifier
+        (primitive_keyword)))))
 
 ================================================================================
 VALID - Type definition with union type
@@ -24,6 +25,23 @@ type StringArray = string[] | string;
   (type_definition
     (identifier)
     (union_type
+      (type_identifier
+        (primitive_keyword))
+      (type_identifier
+        (primitive_keyword)))))
+
+================================================================================
+VALID - Type definition with intersaction type
+================================================================================
+
+type StringArray = string[] & string;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (type_definition
+    (identifier)
+    (intersection_type
       (type_identifier
         (primitive_keyword))
       (type_identifier
@@ -44,20 +62,24 @@ type Number = int | float;
 (source_file
   (type_definition
     (identifier)
-    (type_identifier
-      (primitive_keyword)))
+    (union_type
+      (type_identifier
+        (primitive_keyword))))
   (type_definition
     (identifier)
-    (type_identifier
-      (primitive_keyword)))
+    (union_type
+      (type_identifier
+        (primitive_keyword))))
   (type_definition
     (identifier)
-    (type_identifier
-      (primitive_keyword)))
+    (union_type
+      (type_identifier
+        (primitive_keyword))))
   (type_definition
     (identifier)
-    (type_identifier
-      (primitive_keyword)))
+    (union_type
+      (type_identifier
+        (primitive_keyword))))
   (type_definition
     (identifier)
     (union_type
@@ -83,8 +105,9 @@ function main(): void {
 (source_file
   (type_definition
     (identifier)
-    (type_identifier
-      (primitive_keyword)))
+    (union_type
+      (type_identifier
+        (primitive_keyword))))
   (function_declaration
     (identifier)
     (type_identifier

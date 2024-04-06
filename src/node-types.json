@@ -397,11 +397,34 @@
       "required": true,
       "types": [
         {
+          "type": "generic_type_declaration",
+          "named": true
+        },
+        {
           "type": "identifier",
           "named": true
         },
         {
-          "type": "literal",
+          "type": "type_identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "decorator_use",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "expression",
+          "named": true
+        },
+        {
+          "type": "identifier",
           "named": true
         }
       ]
@@ -444,6 +467,49 @@
         },
         {
           "type": "identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "export_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "class_declaration",
+          "named": true
+        },
+        {
+          "type": "decorator_declaration",
+          "named": true
+        },
+        {
+          "type": "enum_declaration",
+          "named": true
+        },
+        {
+          "type": "extern_declaration",
+          "named": true
+        },
+        {
+          "type": "function_declaration",
+          "named": true
+        },
+        {
+          "type": "interface_declaration",
+          "named": true
+        },
+        {
+          "type": "record_declaration",
+          "named": true
+        },
+        {
+          "type": "type_definition",
           "named": true
         }
       ]
@@ -559,7 +625,15 @@
           "named": true
         },
         {
+          "type": "decorator_use",
+          "named": true
+        },
+        {
           "type": "enum_declaration",
+          "named": true
+        },
+        {
+          "type": "export_statement",
           "named": true
         },
         {
@@ -588,10 +662,6 @@
         },
         {
           "type": "record_declaration",
-          "named": true
-        },
-        {
-          "type": "record_modifier",
           "named": true
         },
         {
@@ -897,6 +967,21 @@
     }
   },
   {
+    "type": "intersection_type",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "type_identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "literal",
     "named": true,
     "fields": {},
@@ -1165,10 +1250,6 @@
           "named": true
         },
         {
-          "type": "record_modifier",
-          "named": true
-        },
-        {
           "type": "record_property_declaration",
           "named": true
         }
@@ -1204,11 +1285,6 @@
         }
       ]
     }
-  },
-  {
-    "type": "record_modifier",
-    "named": true,
-    "fields": {}
   },
   {
     "type": "record_property_declaration",
@@ -1268,7 +1344,15 @@
           "named": true
         },
         {
+          "type": "decorator_use",
+          "named": true
+        },
+        {
           "type": "enum_declaration",
+          "named": true
+        },
+        {
+          "type": "export_statement",
           "named": true
         },
         {
@@ -1331,6 +1415,10 @@
       "types": [
         {
           "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "intersection_type",
           "named": true
         },
         {
@@ -1599,6 +1687,10 @@
   },
   {
     "type": "continue",
+    "named": false
+  },
+  {
+    "type": "decorator",
     "named": false
   },
   {

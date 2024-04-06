@@ -1,5 +1,34 @@
 ================================================================================
-VALID - Decorator
+VALID - Decorator declaration
+================================================================================
+
+decorator Only(IgnisLanguageSupported);
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decorator_declaration
+    (identifier)
+    (type_identifier
+      (identifier))))
+
+================================================================================
+VALID - Export decorator declaration
+================================================================================
+
+export decorator Only(IgnisLanguageSupported);
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (export_statement
+    (decorator_declaration
+      (identifier)
+      (type_identifier
+        (identifier)))))
+
+================================================================================
+VALID - Use decorator
 ================================================================================
 
 @Only
@@ -7,32 +36,29 @@ VALID - Decorator
 --------------------------------------------------------------------------------
 
 (source_file
-  (decorator_declaration
+  (decorator_use
     (identifier)))
 
 ================================================================================
-VALID - Decorator with params
+VALID - Use decorator with params
 ================================================================================
 
 
 @Only(IgnisLanguageSupported.LUA)
 
-
 --------------------------------------------------------------------------------
 
 (source_file
-  (decorator_declaration
-    (identifier))
-  (expression
-    (group_expression
-      (expression
-        (get_expression
-          (property_access
-            (identifier)
-            (identifier)))))))
+  (decorator_use
+    (identifier)
+    (expression
+      (get_expression
+        (property_access
+          (identifier)
+          (identifier))))))
 
 ================================================================================
-VALID - Decorator with multi params
+VALID - Use decorator with multi params
 ================================================================================
 
 @Only("test", "test1")
@@ -40,15 +66,17 @@ VALID - Decorator with multi params
 --------------------------------------------------------------------------------
 
 (source_file
-  (decorator_declaration
+  (decorator_use
     (identifier)
-    (literal
-      (string_literal))
-    (literal
-      (string_literal))))
+    (expression
+      (literal
+        (string_literal)))
+    (expression
+      (literal
+        (string_literal)))))
 
 ================================================================================
-VALID - Decorator with record param
+VALID - Use decorator with record param
 ================================================================================
 
 @Language({
@@ -65,50 +93,51 @@ VALID - Decorator with record param
 --------------------------------------------------------------------------------
 
 (source_file
-  (decorator_declaration
+  (decorator_use
     (identifier)
-    (literal
-      (object_literal
-        (identifier)
-        (expression
-          (get_expression
-            (property_access
-              (identifier)
-              (identifier))))
-        (identifier)
-        (expression
-          (get_expression
-            (property_access
-              (identifier)
-              (identifier))))
-        (identifier)
-        (expression
-          (literal
-            (string_literal)))
-        (identifier)
-        (expression
-          (literal
-            (array_literal
-              (expression
-                (literal
-                  (object_literal
-                    (identifier)
-                    (expression
-                      (literal
-                        (string_literal)))
-                    (identifier)
-                    (expression
-                      (get_expression
-                        (property_access
-                          (identifier)
-                          (identifier))))))))))
-        (identifier)
-        (expression
-          (get_expression
-            (property_access
-              (identifier)
-              (identifier))))
-        (identifier)
-        (expression
-          (literal
-            (boolean_literal)))))))
+    (expression
+      (literal
+        (object_literal
+          (identifier)
+          (expression
+            (get_expression
+              (property_access
+                (identifier)
+                (identifier))))
+          (identifier)
+          (expression
+            (get_expression
+              (property_access
+                (identifier)
+                (identifier))))
+          (identifier)
+          (expression
+            (literal
+              (string_literal)))
+          (identifier)
+          (expression
+            (literal
+              (array_literal
+                (expression
+                  (literal
+                    (object_literal
+                      (identifier)
+                      (expression
+                        (literal
+                          (string_literal)))
+                      (identifier)
+                      (expression
+                        (get_expression
+                          (property_access
+                            (identifier)
+                            (identifier))))))))))
+          (identifier)
+          (expression
+            (get_expression
+              (property_access
+                (identifier)
+                (identifier))))
+          (identifier)
+          (expression
+            (literal
+              (boolean_literal))))))))
