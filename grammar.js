@@ -60,7 +60,7 @@ module.exports = grammar({
       [$.decorator_use],
       [$.decorator_declaration],
       [$.function_declaration],
-      [$.union_type, $.intersection_type]
+      [$.union_type, $.intersection_type],
     ]),
 
   rules: {
@@ -83,7 +83,8 @@ module.exports = grammar({
         $.expression,
       ),
 
-    type_definition: ($) => seq('type', $.identifier, '=', choice($.type_identifier, $.union_type, $.intersection_type), ';'),
+    type_definition: ($) =>
+      seq('type', $.identifier, '=', choice($.type_identifier, $.union_type, $.intersection_type), ';'),
 
     export_statement: ($) =>
       seq(
@@ -470,7 +471,13 @@ module.exports = grammar({
     object_literal: ($) =>
       seq(
         '{',
-        commaSep(seq(field('key', $.identifier), ':', field('value', $.expression))),
+        commaSep(
+          choice(
+            seq(field('key', $.identifier), ':', field('value', $.expression)),
+            $.identifier,
+            $.method_declaration,
+          ),
+        ),
         optional(','),
         '}',
       ),

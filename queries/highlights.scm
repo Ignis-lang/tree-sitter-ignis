@@ -12,6 +12,10 @@
 
 (object_literal key: (identifier) @object.key)
 
+(object_literal (identifier) @object.key)
+
+(object_literal (method_declaration name: (identifier) @object.key))
+
 (null_literal) @constant
 
 ["-" "=" "<" "<=" ">" ">=" "!" "++" "--" "||" "&&" "/" "*" "+" "%" "&" "|" "==" "?" "@"] @operator

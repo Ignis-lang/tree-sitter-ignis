@@ -74,3 +74,42 @@ export record FFIConfig {
         (identifier)
         (type_identifier
           (identifier))))))
+
+================================================================================
+VALID - sdasdasd
+================================================================================
+
+let user: User = {
+  firstName,
+  email: "example@example.com",
+  getName(): string {
+    return this.firstName;
+  }
+};
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (variable_declaration
+    (identifier)
+    (type_identifier
+      (identifier))
+    (expression
+      (literal
+        (object_literal
+          (identifier)
+          (identifier)
+          (expression
+            (literal
+              (string_literal)))
+          (method_declaration
+            (identifier)
+            (type_identifier
+              (primitive_keyword))
+            (block
+              (return_statement
+                (expression
+                  (get_expression
+                    (property_access
+                      (this_expression)
+                      (identifier))))))))))))

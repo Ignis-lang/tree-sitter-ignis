@@ -1127,6 +1127,20 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "method_declaration",
+          "named": true
+        }
+      ]
     }
   },
   {
