@@ -24,3 +24,28 @@ import { println as test } from "std:io";
     (identifier)
     (identifier)
     (string_literal)))
+
+================================================================================
+VALID - Import multiple items
+================================================================================
+
+import {
+  IgnisLanguageSupported,
+  ExternDeclarationType,
+  LuaType,
+  Only,
+  NotTranspile,
+  Language,
+} from "std:ffi";
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (import_statement
+    (identifier)
+    (identifier)
+    (identifier)
+    (identifier)
+    (identifier)
+    (identifier)
+    (string_literal)))

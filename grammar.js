@@ -115,7 +115,7 @@ module.exports = grammar({
       seq($.identifier, choice(optional(seq('=', $.expression)), optional(seq('(', $.expression, ')')))),
 
     import_statement: ($) =>
-      seq('import', '{', $.identifier, optional(seq('as', $.identifier)), '}', 'from', $.string_literal, ';'),
+      seq('import', '{', commaSep1(seq($.identifier, optional(seq('as', $.identifier)))), '}', 'from', $.string_literal, ';'),
 
     // #region Class
     interface_declaration: ($) =>
