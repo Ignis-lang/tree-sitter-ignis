@@ -244,7 +244,7 @@ module.exports = grammar({
         'record',
         $.identifier,
         '{',
-        repeat(choice($.record_property_declaration, $.record_method_declaration)),
+        repeat(choice($.record_property_declaration, $.record_method_declaration, $.decorator_use)),
         '}',
       ),
 

@@ -1256,6 +1256,10 @@
       "required": true,
       "types": [
         {
+          "type": "decorator_use",
+          "named": true
+        },
+        {
           "type": "identifier",
           "named": true
         },

@@ -1409,6 +1409,10 @@
               {
                 "type": "SYMBOL",
                 "name": "record_method_declaration"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "decorator_use"
               }
             ]
           }
