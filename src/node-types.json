@@ -1712,6 +1712,10 @@
     "named": false
   },
   {
+    "type": "doc_comment",
+    "named": true
+  },
+  {
     "type": "else",
     "named": false
   },

@@ -2944,6 +2944,30 @@
         ]
       }
     },
+    "doc_comment": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 1,
+        "content": {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "/**"
+            },
+            {
+              "type": "PATTERN",
+              "value": "[^*]*\\*+([^/*][^*]*\\*+)*"
+            },
+            {
+              "type": "STRING",
+              "value": "/"
+            }
+          ]
+        }
+      }
+    },
     "identifier": {
       "type": "PATTERN",
       "value": "[a-zA-Z_]\\w*"
@@ -3499,6 +3523,10 @@
     {
       "type": "PATTERN",
       "value": "\\s"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "doc_comment"
     },
     {
       "type": "SYMBOL",

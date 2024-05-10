@@ -3,10 +3,24 @@ VALID - Comment
 ================================================================================
 
 // This is a comment
+
 /* This is a comment */
+
+/*
+* This is a comment
+*/
+
+/** This is a document comment */
+
+/**
+* This is a document comment
+*/
 
 --------------------------------------------------------------------------------
 
 (source_file
   (comment)
-  (comment))
+  (comment)
+  (comment)
+  (doc_comment)
+  (doc_comment))

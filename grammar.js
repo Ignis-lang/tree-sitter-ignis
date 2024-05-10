@@ -39,7 +39,7 @@ const primitiveTypes = ['int', 'float', 'boolean', 'char', 'string', 'void', 'un
 module.exports = grammar({
   name: 'ignis',
 
-  extras: ($) => [/\s/, $.comment],
+  extras: ($) => [/\s/, $.doc_comment, $.comment],
 
   conflicts: ($, previous) =>
     previous.concat([
@@ -115,7 +115,15 @@ module.exports = grammar({
       seq($.identifier, choice(optional(seq('=', $.expression)), optional(seq('(', $.expression, ')')))),
 
     import_statement: ($) =>
-      seq('import', '{', commaSep1(seq($.identifier, optional(seq('as', $.identifier)))), '}', 'from', $.string_literal, ';'),
+      seq(
+        'import',
+        '{',
+        commaSep1(seq($.identifier, optional(seq('as', $.identifier)))),
+        '}',
+        'from',
+        $.string_literal,
+        ';',
+      ),
 
     // #region Class
     interface_declaration: ($) =>
@@ -421,6 +429,7 @@ module.exports = grammar({
       ),
 
     comment: (_) => token(choice(seq('//', /.*/), seq('/*', /[^*]*\*+([^/*][^*]*\*+)*/, '/'))),
+    doc_comment: (_) => token(prec(1, seq('/**', /[^*]*\*+([^/*][^*]*\*+)*/, '/'))),
 
     identifier: (_) => /[a-zA-Z_]\w*/,
 
