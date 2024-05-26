@@ -1,0 +1,24 @@
+================================================================================
+VALID - const
+================================================================================
+
+const HELLO_WORLD: string = "Hello, World!";
+const HELLO_WORLD_LEN: int = 13;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (variable_declaration
+    (identifier)
+    (type_identifier
+      (primitive_keyword))
+    (expression
+      (literal
+        (string_literal))))
+  (variable_declaration
+    (identifier)
+    (type_identifier
+      (primitive_keyword))
+    (expression
+      (literal
+        (integer_literal)))))

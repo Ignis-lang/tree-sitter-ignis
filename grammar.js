@@ -298,7 +298,7 @@ module.exports = grammar({
 
     variable_declaration: ($) =>
       seq(
-        'let',
+        choice('let', 'const'),
         optional($.mutable_specifier),
         $.identifier,
         ':',
@@ -449,7 +449,7 @@ module.exports = grammar({
 
     method_modifier: (_) => choice('public', 'private', 'static', 'final', 'abstract'),
 
-    other_keyword: (_) => choice('in', 'const', 'as', 'readonly', 'export', 'super'),
+    other_keyword: (_) => choice('in', 'as', 'readonly', 'export', 'super'),
 
     primitive_keyword: (_) => choice(...primitiveTypes),
 

@@ -2,13 +2,6 @@
 
 (doc_comment) @comment.documentation
 
-((doc_comment) @comment.documentation
- (#match? @comment.documentation "^.*@Note"))
-((doc_comment) @comment.documentation
- (#match? @comment.documentation "^.*@Use"))
-((doc_comment) @comment.documentation
- (#match? @comment.documentation "^.*@EndUse"))
-
 [
   (string_literal)
   (char_literal)
