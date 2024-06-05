@@ -560,6 +560,10 @@
           "named": true
         },
         {
+          "type": "match_expression",
+          "named": true
+        },
+        {
           "type": "method_call_expression",
           "named": true
         },
@@ -1025,6 +1029,70 @@
     }
   },
   {
+    "type": "match_arm",
+    "named": true,
+    "fields": {
+      "pattern": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "pattern",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "block",
+          "named": true
+        },
+        {
+          "type": "expression",
+          "named": true
+        },
+        {
+          "type": "literal",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "match_expression",
+    "named": true,
+    "fields": {
+      "value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "expression",
+            "named": true
+          },
+          {
+            "type": "literal",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "match_arm",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "method_call_expression",
     "named": true,
     "fields": {
@@ -1165,6 +1233,25 @@
         },
         {
           "type": "type_identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "pattern",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "expression",
+          "named": true
+        },
+        {
+          "type": "when_clause",
           "named": true
         }
       ]
@@ -1525,6 +1612,32 @@
     }
   },
   {
+    "type": "when_clause",
+    "named": true,
+    "fields": {
+      "condition": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "expression",
+            "named": true
+          }
+        ]
+      },
+      "pattern": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "pattern",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "while_statement",
     "named": true,
     "fields": {},
@@ -1593,6 +1706,10 @@
   },
   {
     "type": "--",
+    "named": false
+  },
+  {
+    "type": "->",
     "named": false
   },
   {
@@ -1665,6 +1782,10 @@
   },
   {
     "type": "^",
+    "named": false
+  },
+  {
+    "type": "_",
     "named": false
   },
   {
@@ -1800,6 +1921,10 @@
     "named": false
   },
   {
+    "type": "match",
+    "named": false
+  },
+  {
     "type": "mutable_specifier",
     "named": true
   },
@@ -1873,6 +1998,10 @@
   },
   {
     "type": "void",
+    "named": false
+  },
+  {
+    "type": "when",
     "named": false
   },
   {

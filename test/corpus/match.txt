@@ -1,0 +1,163 @@
+================================================================================
+VALID - Match be statement
+================================================================================
+
+match (name) {
+  "John" -> "Hi John!",
+  "Mary" -> { return "Hi Mary!"; },
+  n -> "Hi " + n + "!",
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (expression
+    (match_expression
+      (expression
+        (identifier))
+      (match_arm
+        (pattern
+          (expression
+            (literal
+              (string_literal))))
+        (literal
+          (string_literal)))
+      (match_arm
+        (pattern
+          (expression
+            (literal
+              (string_literal))))
+        (block
+          (return_statement
+            (expression
+              (literal
+                (string_literal))))))
+      (match_arm
+        (pattern
+          (expression
+            (identifier)))
+        (expression
+          (binary_expression
+            (expression
+              (binary_expression
+                (literal
+                  (string_literal))
+                (expression
+                  (identifier))))
+            (literal
+              (string_literal))))))))
+
+================================================================================
+VALID - Match be expression
+================================================================================
+
+let message: string = match (name) {
+  "John" -> "Hi John!",
+  "Mary" -> { return "Hi Mary!"; },
+  n -> "Hi " + n + "!",
+};
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (variable_declaration
+    (identifier)
+    (type_identifier
+      (primitive_keyword))
+    (expression
+      (match_expression
+        (expression
+          (identifier))
+        (match_arm
+          (pattern
+            (expression
+              (literal
+                (string_literal))))
+          (literal
+            (string_literal)))
+        (match_arm
+          (pattern
+            (expression
+              (literal
+                (string_literal))))
+          (block
+            (return_statement
+              (expression
+                (literal
+                  (string_literal))))))
+        (match_arm
+          (pattern
+            (expression
+              (identifier)))
+          (expression
+            (binary_expression
+              (expression
+                (binary_expression
+                  (literal
+                    (string_literal))
+                  (expression
+                    (identifier))))
+              (literal
+                (string_literal)))))))))
+
+================================================================================
+VALID - Match with when
+================================================================================
+
+match (age) {
+  n when age == 20 -> println("You are 20 years old!"),
+  n when age < 20 -> println("You are younger than 20!"),
+  _ -> println("You are older than 20!"),
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (expression
+    (match_expression
+      (expression
+        (identifier))
+      (match_arm
+        (pattern
+          (when_clause
+            (pattern
+              (expression
+                (identifier)))
+            (expression
+              (binary_expression
+                (expression
+                  (identifier))
+                (literal
+                  (integer_literal))))))
+        (expression
+          (call_expression
+            (identifier)
+            (expression
+              (literal
+                (string_literal))))))
+      (match_arm
+        (pattern
+          (when_clause
+            (pattern
+              (expression
+                (identifier)))
+            (expression
+              (binary_expression
+                (expression
+                  (identifier))
+                (literal
+                  (integer_literal))))))
+        (expression
+          (call_expression
+            (identifier)
+            (expression
+              (literal
+                (string_literal))))))
+      (match_arm
+        (pattern)
+        (expression
+          (call_expression
+            (identifier)
+            (expression
+              (literal
+                (string_literal)))))))))

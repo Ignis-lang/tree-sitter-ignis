@@ -16,8 +16,9 @@
 
 [":" "." "," ";" ] @punctuation.delimiter
 
-["-" "=" "<" "<=" ">" ">=" "!" "++" "--" "||" "&&" "/" "*" "+" "%" "&" "|" "==" "?" "@"] @operator
+["-" "=" "<" "<=" ">" ">=" "!" "++" "--" "||" "&&" "/" "*" "+" "%" "&" "|" "==" "?" "@" "->"] @operator
 
+(identifier) @variable
 (type_identifier) @type
 
 ((identifier) @type.builtin
@@ -51,10 +52,12 @@
   "while" "of" "interface" "extends" "public" "private" "new" "class"
   "implements" "super" "static" "final" "readonly" "in" "const" "as" "break"
   "void" "extern" "continue" "unknown" "type" "record" "decorator" (this_expression)
+  "match" "when"
 ] @keyword
 
 (boolean_literal) @boolean
 
 (decorator_use) @decorator
 (decorator_declaration) @decorator
+
 

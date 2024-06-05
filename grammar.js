@@ -43,6 +43,7 @@ module.exports = grammar({
 
   conflicts: ($, previous) =>
     previous.concat([
+      [$._statement, $.expression],
       [$.identifier, $.type_identifier],
       [$.identifier, $.expression],
       [$.identifier, $.literal],
@@ -61,6 +62,7 @@ module.exports = grammar({
       [$.decorator_declaration],
       [$.function_declaration],
       [$.union_type, $.intersection_type],
+      [$.block, $.object_literal],
     ]),
 
   rules: {
@@ -385,6 +387,7 @@ module.exports = grammar({
         $.method_call_expression,
         $.array_access_expression,
         $.cast,
+        $.match_expression,
       ),
 
     cast: ($) => seq($.identifier, 'as', $.type_identifier),
@@ -427,6 +430,16 @@ module.exports = grammar({
           ')',
         ),
       ),
+
+    match_expression: ($) =>
+      seq('match', '(', field('value', $._expression), ')', '{', repeat1($.match_arm), '}'),
+
+    match_arm: ($) =>
+      seq(field('pattern', $.pattern), '->', choice($._expression, $.block), optional(',')),
+
+    when_clause: ($) => seq(field('pattern', $.pattern), 'when', field('condition', $.expression)),
+
+    pattern: ($) => choice($.expression, $.when_clause, '_'),
 
     comment: (_) => token(choice(seq('//', /.*/), seq('/*', /[^*]*\*+([^/*][^*]*\*+)*/, '/'))),
     doc_comment: (_) => token(prec(1, seq('/**', /[^*]*\*+([^/*][^*]*\*+)*/, '/'))),
