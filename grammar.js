@@ -34,7 +34,26 @@ function optionalPipeSep(rule) {
   return optional(pipeSepRepeat(rule));
 }
 
-const primitiveTypes = ['int', 'float', 'boolean', 'char', 'string', 'void', 'unknown'];
+const primitiveTypes = [
+  'u8',
+  'u16',
+  'u32',
+  'u64',
+  'uint',
+  'i8',
+  'i16',
+  'i32',
+  'i64',
+  'int',
+  'float',
+  'f32',
+  'f64',
+  'boolean',
+  'char',
+  'string',
+  'void',
+  'unknown',
+];
 
 module.exports = grammar({
   name: 'ignis',
@@ -434,8 +453,7 @@ module.exports = grammar({
     match_expression: ($) =>
       seq('match', '(', field('value', $._expression), ')', '{', repeat1($.match_arm), '}'),
 
-    match_arm: ($) =>
-      seq(field('pattern', $.pattern), '->', choice($._expression, $.block), optional(',')),
+    match_arm: ($) => seq(field('pattern', $.pattern), '->', choice($._expression, $.block), optional(',')),
 
     when_clause: ($) => seq(field('pattern', $.pattern), 'when', field('condition', $.expression)),
 
