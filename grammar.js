@@ -39,13 +39,10 @@ const primitiveTypes = [
   'u16',
   'u32',
   'u64',
-  'uint',
   'i8',
   'i16',
   'i32',
   'i64',
-  'int',
-  'float',
   'f32',
   'f64',
   'boolean',
@@ -332,10 +329,10 @@ module.exports = grammar({
 
     parameter_declaration: ($) =>
       seq(
-        optional($.reference_operator),
-        optional($.mutable_specifier),
         $.identifier,
         ':',
+        optional($.reference_operator),
+        optional($.mutable_specifier),
         $.type_identifier,
       ),
 
