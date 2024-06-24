@@ -31,7 +31,7 @@ type StringArray = string[] | string;
         (primitive_keyword)))))
 
 ================================================================================
-VALID - Type definition with intersaction type
+VALID - Type definition with i64ersaction type
 ================================================================================
 
 type StringArray = string[] & string;
@@ -51,11 +51,11 @@ type StringArray = string[] & string;
 VALID - Type definition number
 ================================================================================
 
-type Int = int;
-type IntArray = int[];
+type i64 = i64;
+type i64Array = i64[];
 type Float = float;
 type FloatArray = float[];
-type Number = int | float;
+type Number = i64 | float;
 
 --------------------------------------------------------------------------------
 
@@ -74,30 +74,30 @@ type Number = int | float;
     (identifier)
     (union_type
       (type_identifier
-        (primitive_keyword))))
+        (identifier))))
   (type_definition
     (identifier)
     (union_type
       (type_identifier
-        (primitive_keyword))))
+        (identifier))))
   (type_definition
     (identifier)
     (union_type
       (type_identifier
         (primitive_keyword))
       (type_identifier
-        (primitive_keyword)))))
+        (identifier)))))
 
 ================================================================================
 VALID - Type cast
 ================================================================================
 
-type Int = int;
+type Int = i64;
 
 function main(): void {
   let x: Int = 1;
 
-  x as int;
+  x as i64;
 }
 
 --------------------------------------------------------------------------------

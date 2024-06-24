@@ -1936,6 +1936,14 @@
       "type": "SEQ",
       "members": [
         {
+          "type": "SYMBOL",
+          "name": "identifier"
+        },
+        {
+          "type": "STRING",
+          "value": ":"
+        },
+        {
           "type": "CHOICE",
           "members": [
             {
@@ -1958,14 +1966,6 @@
               "type": "BLANK"
             }
           ]
-        },
-        {
-          "type": "SYMBOL",
-          "name": "identifier"
-        },
-        {
-          "type": "STRING",
-          "value": ":"
         },
         {
           "type": "SYMBOL",
@@ -2329,10 +2329,6 @@
               },
               {
                 "type": "STRING",
-                "value": "uint"
-              },
-              {
-                "type": "STRING",
                 "value": "i8"
               },
               {
@@ -2346,14 +2342,6 @@
               {
                 "type": "STRING",
                 "value": "i64"
-              },
-              {
-                "type": "STRING",
-                "value": "int"
-              },
-              {
-                "type": "STRING",
-                "value": "float"
               },
               {
                 "type": "STRING",
@@ -3372,10 +3360,6 @@
         },
         {
           "type": "STRING",
-          "value": "uint"
-        },
-        {
-          "type": "STRING",
           "value": "i8"
         },
         {
@@ -3389,14 +3373,6 @@
         {
           "type": "STRING",
           "value": "i64"
-        },
-        {
-          "type": "STRING",
-          "value": "int"
-        },
-        {
-          "type": "STRING",
-          "value": "float"
         },
         {
           "type": "STRING",

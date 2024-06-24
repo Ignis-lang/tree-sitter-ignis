@@ -71,7 +71,7 @@ sum<int>(1, 2)
       (identifier)
       (generic_type_declaration
         (type_identifier
-          (primitive_keyword)))
+          (identifier)))
       (expression
         (literal
           (integer_literal)))
@@ -83,7 +83,7 @@ sum<int>(1, 2)
 VALID - Mut params
 ================================================================================
 
-function fibonacci(mut num: int): int {
+function fibonacci(num: mut i64): i64 {
   if (num < 2) {
     return num;
   }
@@ -97,8 +97,8 @@ function fibonacci(mut num: int): int {
   (function_declaration
     (identifier)
     (parameter_declaration
-      (mutable_specifier)
       (identifier)
+      (mutable_specifier)
       (type_identifier
         (primitive_keyword)))
     (type_identifier

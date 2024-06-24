@@ -5,9 +5,9 @@ VALID - Class declaration
 class User {
   private name: string;
   private lastName: string;
-  private age: int;
+  private age: i64;
 
-  public User(firstName: string, lastName: string, age: int) {
+  public User(firstName: string, lastName: string, age: i64) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.age = age;
@@ -141,7 +141,7 @@ user.getName()
         (identifier)))))
 
 ================================================================================
-VALID - Class implement interface
+VALID - Class implement Interface
 ================================================================================
 
 class User implements IUser {

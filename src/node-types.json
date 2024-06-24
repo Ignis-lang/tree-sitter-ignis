@@ -1873,10 +1873,6 @@
     "named": false
   },
   {
-    "type": "float",
-    "named": false
-  },
-  {
     "type": "float_literal",
     "named": true
   },
@@ -1926,10 +1922,6 @@
   },
   {
     "type": "in",
-    "named": false
-  },
-  {
-    "type": "int",
     "named": false
   },
   {
@@ -2030,10 +2022,6 @@
   },
   {
     "type": "u8",
-    "named": false
-  },
-  {
-    "type": "uint",
     "named": false
   },
   {
