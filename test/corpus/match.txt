@@ -14,28 +14,33 @@ match (name) {
   (expression
     (match_expression
       (expression
-        (identifier))
+        (primary_expression
+          (identifier)))
       (match_arm
         (pattern
           (expression
-            (literal
-              (string_literal))))
+            (primary_expression
+              (literal
+                (string_literal)))))
         (literal
           (string_literal)))
       (match_arm
         (pattern
           (expression
-            (literal
-              (string_literal))))
+            (primary_expression
+              (literal
+                (string_literal)))))
         (block
           (return_statement
             (expression
-              (literal
-                (string_literal))))))
+              (primary_expression
+                (literal
+                  (string_literal)))))))
       (match_arm
         (pattern
           (expression
-            (identifier)))
+            (primary_expression
+              (identifier))))
         (expression
           (binary_expression
             (expression
@@ -43,7 +48,8 @@ match (name) {
                 (literal
                   (string_literal))
                 (expression
-                  (identifier))))
+                  (primary_expression
+                    (identifier)))))
             (literal
               (string_literal))))))))
 
@@ -67,28 +73,33 @@ let message: string = match (name) {
     (expression
       (match_expression
         (expression
-          (identifier))
+          (primary_expression
+            (identifier)))
         (match_arm
           (pattern
             (expression
-              (literal
-                (string_literal))))
+              (primary_expression
+                (literal
+                  (string_literal)))))
           (literal
             (string_literal)))
         (match_arm
           (pattern
             (expression
-              (literal
-                (string_literal))))
+              (primary_expression
+                (literal
+                  (string_literal)))))
           (block
             (return_statement
               (expression
-                (literal
-                  (string_literal))))))
+                (primary_expression
+                  (literal
+                    (string_literal)))))))
         (match_arm
           (pattern
             (expression
-              (identifier)))
+              (primary_expression
+                (identifier))))
           (expression
             (binary_expression
               (expression
@@ -96,7 +107,8 @@ let message: string = match (name) {
                   (literal
                     (string_literal))
                   (expression
-                    (identifier))))
+                    (primary_expression
+                      (identifier)))))
               (literal
                 (string_literal)))))))))
 
@@ -116,48 +128,59 @@ match (age) {
   (expression
     (match_expression
       (expression
-        (identifier))
+        (primary_expression
+          (identifier)))
       (match_arm
         (pattern
           (when_clause
             (pattern
               (expression
-                (identifier)))
+                (primary_expression
+                  (identifier))))
             (expression
               (binary_expression
                 (expression
-                  (identifier))
+                  (primary_expression
+                    (identifier)))
                 (literal
                   (integer_literal))))))
         (expression
           (call_expression
-            (identifier)
+            (primary_expression
+              (identifier))
             (expression
-              (literal
-                (string_literal))))))
+              (primary_expression
+                (literal
+                  (string_literal)))))))
       (match_arm
         (pattern
           (when_clause
             (pattern
               (expression
-                (identifier)))
+                (primary_expression
+                  (identifier))))
             (expression
               (binary_expression
                 (expression
-                  (identifier))
+                  (primary_expression
+                    (identifier)))
                 (literal
                   (integer_literal))))))
         (expression
           (call_expression
-            (identifier)
+            (primary_expression
+              (identifier))
             (expression
-              (literal
-                (string_literal))))))
+              (primary_expression
+                (literal
+                  (string_literal)))))))
       (match_arm
         (pattern)
         (expression
           (call_expression
-            (identifier)
+            (primary_expression
+              (identifier))
             (expression
-              (literal
-                (string_literal)))))))))
+              (primary_expression
+                (literal
+                  (string_literal))))))))))

@@ -20,28 +20,34 @@ function main(): void {
         (for_variable_declaration
           (identifier)
           (expression
-            (literal
-              (integer_literal))))
+            (primary_expression
+              (literal
+                (integer_literal)))))
         (expression
           (binary_expression
             (expression
-              (identifier))
+              (primary_expression
+                (identifier)))
             (literal
               (integer_literal))))
         (expression
           (suffix_unary_expression
             (expression
-              (identifier))))
+              (primary_expression
+                (identifier)))))
         (block
           (expression_statement
             (expression
               (call_expression
-                (identifier)
+                (primary_expression
+                  (identifier))
                 (expression
-                  (array_access_expression
-                    (identifier)
-                    (expression
-                      (identifier))))))))))))
+                  (primary_expression
+                    (array_access_expression
+                      (identifier)
+                      (expression
+                        (primary_expression
+                          (identifier))))))))))))))
 
 ================================================================================
 VALID - For of
@@ -64,14 +70,17 @@ function main(): void {
       (for_of_statement
         (identifier)
         (expression
-          (identifier))
+          (primary_expression
+            (identifier)))
         (block
           (expression_statement
             (expression
               (call_expression
-                (identifier)
+                (primary_expression
+                  (identifier))
                 (expression
-                  (identifier))))))))))
+                  (primary_expression
+                    (identifier)))))))))))
 
 ================================================================================
 VALID - While loop
@@ -96,7 +105,8 @@ function main(): void {
         (expression
           (binary_expression
             (expression
-              (identifier))
+              (primary_expression
+                (identifier)))
             (literal
               (integer_literal))))
         (block
@@ -104,17 +114,22 @@ function main(): void {
             (expression
               (suffix_unary_expression
                 (expression
-                  (identifier)))))
+                  (primary_expression
+                    (identifier))))))
           (expression_statement
             (expression
               (call_expression
-                (identifier)
+                (primary_expression
+                  (identifier))
                 (expression
                   (binary_expression
                     (literal
                       (string_literal))
                     (expression
-                      (method_call_expression
-                        (property_access
-                          (identifier)
-                          (identifier))))))))))))))
+                      (get_expression
+                        (method_call_expression
+                          (property_access
+                            (expression
+                              (primary_expression
+                                (identifier)))
+                            (identifier)))))))))))))))

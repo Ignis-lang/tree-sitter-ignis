@@ -52,22 +52,31 @@ class User {
       (block
         (assignment_expression
           (property_access
-            (this_expression)
+            (expression
+              (primary_expression
+                (this_expression)))
             (identifier))
           (expression
-            (identifier)))
+            (primary_expression
+              (identifier))))
         (assignment_expression
           (property_access
-            (this_expression)
+            (expression
+              (primary_expression
+                (this_expression)))
             (identifier))
           (expression
-            (identifier)))
+            (primary_expression
+              (identifier))))
         (assignment_expression
           (property_access
-            (this_expression)
+            (expression
+              (primary_expression
+                (this_expression)))
             (identifier))
           (expression
-            (identifier)))))))
+            (primary_expression
+              (identifier))))))))
 
 ================================================================================
 VALID - Class instance
@@ -84,18 +93,21 @@ let user2: User = new User("John");
     (type_identifier
       (identifier))
     (expression
-      (class_instance_expression
-        (identifier))))
+      (primary_expression
+        (class_instance_expression
+          (identifier)))))
   (variable_declaration
     (identifier)
     (type_identifier
       (identifier))
     (expression
-      (class_instance_expression
-        (identifier)
-        (expression
-          (literal
-            (string_literal)))))))
+      (primary_expression
+        (class_instance_expression
+          (identifier)
+          (expression
+            (primary_expression
+              (literal
+                (string_literal)))))))))
 
 ================================================================================
 VALID - Class method declaration
@@ -122,7 +134,9 @@ class User {
           (expression
             (get_expression
               (property_access
-                (this_expression)
+                (expression
+                  (primary_expression
+                    (this_expression)))
                 (identifier)))))))))
 
 ================================================================================
@@ -135,10 +149,13 @@ user.getName()
 
 (source_file
   (expression
-    (method_call_expression
-      (property_access
-        (identifier)
-        (identifier)))))
+    (primary_expression
+      (method_call_expression
+        (property_access
+          (expression
+            (primary_expression
+              (identifier)))
+          (identifier))))))
 
 ================================================================================
 VALID - Class implement Interface
@@ -167,5 +184,29 @@ class User implements IUser {
           (expression
             (get_expression
               (property_access
-                (this_expression)
+                (expression
+                  (primary_expression
+                    (this_expression)))
                 (identifier)))))))))
+
+================================================================================
+VALID - Multiple get expression
+================================================================================
+
+user.age.toSrting()
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (expression
+    (primary_expression
+      (method_call_expression
+        (property_access
+          (expression
+            (get_expression
+              (property_access
+                (expression
+                  (primary_expression
+                    (identifier)))
+                (identifier))))
+          (identifier))))))

@@ -38,18 +38,21 @@ enum Status {
     (enum_member_declaration
       (identifier)
       (expression
-        (literal
-          (integer_literal))))
+        (primary_expression
+          (literal
+            (integer_literal)))))
     (enum_member_declaration
       (identifier)
       (expression
-        (literal
-          (integer_literal))))
+        (primary_expression
+          (literal
+            (integer_literal)))))
     (enum_member_declaration
       (identifier)
       (expression
-        (literal
-          (integer_literal))))))
+        (primary_expression
+          (literal
+            (integer_literal)))))))
 
 ================================================================================
 VALID - Enum declaration with string values
@@ -69,18 +72,21 @@ enum Status {
     (enum_member_declaration
       (identifier)
       (expression
-        (literal
-          (string_literal))))
+        (primary_expression
+          (literal
+            (string_literal)))))
     (enum_member_declaration
       (identifier)
       (expression
-        (literal
-          (string_literal))))
+        (primary_expression
+          (literal
+            (string_literal)))))
     (enum_member_declaration
       (identifier)
       (expression
-        (literal
-          (string_literal))))))
+        (primary_expression
+          (literal
+            (string_literal)))))))
 
 ================================================================================
 VALID - Enum declaration with generic values
@@ -104,8 +110,10 @@ enum Result<O, E> {
     (enum_member_declaration
       (identifier)
       (expression
-        (identifier)))
+        (primary_expression
+          (identifier))))
     (enum_member_declaration
       (identifier)
       (expression
-        (identifier)))))
+        (primary_expression
+          (identifier))))))

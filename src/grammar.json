@@ -893,42 +893,74 @@
       "type": "STRING",
       "value": "this"
     },
-    "property_access": {
-      "type": "SEQ",
+    "primary_expression": {
+      "type": "CHOICE",
       "members": [
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "this_expression"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "identifier"
-            }
-          ]
+          "type": "SYMBOL",
+          "name": "identifier"
         },
         {
-          "type": "STRING",
-          "value": "."
+          "type": "SYMBOL",
+          "name": "this_expression"
         },
         {
-          "type": "FIELD",
-          "name": "name",
-          "content": {
-            "type": "SYMBOL",
-            "name": "identifier"
-          }
+          "type": "SYMBOL",
+          "name": "method_call_expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "literal"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "group_expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "array_access_expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "class_instance_expression"
         }
       ]
     },
+    "property_access": {
+      "type": "PREC",
+      "value": 14,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "expression"
+          },
+          {
+            "type": "STRING",
+            "value": "."
+          },
+          {
+            "type": "FIELD",
+            "name": "name",
+            "content": {
+              "type": "SYMBOL",
+              "name": "identifier"
+            }
+          }
+        ]
+      }
+    },
     "get_expression": {
-      "type": "SEQ",
+      "type": "CHOICE",
       "members": [
         {
           "type": "SYMBOL",
           "name": "property_access"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "method_call_expression"
         }
       ]
     },
@@ -2375,11 +2407,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "literal"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "identifier"
+          "name": "primary_expression"
         },
         {
           "type": "SYMBOL",
@@ -2399,31 +2427,15 @@
         },
         {
           "type": "SYMBOL",
-          "name": "group_expression"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "class_instance_expression"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "get_expression"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "method_call_expression"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "array_access_expression"
-        },
-        {
-          "type": "SYMBOL",
           "name": "cast"
         },
         {
           "type": "SYMBOL",
           "name": "match_expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "get_expression"
         }
       ]
     },
@@ -2869,7 +2881,7 @@
             "name": "function",
             "content": {
               "type": "SYMBOL",
-              "name": "identifier"
+              "name": "primary_expression"
             }
           },
           {
@@ -3803,8 +3815,20 @@
       "call_expression"
     ],
     [
-      "array_access_expression",
-      "expression"
+      "primary_expression",
+      "array_access_expression"
+    ],
+    [
+      "primary_expression",
+      "get_expression"
+    ],
+    [
+      "_expression",
+      "primary_expression"
+    ],
+    [
+      "method_declaration",
+      "primary_expression"
     ],
     [
       "for_statement",
@@ -3833,6 +3857,10 @@
     [
       "method_modifier",
       "property_modifier"
+    ],
+    [
+      "expression",
+      "get_expression"
     ]
   ],
   "precedences": [],

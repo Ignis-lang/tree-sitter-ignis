@@ -13,12 +13,14 @@ const HELLO_WORLD_LEN: i64 = 13;
     (type_identifier
       (primitive_keyword))
     (expression
-      (literal
-        (string_literal))))
+      (primary_expression
+        (literal
+          (string_literal)))))
   (variable_declaration
     (identifier)
     (type_identifier
       (primitive_keyword))
     (expression
-      (literal
-        (integer_literal)))))
+      (primary_expression
+        (literal
+          (integer_literal))))))

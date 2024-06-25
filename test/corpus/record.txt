@@ -95,21 +95,25 @@ let user: User = {
     (type_identifier
       (identifier))
     (expression
-      (literal
-        (object_literal
-          (identifier)
-          (identifier)
-          (expression
-            (literal
-              (string_literal)))
-          (method_declaration
+      (primary_expression
+        (literal
+          (object_literal
             (identifier)
-            (type_identifier
-              (primitive_keyword))
-            (block
-              (return_statement
-                (expression
-                  (get_expression
-                    (property_access
-                      (this_expression)
-                      (identifier))))))))))))
+            (identifier)
+            (expression
+              (primary_expression
+                (literal
+                  (string_literal))))
+            (method_declaration
+              (identifier)
+              (type_identifier
+                (primitive_keyword))
+              (block
+                (return_statement
+                  (expression
+                    (get_expression
+                      (property_access
+                        (expression
+                          (primary_expression
+                            (this_expression)))
+                        (identifier)))))))))))))

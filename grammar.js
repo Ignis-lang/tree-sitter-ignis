@@ -71,7 +71,10 @@ module.exports = grammar({
       [$.prefix_unary_expression, $.expression],
       [$.prefix_unary_expression, $.suffix_unary_expression],
       [$.method_call_expression, $.call_expression],
-      [$.array_access_expression, $.expression],
+      [$.primary_expression, $.array_access_expression],
+      [$.primary_expression, $.get_expression],
+      [$._expression, $.primary_expression],
+      [$.method_declaration, $.primary_expression],
       [$.for_statement, $.expression],
       [$.interface_method_declaration],
       [$.decorator_use],
@@ -80,6 +83,7 @@ module.exports = grammar({
       [$.union_type, $.intersection_type],
       [$.block, $.object_literal],
       [$.method_modifier, $.property_modifier],
+      [$.expression, $.get_expression],
     ]),
 
   rules: {
@@ -202,9 +206,20 @@ module.exports = grammar({
 
     this_expression: (_) => 'this',
 
-    property_access: ($) => seq(choice($.this_expression, $.identifier), '.', field('name', $.identifier)),
+    primary_expression: ($) =>
+      choice(
+        $.identifier,
+        $.this_expression,
+        $.method_call_expression,
+        $.literal,
+        $.group_expression,
+        $.array_access_expression,
+        $.class_instance_expression,
+      ),
 
-    get_expression: ($) => seq($.property_access),
+    property_access: ($) => prec(PREC.FIELD, seq($.expression, '.', field('name', $.identifier))),
+
+    get_expression: ($) => choice($.property_access, $.method_call_expression),
 
     method_call_expression: ($) =>
       prec(
@@ -230,13 +245,7 @@ module.exports = grammar({
       ),
 
     property_declaration: ($) =>
-      seq(
-        optional(repeat($.property_modifier)),
-        $.identifier,
-        ':',
-        $.type_identifier,
-        ';',
-      ),
+      seq(optional(repeat($.property_modifier)), $.identifier, ':', $.type_identifier, ';'),
 
     method_declaration: ($) =>
       seq(
@@ -391,19 +400,14 @@ module.exports = grammar({
     expression: ($) =>
       choice(
         alias(choice(...primitiveTypes), $.identifier),
-        $.literal,
-        $.identifier,
+        $.primary_expression,
         $.prefix_unary_expression,
         $.suffix_unary_expression,
         $.binary_expression,
         $.call_expression,
-        $.group_expression,
-        $.class_instance_expression,
-        $.get_expression,
-        $.method_call_expression,
-        $.array_access_expression,
         $.cast,
         $.match_expression,
+        $.get_expression,
       ),
 
     cast: ($) => seq($.identifier, 'as', $.type_identifier),
@@ -439,7 +443,7 @@ module.exports = grammar({
       prec.dynamic(
         PREC.CALL,
         seq(
-          field('function', $.identifier),
+          field('function', $.primary_expression),
           optional($.generic_type_declaration),
           '(',
           commaSep(field('arguments', $.expression)),

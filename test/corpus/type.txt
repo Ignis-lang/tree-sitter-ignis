@@ -118,8 +118,9 @@ function main(): void {
         (type_identifier
           (identifier))
         (expression
-          (literal
-            (integer_literal))))
+          (primary_expression
+            (literal
+              (integer_literal)))))
       (expression_statement
         (expression
           (cast

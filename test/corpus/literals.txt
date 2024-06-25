@@ -15,29 +15,37 @@ VALID - numeric literals
 
 (source_file
   (expression
-    (literal
-      (integer_literal)))
+    (primary_expression
+      (literal
+        (integer_literal))))
   (expression
-    (literal
-      (integer_literal)))
+    (primary_expression
+      (literal
+        (integer_literal))))
   (expression
-    (literal
-      (float_literal)))
+    (primary_expression
+      (literal
+        (float_literal))))
   (expression
-    (literal
-      (float_literal)))
+    (primary_expression
+      (literal
+        (float_literal))))
   (expression
-    (literal
-      (integer_literal)))
+    (primary_expression
+      (literal
+        (integer_literal))))
   (expression
-    (literal
-      (integer_literal)))
+    (primary_expression
+      (literal
+        (integer_literal))))
   (expression
-    (literal
-      (integer_literal)))
+    (primary_expression
+      (literal
+        (integer_literal))))
   (expression
-    (literal
-      (float_literal))))
+    (primary_expression
+      (literal
+        (float_literal)))))
 
 ================================================================================
 VALID - string literals
@@ -56,29 +64,37 @@ VALID - string literals
 
 (source_file
   (expression
-    (literal
-      (string_literal)))
+    (primary_expression
+      (literal
+        (string_literal))))
   (expression
-    (literal
-      (string_literal)))
+    (primary_expression
+      (literal
+        (string_literal))))
   (expression
-    (literal
-      (string_literal)))
+    (primary_expression
+      (literal
+        (string_literal))))
   (expression
-    (literal
-      (string_literal)))
+    (primary_expression
+      (literal
+        (string_literal))))
   (expression
-    (literal
-      (string_literal)))
+    (primary_expression
+      (literal
+        (string_literal))))
   (expression
-    (literal
-      (string_literal)))
+    (primary_expression
+      (literal
+        (string_literal))))
   (expression
-    (literal
-      (string_literal)))
+    (primary_expression
+      (literal
+        (string_literal))))
   (expression
-    (literal
-      (string_literal))))
+    (primary_expression
+      (literal
+        (string_literal)))))
 
 ================================================================================
 VALID - boolean literals
@@ -91,11 +107,13 @@ false
 
 (source_file
   (expression
-    (literal
-      (boolean_literal)))
+    (primary_expression
+      (literal
+        (boolean_literal))))
   (expression
-    (literal
-      (boolean_literal))))
+    (primary_expression
+      (literal
+        (boolean_literal)))))
 
 ================================================================================
 VALID - null literal
@@ -107,8 +125,9 @@ null
 
 (source_file
   (expression
-    (literal
-      (null_literal))))
+    (primary_expression
+      (literal
+        (null_literal)))))
 
 ================================================================================
 VALID - array literal
@@ -125,113 +144,150 @@ VALID - array literal
 
 (source_file
   (expression
-    (literal
-      (array_literal)))
+    (primary_expression
+      (literal
+        (array_literal))))
   (expression
-    (literal
-      (array_literal
-        (expression
-          (literal
-            (integer_literal)))
-        (expression
-          (literal
-            (integer_literal)))
-        (expression
-          (literal
-            (integer_literal))))))
+    (primary_expression
+      (literal
+        (array_literal
+          (expression
+            (primary_expression
+              (literal
+                (integer_literal))))
+          (expression
+            (primary_expression
+              (literal
+                (integer_literal))))
+          (expression
+            (primary_expression
+              (literal
+                (integer_literal))))))))
   (expression
-    (literal
-      (array_literal
-        (expression
-          (literal
-            (integer_literal)))
-        (expression
-          (literal
-            (integer_literal)))
-        (expression
-          (literal
-            (integer_literal)))
-        (expression
-          (literal
-            (integer_literal)))
-        (expression
-          (literal
-            (integer_literal))))))
+    (primary_expression
+      (literal
+        (array_literal
+          (expression
+            (primary_expression
+              (literal
+                (integer_literal))))
+          (expression
+            (primary_expression
+              (literal
+                (integer_literal))))
+          (expression
+            (primary_expression
+              (literal
+                (integer_literal))))
+          (expression
+            (primary_expression
+              (literal
+                (integer_literal))))
+          (expression
+            (primary_expression
+              (literal
+                (integer_literal))))))))
   (expression
-    (literal
-      (array_literal
-        (expression
-          (literal
-            (integer_literal)))
-        (expression
-          (literal
-            (integer_literal)))
-        (expression
-          (literal
-            (integer_literal)))
-        (expression
-          (literal
-            (integer_literal)))
-        (expression
-          (literal
-            (integer_literal)))
-        (expression
-          (literal
-            (integer_literal)))
-        (expression
-          (literal
-            (integer_literal)))
-        (expression
-          (literal
-            (integer_literal)))
-        (expression
-          (literal
-            (integer_literal)))
-        (expression
-          (literal
-            (integer_literal))))))
+    (primary_expression
+      (literal
+        (array_literal
+          (expression
+            (primary_expression
+              (literal
+                (integer_literal))))
+          (expression
+            (primary_expression
+              (literal
+                (integer_literal))))
+          (expression
+            (primary_expression
+              (literal
+                (integer_literal))))
+          (expression
+            (primary_expression
+              (literal
+                (integer_literal))))
+          (expression
+            (primary_expression
+              (literal
+                (integer_literal))))
+          (expression
+            (primary_expression
+              (literal
+                (integer_literal))))
+          (expression
+            (primary_expression
+              (literal
+                (integer_literal))))
+          (expression
+            (primary_expression
+              (literal
+                (integer_literal))))
+          (expression
+            (primary_expression
+              (literal
+                (integer_literal))))
+          (expression
+            (primary_expression
+              (literal
+                (integer_literal))))))))
   (expression
-    (literal
-      (array_literal
-        (expression
-          (literal
-            (integer_literal)))
-        (expression
-          (literal
-            (integer_literal)))
-        (expression
-          (literal
-            (integer_literal)))
-        (expression
-          (literal
-            (integer_literal)))
-        (expression
-          (literal
-            (integer_literal)))
-        (expression
-          (literal
-            (integer_literal)))
-        (expression
-          (literal
-            (integer_literal)))
-        (expression
-          (literal
-            (integer_literal)))
-        (expression
-          (literal
-            (integer_literal)))
-        (expression
-          (literal
-            (integer_literal)))
-        (expression
-          (literal
-            (integer_literal))))))
+    (primary_expression
+      (literal
+        (array_literal
+          (expression
+            (primary_expression
+              (literal
+                (integer_literal))))
+          (expression
+            (primary_expression
+              (literal
+                (integer_literal))))
+          (expression
+            (primary_expression
+              (literal
+                (integer_literal))))
+          (expression
+            (primary_expression
+              (literal
+                (integer_literal))))
+          (expression
+            (primary_expression
+              (literal
+                (integer_literal))))
+          (expression
+            (primary_expression
+              (literal
+                (integer_literal))))
+          (expression
+            (primary_expression
+              (literal
+                (integer_literal))))
+          (expression
+            (primary_expression
+              (literal
+                (integer_literal))))
+          (expression
+            (primary_expression
+              (literal
+                (integer_literal))))
+          (expression
+            (primary_expression
+              (literal
+                (integer_literal))))
+          (expression
+            (primary_expression
+              (literal
+                (integer_literal))))))))
   (expression
-    (literal
-      (array_literal
-        (expression
-          (literal
-            (string_literal)))
-        (expression
-          (literal
-            (string_literal)))))))
+    (primary_expression
+      (literal
+        (array_literal
+          (expression
+            (primary_expression
+              (literal
+                (string_literal))))
+          (expression
+            (primary_expression
+              (literal
+                (string_literal)))))))))

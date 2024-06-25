@@ -15,29 +15,33 @@ let d: f64 = 1.3;
     (type_identifier
       (primitive_keyword))
     (expression
-      (literal
-        (integer_literal))))
+      (primary_expression
+        (literal
+          (integer_literal)))))
   (variable_declaration
     (identifier)
     (type_identifier
       (primitive_keyword))
     (expression
-      (literal
-        (string_literal))))
+      (primary_expression
+        (literal
+          (string_literal)))))
   (variable_declaration
     (identifier)
     (type_identifier
       (primitive_keyword))
     (expression
-      (literal
-        (boolean_literal))))
+      (primary_expression
+        (literal
+          (boolean_literal)))))
   (variable_declaration
     (identifier)
     (type_identifier
       (primitive_keyword))
     (expression
-      (literal
-        (float_literal)))))
+      (primary_expression
+        (literal
+          (float_literal))))))
 
 ================================================================================
 VALID - variable
@@ -53,11 +57,16 @@ let result: i64 = math.sum(x, y);
     (type_identifier
       (primitive_keyword))
     (expression
-      (method_call_expression
-        (property_access
-          (identifier)
-          (identifier))
-        (expression
-          (identifier))
-        (expression
-          (identifier))))))
+      (get_expression
+        (method_call_expression
+          (property_access
+            (expression
+              (primary_expression
+                (identifier)))
+            (identifier))
+          (expression
+            (primary_expression
+              (identifier)))
+          (expression
+            (primary_expression
+              (identifier))))))))

@@ -21,14 +21,17 @@ function main(): void {
         (type_identifier
           (identifier))
         (expression
-          (literal
-            (integer_literal))))
+          (primary_expression
+            (literal
+              (integer_literal)))))
       (expression_statement
         (expression
           (call_expression
-            (identifier)
+            (primary_expression
+              (identifier))
             (expression
-              (identifier))))))))
+              (primary_expression
+                (identifier)))))))))
 
 ================================================================================
 VALID - function generic params
@@ -63,21 +66,26 @@ sum<int>(1, 2)
         (expression
           (binary_expression
             (expression
-              (identifier))
+              (primary_expression
+                (identifier)))
             (expression
-              (identifier)))))))
+              (primary_expression
+                (identifier))))))))
   (expression
     (call_expression
-      (identifier)
+      (primary_expression
+        (identifier))
       (generic_type_declaration
         (type_identifier
           (identifier)))
       (expression
-        (literal
-          (integer_literal)))
+        (primary_expression
+          (literal
+            (integer_literal))))
       (expression
-        (literal
-          (integer_literal))))))
+        (primary_expression
+          (literal
+            (integer_literal)))))))
 
 ================================================================================
 VALID - Mut params
@@ -108,31 +116,37 @@ function fibonacci(num: mut i64): i64 {
         (expression
           (binary_expression
             (expression
-              (identifier))
+              (primary_expression
+                (identifier)))
             (literal
               (integer_literal))))
         (block
           (return_statement
             (expression
-              (identifier)))))
+              (primary_expression
+                (identifier))))))
       (return_statement
         (expression
           (binary_expression
             (expression
               (call_expression
-                (identifier)
+                (primary_expression
+                  (identifier))
                 (expression
                   (binary_expression
                     (expression
-                      (identifier))
+                      (primary_expression
+                        (identifier)))
                     (literal
                       (integer_literal))))))
             (expression
               (call_expression
-                (identifier)
+                (primary_expression
+                  (identifier))
                 (expression
                   (binary_expression
                     (expression
-                      (identifier))
+                      (primary_expression
+                        (identifier)))
                     (literal
                       (integer_literal))))))))))))

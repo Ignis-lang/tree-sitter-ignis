@@ -54,7 +54,9 @@ VALID - Use decorator with params
     (expression
       (get_expression
         (property_access
-          (identifier)
+          (expression
+            (primary_expression
+              (identifier)))
           (identifier))))))
 
 ================================================================================
@@ -69,11 +71,13 @@ VALID - Use decorator with multi params
   (decorator_use
     (identifier)
     (expression
-      (literal
-        (string_literal)))
+      (primary_expression
+        (literal
+          (string_literal))))
     (expression
-      (literal
-        (string_literal)))))
+      (primary_expression
+        (literal
+          (string_literal))))))
 
 ================================================================================
 VALID - Use decorator with record param
@@ -96,48 +100,62 @@ VALID - Use decorator with record param
   (decorator_use
     (identifier)
     (expression
-      (literal
-        (object_literal
-          (identifier)
-          (expression
-            (get_expression
-              (property_access
-                (identifier)
-                (identifier))))
-          (identifier)
-          (expression
-            (get_expression
-              (property_access
-                (identifier)
-                (identifier))))
-          (identifier)
-          (expression
-            (literal
-              (string_literal)))
-          (identifier)
-          (expression
-            (literal
-              (array_literal
-                (expression
-                  (literal
-                    (object_literal
-                      (identifier)
-                      (expression
+      (primary_expression
+        (literal
+          (object_literal
+            (identifier)
+            (expression
+              (get_expression
+                (property_access
+                  (expression
+                    (primary_expression
+                      (identifier)))
+                  (identifier))))
+            (identifier)
+            (expression
+              (get_expression
+                (property_access
+                  (expression
+                    (primary_expression
+                      (identifier)))
+                  (identifier))))
+            (identifier)
+            (expression
+              (primary_expression
+                (literal
+                  (string_literal))))
+            (identifier)
+            (expression
+              (primary_expression
+                (literal
+                  (array_literal
+                    (expression
+                      (primary_expression
                         (literal
-                          (string_literal)))
-                      (identifier)
-                      (expression
-                        (get_expression
-                          (property_access
+                          (object_literal
                             (identifier)
-                            (identifier))))))))))
-          (identifier)
-          (expression
-            (get_expression
-              (property_access
-                (identifier)
-                (identifier))))
-          (identifier)
-          (expression
-            (literal
-              (boolean_literal))))))))
+                            (expression
+                              (primary_expression
+                                (literal
+                                  (string_literal))))
+                            (identifier)
+                            (expression
+                              (get_expression
+                                (property_access
+                                  (expression
+                                    (primary_expression
+                                      (identifier)))
+                                  (identifier))))))))))))
+            (identifier)
+            (expression
+              (get_expression
+                (property_access
+                  (expression
+                    (primary_expression
+                      (identifier)))
+                  (identifier))))
+            (identifier)
+            (expression
+              (primary_expression
+                (literal
+                  (boolean_literal))))))))))
