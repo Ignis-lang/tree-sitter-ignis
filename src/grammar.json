@@ -1133,20 +1133,8 @@
               "type": "REPEAT",
               "content": {
                 "type": "SYMBOL",
-                "name": "method_modifier"
+                "name": "property_modifier"
               }
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "mutable_specifier"
             },
             {
               "type": "BLANK"
@@ -3298,6 +3286,31 @@
         }
       ]
     },
+    "property_modifier": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "public"
+        },
+        {
+          "type": "STRING",
+          "value": "private"
+        },
+        {
+          "type": "STRING",
+          "value": "static"
+        },
+        {
+          "type": "STRING",
+          "value": "mut"
+        },
+        {
+          "type": "STRING",
+          "value": "abstract"
+        }
+      ]
+    },
     "method_modifier": {
       "type": "CHOICE",
       "members": [
@@ -3816,6 +3829,10 @@
     [
       "block",
       "object_literal"
+    ],
+    [
+      "method_modifier",
+      "property_modifier"
     ]
   ],
   "precedences": [],

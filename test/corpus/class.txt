@@ -20,17 +20,17 @@ class User {
   (class_declaration
     (identifier)
     (property_declaration
-      (method_modifier)
+      (property_modifier)
       (identifier)
       (type_identifier
         (primitive_keyword)))
     (property_declaration
-      (method_modifier)
+      (property_modifier)
       (identifier)
       (type_identifier
         (primitive_keyword)))
     (property_declaration
-      (method_modifier)
+      (property_modifier)
       (identifier)
       (type_identifier
         (primitive_keyword)))

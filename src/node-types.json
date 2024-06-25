@@ -1172,6 +1172,11 @@
     "fields": {}
   },
   {
+    "type": "mutable_specifier",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "object_literal",
     "named": true,
     "fields": {
@@ -1320,11 +1325,7 @@
           "named": true
         },
         {
-          "type": "method_modifier",
-          "named": true
-        },
-        {
-          "type": "mutable_specifier",
+          "type": "property_modifier",
           "named": true
         },
         {
@@ -1333,6 +1334,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "property_modifier",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "record_declaration",
@@ -1941,8 +1947,8 @@
     "named": false
   },
   {
-    "type": "mutable_specifier",
-    "named": true
+    "type": "mut",
+    "named": false
   },
   {
     "type": "new",

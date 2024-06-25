@@ -79,6 +79,7 @@ module.exports = grammar({
       [$.function_declaration],
       [$.union_type, $.intersection_type],
       [$.block, $.object_literal],
+      [$.method_modifier, $.property_modifier],
     ]),
 
   rules: {
@@ -230,8 +231,7 @@ module.exports = grammar({
 
     property_declaration: ($) =>
       seq(
-        optional(repeat($.method_modifier)),
-        optional($.mutable_specifier),
+        optional(repeat($.property_modifier)),
         $.identifier,
         ':',
         $.type_identifier,
@@ -474,6 +474,8 @@ module.exports = grammar({
     loop_control: (_) => choice('break', 'continue'),
 
     class_modifier: (_) => choice('abstract'),
+
+    property_modifier: (_) => choice('public', 'private', 'static', 'mut', 'abstract'),
 
     method_modifier: (_) => choice('public', 'private', 'static', 'final', 'abstract'),
 

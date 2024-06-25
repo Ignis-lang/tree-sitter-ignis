@@ -34,6 +34,7 @@
 (object_literal (identifier) @variable.builtin)
 
 (function_declaration  (identifier) @function)
+(constructor_declaration (identifier) @method)
 (method_declaration name: (identifier) @method)
 
 (call_expression function: (identifier) @function.call)
