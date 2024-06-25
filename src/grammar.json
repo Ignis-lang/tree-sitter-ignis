@@ -1029,8 +1029,11 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "method_modifier"
+              "type": "REPEAT",
+              "content": {
+                "type": "SYMBOL",
+                "name": "method_modifier"
+              }
             },
             {
               "type": "BLANK"
@@ -1127,8 +1130,11 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "method_modifier"
+              "type": "REPEAT",
+              "content": {
+                "type": "SYMBOL",
+                "name": "method_modifier"
+              }
             },
             {
               "type": "BLANK"
@@ -1172,8 +1178,11 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "method_modifier"
+              "type": "REPEAT",
+              "content": {
+                "type": "SYMBOL",
+                "name": "method_modifier"
+              }
             },
             {
               "type": "BLANK"

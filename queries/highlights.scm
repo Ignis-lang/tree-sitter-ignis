@@ -52,7 +52,7 @@
   "while" "of" "interface" "extends" "public" "private" "new" "class"
   "implements" "super" "static" "final" "readonly" "in" "const" "as" "break"
   "void" "extern" "continue" "unknown" "type" "record" "decorator" (this_expression)
-  "match" "when"
+  "match" "when" "abstract"
 ] @keyword
 
 (boolean_literal) @boolean

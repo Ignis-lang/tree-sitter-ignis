@@ -219,7 +219,7 @@ module.exports = grammar({
 
     constructor_declaration: ($) =>
       seq(
-        optional($.method_modifier),
+        optional(repeat($.method_modifier)),
         $.identifier,
         optional($.generic_type_declaration),
         '(',
@@ -230,7 +230,7 @@ module.exports = grammar({
 
     property_declaration: ($) =>
       seq(
-        optional($.method_modifier),
+        optional(repeat($.method_modifier)),
         optional($.mutable_specifier),
         $.identifier,
         ':',
@@ -240,7 +240,7 @@ module.exports = grammar({
 
     method_declaration: ($) =>
       seq(
-        optional($.method_modifier),
+        optional(repeat($.method_modifier)),
         field('name', $.identifier),
         '(',
         optional(commaSep1($.parameter_declaration)),
