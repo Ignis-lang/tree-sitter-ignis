@@ -21,6 +21,13 @@
   "-" "=" "<" "<=" ">" ">=" "!" "++" "--" "||" "&&" "/" "*" "+" "%" "&" "|" "==" "?" "@" "->"
 ] @operator
 
+[
+  "if" "else" "let" "return" "function" "import" "from" "for" "enum" "export"
+  "while" "of" "interface" "extends" "public" "private" "new" "class"
+  "implements" "super" "static" "final" "readonly" "in" "const" "as" "break"
+  "void" "extern" "continue" "unknown" "type" "record" "decorator" (this_expression)
+  "match" "when" "abstract" "mut"
+] @keyword
 
 (type_identifier) @type
 
@@ -39,9 +46,8 @@
 (constructor_declaration (identifier) @function)
 (method_declaration name: (identifier) @function)
 
-(primary_expression (identifier) @variable)
-
-(method_call_expression function: (property_access name: (identifier) @method.call))
+(primary_expression (identifier) @function)
+(property_access name: (identifier) @property)
 
 (property_declaration (identifier) @variable)
 (property_access name: (identifier) @variable)
@@ -51,13 +57,6 @@
 (variable_declaration (identifier) @variable)
 (parameter_declaration (identifier) @parameter)
 
-[
-  "if" "else" "let" "return" "function" "import" "from" "for" "enum" "export"
-  "while" "of" "interface" "extends" "public" "private" "new" "class"
-  "implements" "super" "static" "final" "readonly" "in" "const" "as" "break"
-  "void" "extern" "continue" "unknown" "type" "record" "decorator" (this_expression)
-  "match" "when" "abstract" "mut"
-] @keyword
+(decorator_use (identifier) @decorator)
+(decorator_declaration (identifier) @decorator)
 
-(decorator_use) @decorator
-(decorator_declaration) @decorator
