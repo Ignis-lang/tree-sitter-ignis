@@ -84,6 +84,9 @@ module.exports = grammar({
       [$.block, $.object_literal],
       [$.method_modifier, $.property_modifier],
       [$.expression, $.get_expression],
+      [$.union_type, $.intersection_type, $.type_expression],
+      [$.union_type, $.intersection_type, $.type_expression, $.array_type],
+      [$.implements_methods, $.type_identifier],
     ]),
 
   rules: {
@@ -101,6 +104,7 @@ module.exports = grammar({
         $.type_definition,
         $.record_declaration,
         $.extern_declaration,
+        $.implements_methods,
         $.decorator_declaration,
         $.decorator_use,
         $.expression,
@@ -298,7 +302,7 @@ module.exports = grammar({
 
     // #endregion
     // #region Function
-    generic_type_declaration: ($) => seq('<', commaSep1($.type_identifier), '>'),
+    generic_type_declaration: ($) => seq('<', commaSep1(choice($.type_expression, $.cast)), '>'),
 
     function_declaration: ($) =>
       seq(
@@ -332,6 +336,17 @@ module.exports = grammar({
         field('type', $.type_identifier),
         optional(seq('=', field('value', $.expression))),
         ';',
+      ),
+
+    implements_methods: ($) =>
+      seq(
+        optional('export'),
+        'implements',
+        optional($.generic_type_declaration),
+        choice($.identifier, $.type_expression),
+        '{',
+        optional(repeat(choice($._definition, $.property_declaration))),
+        '}',
       ),
 
     reference_operator: (_) => '$',
@@ -410,7 +425,7 @@ module.exports = grammar({
         $.get_expression,
       ),
 
-    cast: ($) => seq($.identifier, 'as', $.type_identifier),
+    cast: ($) => prec(PREC.CAST, seq($.identifier, 'as', $.type_expression)),
 
     prefix_unary_expression: ($) => prec(PREC.UNARY, seq(choice('!', '++', '--'), $.expression)),
 

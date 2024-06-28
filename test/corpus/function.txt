@@ -49,8 +49,9 @@ sum<int>(1, 2)
   (function_declaration
     (identifier)
     (generic_type_declaration
-      (type_identifier
-        (identifier)))
+      (type_expression
+        (type_identifier
+          (identifier))))
     (parameter_declaration
       (identifier)
       (type_identifier
@@ -76,8 +77,9 @@ sum<int>(1, 2)
       (primary_expression
         (identifier))
       (generic_type_declaration
-        (type_identifier
-          (identifier)))
+        (type_expression
+          (type_identifier
+            (identifier))))
       (expression
         (primary_expression
           (literal

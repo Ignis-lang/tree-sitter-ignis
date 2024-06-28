@@ -280,7 +280,7 @@
           "named": true
         },
         {
-          "type": "type_identifier",
+          "type": "type_expression",
           "named": true
         }
       ]
@@ -641,6 +641,10 @@
           "named": true
         },
         {
+          "type": "implements_methods",
+          "named": true
+        },
+        {
           "type": "import_statement",
           "named": true
         },
@@ -800,7 +804,11 @@
       "required": true,
       "types": [
         {
-          "type": "type_identifier",
+          "type": "cast",
+          "named": true
+        },
+        {
+          "type": "type_expression",
           "named": true
         }
       ]
@@ -877,6 +885,89 @@
         },
         {
           "type": "identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "implements_methods",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "class_declaration",
+          "named": true
+        },
+        {
+          "type": "decorator_declaration",
+          "named": true
+        },
+        {
+          "type": "decorator_use",
+          "named": true
+        },
+        {
+          "type": "enum_declaration",
+          "named": true
+        },
+        {
+          "type": "export_statement",
+          "named": true
+        },
+        {
+          "type": "expression",
+          "named": true
+        },
+        {
+          "type": "extern_declaration",
+          "named": true
+        },
+        {
+          "type": "function_declaration",
+          "named": true
+        },
+        {
+          "type": "generic_type_declaration",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "implements_methods",
+          "named": true
+        },
+        {
+          "type": "import_statement",
+          "named": true
+        },
+        {
+          "type": "interface_declaration",
+          "named": true
+        },
+        {
+          "type": "property_declaration",
+          "named": true
+        },
+        {
+          "type": "record_declaration",
+          "named": true
+        },
+        {
+          "type": "type_definition",
+          "named": true
+        },
+        {
+          "type": "type_expression",
+          "named": true
+        },
+        {
+          "type": "variable_declaration",
           "named": true
         }
       ]
@@ -1502,6 +1593,10 @@
           "named": true
         },
         {
+          "type": "implements_methods",
+          "named": true
+        },
+        {
           "type": "import_statement",
           "named": true
         },
@@ -1549,6 +1644,33 @@
       "types": [
         {
           "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "intersection_type",
+          "named": true
+        },
+        {
+          "type": "type_identifier",
+          "named": true
+        },
+        {
+          "type": "union_type",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "type_expression",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "array_type",
           "named": true
         },
         {

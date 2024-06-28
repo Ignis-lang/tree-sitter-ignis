@@ -103,10 +103,12 @@ enum Result<O, E> {
   (enum_declaration
     (identifier)
     (generic_type_declaration
-      (type_identifier
-        (identifier))
-      (type_identifier
-        (identifier)))
+      (type_expression
+        (type_identifier
+          (identifier)))
+      (type_expression
+        (type_identifier
+          (identifier))))
     (enum_member_declaration
       (identifier)
       (expression

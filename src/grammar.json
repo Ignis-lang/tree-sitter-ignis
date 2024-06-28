@@ -53,6 +53,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "implements_methods"
+        },
+        {
+          "type": "SYMBOL",
           "name": "decorator_declaration"
         },
         {
@@ -1678,8 +1682,17 @@
           "type": "SEQ",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "type_identifier"
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "type_expression"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "cast"
+                }
+              ]
             },
             {
               "type": "REPEAT",
@@ -1691,8 +1704,17 @@
                     "value": ","
                   },
                   {
-                    "type": "SYMBOL",
-                    "name": "type_identifier"
+                    "type": "CHOICE",
+                    "members": [
+                      {
+                        "type": "SYMBOL",
+                        "name": "type_expression"
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "cast"
+                      }
+                    ]
                   }
                 ]
               }
@@ -1954,6 +1976,84 @@
         {
           "type": "STRING",
           "value": ";"
+        }
+      ]
+    },
+    "implements_methods": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "export"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": "implements"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "generic_type_declaration"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "identifier"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "type_expression"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": "{"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "REPEAT",
+              "content": {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "_definition"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "property_declaration"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": "}"
         }
       ]
     },
@@ -2440,21 +2540,25 @@
       ]
     },
     "cast": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "identifier"
-        },
-        {
-          "type": "STRING",
-          "value": "as"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "type_identifier"
-        }
-      ]
+      "type": "PREC",
+      "value": 11,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "identifier"
+          },
+          {
+            "type": "STRING",
+            "value": "as"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "type_expression"
+          }
+        ]
+      }
     },
     "prefix_unary_expression": {
       "type": "PREC",
@@ -3861,6 +3965,21 @@
     [
       "expression",
       "get_expression"
+    ],
+    [
+      "union_type",
+      "intersection_type",
+      "type_expression"
+    ],
+    [
+      "union_type",
+      "intersection_type",
+      "type_expression",
+      "array_type"
+    ],
+    [
+      "implements_methods",
+      "type_identifier"
     ]
   ],
   "precedences": [],

@@ -125,5 +125,6 @@ function main(): void {
         (expression
           (cast
             (identifier)
-            (type_identifier
-              (primitive_keyword))))))))
+            (type_expression
+              (type_identifier
+                (primitive_keyword)))))))))
