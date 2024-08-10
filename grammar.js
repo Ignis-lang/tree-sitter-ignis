@@ -283,6 +283,7 @@ module.exports = grammar({
     record_declaration: ($) =>
       seq(
         'record',
+        optional($.generic_type_declaration),
         $.identifier,
         '{',
         repeat(
