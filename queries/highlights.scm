@@ -18,7 +18,7 @@
 [":" "." "," ";" ] @punctuation.delimiter
 
 [
-  "-" "=" "<" "<=" ">" ">=" "!" "++" "--" "||" "&&" "/" "*" "+" "%" "&" "|" "==" "?" "@" "->"
+  "-" "=" "<" "<=" ">" ">=" "!" "++" "--" "||" "&&" "/" "*" "+" "%" "&" "|" "==" "?" "@" "->" "#" ":"
 ] @operator
 
 [
@@ -26,7 +26,7 @@
   "while" "of" "interface" "extends" "public" "private" "new" "class"
   "implements" "super" "static" "final" "readonly" "in" "const" "as" "break"
   "void" "extern" "continue" "unknown" "type" "record" "decorator" (this_expression)
-  "match" "when" "abstract" "mut"
+  "match" "when" "abstract" "mut" "namespace" "declare" "meta"
 ] @keyword
 
 (type_identifier) @type
@@ -59,4 +59,3 @@
 
 (decorator_use (identifier) @decorator)
 (decorator_declaration (identifier) @decorator)
-

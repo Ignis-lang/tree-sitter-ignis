@@ -107,6 +107,8 @@ module.exports = grammar({
         $.implements_methods,
         $.decorator_declaration,
         $.decorator_use,
+        $.metadata_declaration,
+        $.metadata_expression,
         $.expression,
       ),
 
@@ -125,6 +127,7 @@ module.exports = grammar({
           $.record_declaration,
           $.extern_declaration,
           $.decorator_declaration,
+          $.metadata_declaration,
         ),
       ),
 
@@ -298,6 +301,30 @@ module.exports = grammar({
         optional($.generic_type_declaration),
         optional(seq('(', optional(commaSep($.type_identifier)), ')')),
         ';',
+      ),
+
+    metadata_declaration: ($) =>
+      prec.left(
+        seq(
+          'meta',
+          $.identifier,
+          optional(seq('(', optional(commaSep1(choice($.parameter_declaration, $.type_identifier))), ')')),
+          ';',
+        ),
+      ),
+
+    metadata_expression: ($) =>
+      seq(
+        '#',
+        '[',
+        repeat(
+          seq(
+            $.identifier,
+            optional(commaSep1(seq('(', optional(commaSep($.expression)), ')'))),
+            optional(','),
+          ),
+        ),
+        ']',
       ),
 
     // #endregion
@@ -498,7 +525,7 @@ module.exports = grammar({
 
     method_modifier: (_) => choice('public', 'private', 'static', 'final', 'abstract'),
 
-    other_keyword: (_) => choice('in', 'as', 'readonly', 'export', 'super'),
+    other_keyword: (_) => choice('in', 'as', 'readonly', 'export', 'super', 'declare', 'namespace'),
 
     primitive_keyword: (_) => choice(...primitiveTypes),
 

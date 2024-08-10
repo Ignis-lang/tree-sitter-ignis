@@ -505,6 +505,10 @@
           "named": true
         },
         {
+          "type": "metadata_declaration",
+          "named": true
+        },
+        {
           "type": "record_declaration",
           "named": true
         },
@@ -650,6 +654,14 @@
         },
         {
           "type": "interface_declaration",
+          "named": true
+        },
+        {
+          "type": "metadata_declaration",
+          "named": true
+        },
+        {
+          "type": "metadata_expression",
           "named": true
         },
         {
@@ -951,6 +963,14 @@
           "named": true
         },
         {
+          "type": "metadata_declaration",
+          "named": true
+        },
+        {
+          "type": "metadata_expression",
+          "named": true
+        },
+        {
           "type": "property_declaration",
           "named": true
         },
@@ -1166,6 +1186,48 @@
       "types": [
         {
           "type": "match_arm",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "metadata_declaration",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "parameter_declaration",
+          "named": true
+        },
+        {
+          "type": "type_identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "metadata_expression",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "expression",
+          "named": true
+        },
+        {
+          "type": "identifier",
           "named": true
         }
       ]
@@ -1605,6 +1667,14 @@
           "named": true
         },
         {
+          "type": "metadata_declaration",
+          "named": true
+        },
+        {
+          "type": "metadata_expression",
+          "named": true
+        },
+        {
           "type": "record_declaration",
           "named": true
         },
@@ -1816,6 +1886,10 @@
     "named": false
   },
   {
+    "type": "#",
+    "named": false
+  },
+  {
     "type": "%",
     "named": false
   },
@@ -1980,6 +2054,10 @@
     "named": false
   },
   {
+    "type": "declare",
+    "named": false
+  },
+  {
     "type": "decorator",
     "named": false
   },
@@ -2092,7 +2170,15 @@
     "named": false
   },
   {
+    "type": "meta",
+    "named": false
+  },
+  {
     "type": "mut",
+    "named": false
+  },
+  {
+    "type": "namespace",
     "named": false
   },
   {

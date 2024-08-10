@@ -1,0 +1,63 @@
+================================================================================
+VALID - Declaration meta
+================================================================================
+
+meta NotTranspile;
+meta Metadata();
+meta Metadata(string);
+meta Metadata(name: string, name2: string);
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (metadata_declaration
+    (identifier))
+  (metadata_declaration
+    (identifier))
+  (metadata_declaration
+    (identifier)
+    (type_identifier
+      (primitive_keyword)))
+  (metadata_declaration
+    (identifier)
+    (parameter_declaration
+      (identifier)
+      (type_identifier
+        (primitive_keyword)))
+    (parameter_declaration
+      (identifier)
+      (type_identifier
+        (primitive_keyword)))))
+
+================================================================================
+VALID - Use meta
+================================================================================
+
+#[NotTranspile, Metadata, Metadata("test"), Metadata("test", "test")]
+function test(): void {}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (metadata_expression
+    (identifier)
+    (identifier)
+    (identifier)
+    (expression
+      (primary_expression
+        (literal
+          (string_literal))))
+    (identifier)
+    (expression
+      (primary_expression
+        (literal
+          (string_literal))))
+    (expression
+      (primary_expression
+        (literal
+          (string_literal)))))
+  (function_declaration
+    (identifier)
+    (type_identifier
+      (primitive_keyword))
+    (block)))
