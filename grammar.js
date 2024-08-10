@@ -294,7 +294,7 @@ module.exports = grammar({
         '}',
       ),
 
-    extern_declaration: ($) => seq('extern', $.identifier, '{', $._definition, '}'),
+    extern_declaration: ($) => seq('extern', optional($.identifier), '{', $._definition, '}'),
 
     decorator_use: ($) => seq('@', $.identifier, optional(seq('(', optional(commaSep($.expression)), ')'))),
 
