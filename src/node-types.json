@@ -649,10 +649,6 @@
           "named": true
         },
         {
-          "type": "implements_methods",
-          "named": true
-        },
-        {
           "type": "import_statement",
           "named": true
         },
@@ -897,93 +893,6 @@
         },
         {
           "type": "identifier",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "implements_methods",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "class_declaration",
-          "named": true
-        },
-        {
-          "type": "decorator_declaration",
-          "named": true
-        },
-        {
-          "type": "decorator_use",
-          "named": true
-        },
-        {
-          "type": "enum_declaration",
-          "named": true
-        },
-        {
-          "type": "export_statement",
-          "named": true
-        },
-        {
-          "type": "expression",
-          "named": true
-        },
-        {
-          "type": "extern_declaration",
-          "named": true
-        },
-        {
-          "type": "function_declaration",
-          "named": true
-        },
-        {
-          "type": "generic_type_declaration",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "implements_methods",
-          "named": true
-        },
-        {
-          "type": "import_statement",
-          "named": true
-        },
-        {
-          "type": "interface_declaration",
-          "named": true
-        },
-        {
-          "type": "metadata_declaration",
-          "named": true
-        },
-        {
-          "type": "property_declaration",
-          "named": true
-        },
-        {
-          "type": "record_declaration",
-          "named": true
-        },
-        {
-          "type": "type_definition",
-          "named": true
-        },
-        {
-          "type": "type_expression",
-          "named": true
-        },
-        {
-          "type": "variable_declaration",
           "named": true
         }
       ]
@@ -1370,15 +1279,11 @@
           "named": true
         },
         {
-          "type": "mutable_specifier",
-          "named": true
-        },
-        {
-          "type": "reference_operator",
-          "named": true
-        },
-        {
           "type": "type_expression",
+          "named": true
+        },
+        {
+          "type": "variable_modifiers",
           "named": true
         }
       ]
@@ -1402,6 +1307,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "pointer_specifier",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "prefix_unary_expression",
@@ -1533,10 +1443,6 @@
           "named": true
         },
         {
-          "type": "identifier",
-          "named": true
-        },
-        {
           "type": "metadata_expression",
           "named": true
         },
@@ -1546,6 +1452,14 @@
         },
         {
           "type": "record_property_declaration",
+          "named": true
+        },
+        {
+          "type": "type_expression",
+          "named": true
+        },
+        {
+          "type": "variable_modifiers",
           "named": true
         }
       ]
@@ -1611,9 +1525,18 @@
         {
           "type": "type_expression",
           "named": true
+        },
+        {
+          "type": "variable_modifiers",
+          "named": true
         }
       ]
     }
+  },
+  {
+    "type": "reference_operator",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "return_statement",
@@ -1668,10 +1591,6 @@
         },
         {
           "type": "function_declaration",
-          "named": true
-        },
-        {
-          "type": "implements_methods",
           "named": true
         },
         {
@@ -1830,7 +1749,30 @@
           "named": true
         },
         {
+          "type": "variable_modifiers",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "variable_modifiers",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
           "type": "mutable_specifier",
+          "named": true
+        },
+        {
+          "type": "pointer_specifier",
+          "named": true
+        },
+        {
+          "type": "reference_operator",
           "named": true
         }
       ]
@@ -2212,10 +2154,6 @@
   {
     "type": "record",
     "named": false
-  },
-  {
-    "type": "reference_operator",
-    "named": true
   },
   {
     "type": "return",

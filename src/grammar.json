@@ -53,10 +53,6 @@
         },
         {
           "type": "SYMBOL",
-          "name": "implements_methods"
-        },
-        {
-          "type": "SYMBOL",
           "name": "decorator_declaration"
         },
         {
@@ -1299,6 +1295,18 @@
           "members": [
             {
               "type": "SYMBOL",
+              "name": "variable_modifiers"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
               "name": "generic_type_declaration"
             },
             {
@@ -1454,8 +1462,20 @@
           ]
         },
         {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "variable_modifiers"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
           "type": "SYMBOL",
-          "name": "identifier"
+          "name": "type_expression"
         },
         {
           "type": "STRING",
@@ -2271,9 +2291,42 @@
         ]
       }
     },
+    "reference_operator": {
+      "type": "STRING",
+      "value": "&"
+    },
     "mutable_specifier": {
       "type": "STRING",
       "value": "mut"
+    },
+    "pointer_specifier": {
+      "type": "STRING",
+      "value": "*"
+    },
+    "variable_modifiers": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "REPEAT1",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "mutable_specifier"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "reference_operator"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "pointer_specifier"
+              }
+            ]
+          }
+        }
+      ]
     },
     "variable_declaration": {
       "type": "SEQ",
@@ -2296,7 +2349,7 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "mutable_specifier"
+              "name": "variable_modifiers"
             },
             {
               "type": "BLANK"
@@ -2350,88 +2403,6 @@
         }
       ]
     },
-    "implements_methods": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "STRING",
-              "value": "export"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "STRING",
-          "value": "implements"
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "generic_type_declaration"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "identifier"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "type_expression"
-            }
-          ]
-        },
-        {
-          "type": "STRING",
-          "value": "{"
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "REPEAT",
-              "content": {
-                "type": "CHOICE",
-                "members": [
-                  {
-                    "type": "SYMBOL",
-                    "name": "_definition"
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "property_declaration"
-                  }
-                ]
-              }
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "STRING",
-          "value": "}"
-        }
-      ]
-    },
-    "reference_operator": {
-      "type": "STRING",
-      "value": "$"
-    },
     "parameter_declaration": {
       "type": "SEQ",
       "members": [
@@ -2460,19 +2431,7 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "reference_operator"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "mutable_specifier"
+              "name": "variable_modifiers"
             },
             {
               "type": "BLANK"
@@ -4371,10 +4330,6 @@
       "intersection_type",
       "type_expression",
       "array_type"
-    ],
-    [
-      "implements_methods",
-      "type_identifier"
     ]
   ],
   "precedences": [],

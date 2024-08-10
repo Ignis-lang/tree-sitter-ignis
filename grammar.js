@@ -86,7 +86,6 @@ module.exports = grammar({
       [$.expression, $.get_expression],
       [$.union_type, $.intersection_type, $.type_expression],
       [$.union_type, $.intersection_type, $.type_expression, $.array_type],
-      [$.implements_methods, $.type_identifier],
     ]),
 
   rules: {
@@ -104,15 +103,13 @@ module.exports = grammar({
         $.type_definition,
         $.record_declaration,
         $.extern_declaration,
-        $.implements_methods,
         $.decorator_declaration,
         $.decorator_use,
         $.metadata_declaration,
         $.expression,
       ),
 
-    type_definition: ($) =>
-      seq('type', $.identifier, '=', $.type_expression, ';'),
+    type_definition: ($) => seq('type', $.identifier, '=', $.type_expression, ';'),
 
     export_statement: ($) =>
       seq(
@@ -268,6 +265,7 @@ module.exports = grammar({
     record_property_declaration: ($) =>
       seq(
         field('name', $.identifier),
+        optional($.variable_modifiers),
         optional($.generic_type_declaration),
         optional('?'),
         ':',
@@ -292,7 +290,8 @@ module.exports = grammar({
       seq(
         'record',
         optional($.generic_type_declaration),
-        $.identifier,
+        optional($.variable_modifiers),
+        $.type_expression,
         '{',
         repeat(
           seq(
@@ -365,12 +364,16 @@ module.exports = grammar({
     assignment_expression: ($) =>
       prec(PREC.ASSIGN, seq(choice($.identifier, $.property_access), '=', $.expression, ';')),
 
+    reference_operator: (_) => '&',
     mutable_specifier: (_) => 'mut',
+    pointer_specifier: (_) => '*',
+    variable_modifiers: ($) =>
+      seq(repeat1(choice($.mutable_specifier, $.reference_operator, $.pointer_specifier))),
 
     variable_declaration: ($) =>
       seq(
         choice('let', 'const'),
-        optional($.mutable_specifier),
+        optional($.variable_modifiers),
         $.identifier,
         ':',
         field('type', $.type_expression),
@@ -378,26 +381,12 @@ module.exports = grammar({
         ';',
       ),
 
-    implements_methods: ($) =>
-      seq(
-        optional('export'),
-        'implements',
-        optional($.generic_type_declaration),
-        choice($.identifier, $.type_expression),
-        '{',
-        optional(repeat(choice($._definition, $.property_declaration))),
-        '}',
-      ),
-
-    reference_operator: (_) => '$',
-
     parameter_declaration: ($) =>
       seq(
         optional($.metadata_expression),
         $.identifier,
         ':',
-        optional($.reference_operator),
-        optional($.mutable_specifier),
+        optional($.variable_modifiers),
         $.type_expression,
       ),
 
