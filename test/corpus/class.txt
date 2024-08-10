@@ -22,33 +22,39 @@ class User {
     (property_declaration
       (property_modifier)
       (identifier)
-      (type_identifier
-        (primitive_keyword)))
+      (type_expression
+        (type_identifier
+          (primitive_keyword))))
     (property_declaration
       (property_modifier)
       (identifier)
-      (type_identifier
-        (primitive_keyword)))
+      (type_expression
+        (type_identifier
+          (primitive_keyword))))
     (property_declaration
       (property_modifier)
       (identifier)
-      (type_identifier
-        (primitive_keyword)))
+      (type_expression
+        (type_identifier
+          (primitive_keyword))))
     (constructor_declaration
       (method_modifier)
       (identifier)
       (parameter_declaration
         (identifier)
-        (type_identifier
-          (primitive_keyword)))
+        (type_expression
+          (type_identifier
+            (primitive_keyword))))
       (parameter_declaration
         (identifier)
-        (type_identifier
-          (primitive_keyword)))
+        (type_expression
+          (type_identifier
+            (primitive_keyword))))
       (parameter_declaration
         (identifier)
-        (type_identifier
-          (primitive_keyword)))
+        (type_expression
+          (type_identifier
+            (primitive_keyword))))
       (block
         (assignment_expression
           (property_access
@@ -90,16 +96,18 @@ let user2: User = new User("John");
 (source_file
   (variable_declaration
     (identifier)
-    (type_identifier
-      (identifier))
+    (type_expression
+      (type_identifier
+        (identifier)))
     (expression
       (primary_expression
         (class_instance_expression
           (identifier)))))
   (variable_declaration
     (identifier)
-    (type_identifier
-      (identifier))
+    (type_expression
+      (type_identifier
+        (identifier)))
     (expression
       (primary_expression
         (class_instance_expression
@@ -127,8 +135,9 @@ class User {
     (method_declaration
       (method_modifier)
       (identifier)
-      (type_identifier
-        (primitive_keyword))
+      (type_expression
+        (type_identifier
+          (primitive_keyword)))
       (block
         (return_statement
           (expression
@@ -177,8 +186,9 @@ class User implements IUser {
     (method_declaration
       (method_modifier)
       (identifier)
-      (type_identifier
-        (primitive_keyword))
+      (type_expression
+        (type_identifier
+          (primitive_keyword)))
       (block
         (return_statement
           (expression

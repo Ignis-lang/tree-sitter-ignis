@@ -9,7 +9,7 @@ type StringArray = string[];
 (source_file
   (type_definition
     (identifier)
-    (union_type
+    (type_expression
       (type_identifier
         (primitive_keyword)))))
 
@@ -24,11 +24,12 @@ type StringArray = string[] | string;
 (source_file
   (type_definition
     (identifier)
-    (union_type
-      (type_identifier
-        (primitive_keyword))
-      (type_identifier
-        (primitive_keyword)))))
+    (type_expression
+      (union_type
+        (type_identifier
+          (primitive_keyword))
+        (type_identifier
+          (primitive_keyword))))))
 
 ================================================================================
 VALID - Type definition with i64ersaction type
@@ -41,11 +42,12 @@ type StringArray = string[] & string;
 (source_file
   (type_definition
     (identifier)
-    (intersection_type
-      (type_identifier
-        (primitive_keyword))
-      (type_identifier
-        (primitive_keyword)))))
+    (type_expression
+      (intersection_type
+        (type_identifier
+          (primitive_keyword))
+        (type_identifier
+          (primitive_keyword))))))
 
 ================================================================================
 VALID - Type definition number
@@ -62,31 +64,32 @@ type Number = i64 | float;
 (source_file
   (type_definition
     (identifier)
-    (union_type
+    (type_expression
       (type_identifier
         (primitive_keyword))))
   (type_definition
     (identifier)
-    (union_type
+    (type_expression
       (type_identifier
         (primitive_keyword))))
   (type_definition
     (identifier)
-    (union_type
+    (type_expression
       (type_identifier
         (identifier))))
   (type_definition
     (identifier)
-    (union_type
+    (type_expression
       (type_identifier
         (identifier))))
   (type_definition
     (identifier)
-    (union_type
-      (type_identifier
-        (primitive_keyword))
-      (type_identifier
-        (identifier)))))
+    (type_expression
+      (union_type
+        (type_identifier
+          (primitive_keyword))
+        (type_identifier
+          (identifier))))))
 
 ================================================================================
 VALID - Type cast
@@ -105,18 +108,20 @@ function main(): void {
 (source_file
   (type_definition
     (identifier)
-    (union_type
+    (type_expression
       (type_identifier
         (primitive_keyword))))
   (function_declaration
     (identifier)
-    (type_identifier
-      (primitive_keyword))
+    (type_expression
+      (type_identifier
+        (primitive_keyword)))
     (block
       (variable_declaration
         (identifier)
-        (type_identifier
-          (identifier))
+        (type_expression
+          (type_identifier
+            (identifier)))
         (expression
           (primary_expression
             (literal

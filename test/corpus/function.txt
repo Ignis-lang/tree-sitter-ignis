@@ -13,13 +13,15 @@ function main(): void {
 (source_file
   (function_declaration
     (identifier)
-    (type_identifier
-      (primitive_keyword))
+    (type_expression
+      (type_identifier
+        (primitive_keyword)))
     (block
       (variable_declaration
         (identifier)
-        (type_identifier
-          (identifier))
+        (type_expression
+          (type_identifier
+            (identifier)))
         (expression
           (primary_expression
             (literal
@@ -54,14 +56,17 @@ sum<int>(1, 2)
           (identifier))))
     (parameter_declaration
       (identifier)
-      (type_identifier
-        (identifier)))
+      (type_expression
+        (type_identifier
+          (identifier))))
     (parameter_declaration
       (identifier)
+      (type_expression
+        (type_identifier
+          (identifier))))
+    (type_expression
       (type_identifier
         (identifier)))
-    (type_identifier
-      (identifier))
     (block
       (return_statement
         (expression
@@ -109,10 +114,12 @@ function fibonacci(num: mut i64): i64 {
     (parameter_declaration
       (identifier)
       (mutable_specifier)
+      (type_expression
+        (type_identifier
+          (primitive_keyword))))
+    (type_expression
       (type_identifier
         (primitive_keyword)))
-    (type_identifier
-      (primitive_keyword))
     (block
       (if_statement
         (expression

@@ -68,8 +68,9 @@ let message: string = match (name) {
 (source_file
   (variable_declaration
     (identifier)
-    (type_identifier
-      (primitive_keyword))
+    (type_expression
+      (type_identifier
+        (primitive_keyword)))
     (expression
       (match_expression
         (expression

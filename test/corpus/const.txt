@@ -10,16 +10,18 @@ const HELLO_WORLD_LEN: i64 = 13;
 (source_file
   (variable_declaration
     (identifier)
-    (type_identifier
-      (primitive_keyword))
+    (type_expression
+      (type_identifier
+        (primitive_keyword)))
     (expression
       (primary_expression
         (literal
           (string_literal)))))
   (variable_declaration
     (identifier)
-    (type_identifier
-      (primitive_keyword))
+    (type_expression
+      (type_identifier
+        (primitive_keyword)))
     (expression
       (primary_expression
         (literal

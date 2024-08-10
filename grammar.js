@@ -112,7 +112,7 @@ module.exports = grammar({
       ),
 
     type_definition: ($) =>
-      seq('type', $.identifier, '=', choice($.type_identifier, $.union_type, $.intersection_type), ';'),
+      seq('type', $.identifier, '=', $.type_expression, ';'),
 
     export_statement: ($) =>
       seq(
@@ -173,7 +173,7 @@ module.exports = grammar({
         commaSep1(optional($.parameter_declaration)),
         ')',
         ':',
-        $.type_identifier,
+        $.type_expression,
         ';',
       ),
 
@@ -251,7 +251,7 @@ module.exports = grammar({
       ),
 
     property_declaration: ($) =>
-      seq(optional(repeat($.property_modifier)), $.identifier, ':', $.type_identifier, ';'),
+      seq(optional(repeat($.property_modifier)), $.identifier, ':', $.type_expression, ';'),
 
     method_declaration: ($) =>
       seq(
@@ -261,22 +261,30 @@ module.exports = grammar({
         optional(commaSep1($.parameter_declaration)),
         ')',
         ':',
-        $.type_identifier,
+        $.type_expression,
         $.block,
       ),
 
     record_property_declaration: ($) =>
-      seq(field('name', $.identifier), optional('?'), ':', $.type_identifier, ';'),
+      seq(
+        field('name', $.identifier),
+        optional($.generic_type_declaration),
+        optional('?'),
+        ':',
+        $.type_expression,
+        ';',
+      ),
 
     record_method_declaration: ($) =>
       seq(
         field('name', $.identifier),
+        optional($.generic_type_declaration),
         '(',
         optional(commaSep1($.parameter_declaration)),
         ')',
         optional('?'),
         ':',
-        $.type_identifier,
+        $.type_expression,
         ';',
       ),
 
@@ -304,7 +312,7 @@ module.exports = grammar({
         'decorator',
         $.identifier,
         optional($.generic_type_declaration),
-        optional(seq('(', optional(commaSep($.type_identifier)), ')')),
+        optional(seq('(', optional(commaSep($.type_expression)), ')')),
         ';',
       ),
 
@@ -313,7 +321,7 @@ module.exports = grammar({
         seq(
           'meta',
           $.identifier,
-          optional(seq('(', optional(commaSep1(choice($.parameter_declaration, $.type_identifier))), ')')),
+          optional(seq('(', optional(commaSep1(choice($.parameter_declaration, $.type_expression))), ')')),
           ';',
         ),
       ),
@@ -345,7 +353,7 @@ module.exports = grammar({
         commaSep($.parameter_declaration),
         ')',
         ':',
-        $.type_identifier,
+        $.type_expression,
         optional($.block),
         optional(';'),
       ),
@@ -365,7 +373,7 @@ module.exports = grammar({
         optional($.mutable_specifier),
         $.identifier,
         ':',
-        field('type', $.type_identifier),
+        field('type', $.type_expression),
         optional(seq('=', field('value', $.expression))),
         ';',
       ),
@@ -390,7 +398,7 @@ module.exports = grammar({
         ':',
         optional($.reference_operator),
         optional($.mutable_specifier),
-        $.type_identifier,
+        $.type_expression,
       ),
 
     block: ($) => seq('{', repeat($._statement), '}'),

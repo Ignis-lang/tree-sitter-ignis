@@ -49,8 +49,9 @@ implements string {
         (primitive_keyword)))
     (function_declaration
       (identifier)
-      (type_identifier
-        (primitive_keyword))
+      (type_expression
+        (type_identifier
+          (primitive_keyword)))
       (block
         (return_statement
           (expression
@@ -81,8 +82,9 @@ implements<T> T {
     (identifier)
     (function_declaration
       (identifier)
-      (type_identifier
-        (primitive_keyword))
+      (type_expression
+        (type_identifier
+          (primitive_keyword)))
       (block
         (return_statement
           (expression
@@ -91,8 +93,9 @@ implements<T> T {
                 (string_literal)))))))
     (property_declaration
       (identifier)
-      (type_identifier
-        (identifier)))))
+      (type_expression
+        (type_identifier
+          (identifier))))))
 
 ================================================================================
 VALID - Implements with array generic

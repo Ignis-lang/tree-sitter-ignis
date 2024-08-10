@@ -15,16 +15,19 @@ record User {
     (identifier)
     (record_property_declaration
       (identifier)
-      (type_identifier
-        (primitive_keyword)))
+      (type_expression
+        (type_identifier
+          (primitive_keyword))))
     (record_property_declaration
       (identifier)
-      (type_identifier
-        (primitive_keyword)))
+      (type_expression
+        (type_identifier
+          (primitive_keyword))))
     (record_method_declaration
       (identifier)
-      (type_identifier
-        (primitive_keyword)))))
+      (type_expression
+        (type_identifier
+          (primitive_keyword))))))
 
 ================================================================================
 VALID - Export record
@@ -48,32 +51,39 @@ export record FFIConfig {
       (identifier)
       (record_property_declaration
         (identifier)
-        (type_identifier
-          (identifier)))
+        (type_expression
+          (type_identifier
+            (identifier))))
       (record_property_declaration
         (identifier)
-        (type_identifier
-          (identifier)))
+        (type_expression
+          (type_identifier
+            (identifier))))
       (record_property_declaration
         (identifier)
-        (type_identifier
-          (primitive_keyword)))
+        (type_expression
+          (type_identifier
+            (primitive_keyword))))
       (record_property_declaration
         (identifier)
-        (type_identifier
-          (identifier)))
+        (type_expression
+          (type_identifier
+            (identifier))))
       (record_property_declaration
         (identifier)
-        (type_identifier
-          (identifier)))
+        (type_expression
+          (type_identifier
+            (identifier))))
       (record_property_declaration
         (identifier)
-        (type_identifier
-          (primitive_keyword)))
+        (type_expression
+          (type_identifier
+            (primitive_keyword))))
       (record_property_declaration
         (identifier)
-        (type_identifier
-          (identifier))))))
+        (type_expression
+          (type_identifier
+            (identifier)))))))
 
 ================================================================================
 VALID - sdasdasd
@@ -92,8 +102,9 @@ let user: User = {
 (source_file
   (variable_declaration
     (identifier)
-    (type_identifier
-      (identifier))
+    (type_expression
+      (type_identifier
+        (identifier)))
     (expression
       (primary_expression
         (literal
@@ -106,8 +117,9 @@ let user: User = {
                   (string_literal))))
             (method_declaration
               (identifier)
-              (type_identifier
-                (primitive_keyword))
+              (type_expression
+                (type_identifier
+                  (primitive_keyword)))
               (block
                 (return_statement
                   (expression

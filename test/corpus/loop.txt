@@ -13,8 +13,9 @@ function main(): void {
 (source_file
   (function_declaration
     (identifier)
-    (type_identifier
-      (primitive_keyword))
+    (type_expression
+      (type_identifier
+        (primitive_keyword)))
     (block
       (for_statement
         (for_variable_declaration
@@ -64,8 +65,9 @@ function main(): void {
 (source_file
   (function_declaration
     (identifier)
-    (type_identifier
-      (primitive_keyword))
+    (type_expression
+      (type_identifier
+        (primitive_keyword)))
     (block
       (for_of_statement
         (identifier)
@@ -98,8 +100,9 @@ function main(): void {
 (source_file
   (function_declaration
     (identifier)
-    (type_identifier
-      (primitive_keyword))
+    (type_expression
+      (type_identifier
+        (primitive_keyword)))
     (block
       (while_statement
         (expression

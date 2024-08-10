@@ -9,8 +9,9 @@ decorator Only(IgnisLanguageSupported);
 (source_file
   (decorator_declaration
     (identifier)
-    (type_identifier
-      (identifier))))
+    (type_expression
+      (type_identifier
+        (identifier)))))
 
 ================================================================================
 VALID - Export decorator declaration
@@ -24,8 +25,9 @@ export decorator Only(IgnisLanguageSupported);
   (export_statement
     (decorator_declaration
       (identifier)
-      (type_identifier
-        (identifier)))))
+      (type_expression
+        (type_identifier
+          (identifier))))))
 
 ================================================================================
 VALID - Use decorator

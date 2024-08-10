@@ -12,32 +12,36 @@ let d: f64 = 1.3;
 (source_file
   (variable_declaration
     (identifier)
-    (type_identifier
-      (primitive_keyword))
+    (type_expression
+      (type_identifier
+        (primitive_keyword)))
     (expression
       (primary_expression
         (literal
           (integer_literal)))))
   (variable_declaration
     (identifier)
-    (type_identifier
-      (primitive_keyword))
+    (type_expression
+      (type_identifier
+        (primitive_keyword)))
     (expression
       (primary_expression
         (literal
           (string_literal)))))
   (variable_declaration
     (identifier)
-    (type_identifier
-      (primitive_keyword))
+    (type_expression
+      (type_identifier
+        (primitive_keyword)))
     (expression
       (primary_expression
         (literal
           (boolean_literal)))))
   (variable_declaration
     (identifier)
-    (type_identifier
-      (primitive_keyword))
+    (type_expression
+      (type_identifier
+        (primitive_keyword)))
     (expression
       (primary_expression
         (literal
@@ -54,8 +58,9 @@ let result: i64 = math.sum(x, y);
 (source_file
   (variable_declaration
     (identifier)
-    (type_identifier
-      (primitive_keyword))
+    (type_expression
+      (type_identifier
+        (primitive_keyword)))
     (expression
       (get_expression
         (method_call_expression

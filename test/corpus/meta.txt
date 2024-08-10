@@ -16,18 +16,21 @@ meta Metadata(name: string, name2: string);
     (identifier))
   (metadata_declaration
     (identifier)
-    (type_identifier
-      (primitive_keyword)))
+    (type_expression
+      (type_identifier
+        (primitive_keyword))))
   (metadata_declaration
     (identifier)
     (parameter_declaration
       (identifier)
-      (type_identifier
-        (primitive_keyword)))
+      (type_expression
+        (type_identifier
+          (primitive_keyword))))
     (parameter_declaration
       (identifier)
-      (type_identifier
-        (primitive_keyword)))))
+      (type_expression
+        (type_identifier
+          (primitive_keyword))))))
 
 ================================================================================
 VALID - Use meta
@@ -59,8 +62,9 @@ function test(): void {}
             (string_literal))))))
   (function_declaration
     (identifier)
-    (type_identifier
-      (primitive_keyword))
+    (type_expression
+      (type_identifier
+        (primitive_keyword)))
     (block)))
 
 ================================================================================
@@ -86,10 +90,12 @@ function test(#[Metadata("test", "test")] test: string): void {}
             (literal
               (string_literal)))))
       (identifier)
+      (type_expression
+        (type_identifier
+          (primitive_keyword))))
+    (type_expression
       (type_identifier
         (primitive_keyword)))
-    (type_identifier
-      (primitive_keyword))
     (block)))
 
 ================================================================================
@@ -116,11 +122,13 @@ record Test {
       (identifier))
     (record_property_declaration
       (identifier)
-      (type_identifier
-        (primitive_keyword)))
+      (type_expression
+        (type_identifier
+          (primitive_keyword))))
     (metadata_expression
       (identifier))
     (record_method_declaration
       (identifier)
-      (type_identifier
-        (primitive_keyword)))))
+      (type_expression
+        (type_identifier
+          (primitive_keyword))))))

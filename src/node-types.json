@@ -405,7 +405,7 @@
           "named": true
         },
         {
-          "type": "type_identifier",
+          "type": "type_expression",
           "named": true
         }
       ]
@@ -801,7 +801,7 @@
           "named": true
         },
         {
-          "type": "type_identifier",
+          "type": "type_expression",
           "named": true
         }
       ]
@@ -1059,7 +1059,7 @@
           "named": true
         },
         {
-          "type": "type_identifier",
+          "type": "type_expression",
           "named": true
         }
       ]
@@ -1204,7 +1204,7 @@
           "named": true
         },
         {
-          "type": "type_identifier",
+          "type": "type_expression",
           "named": true
         }
       ]
@@ -1297,7 +1297,7 @@
           "named": true
         },
         {
-          "type": "type_identifier",
+          "type": "type_expression",
           "named": true
         }
       ]
@@ -1378,7 +1378,7 @@
           "named": true
         },
         {
-          "type": "type_identifier",
+          "type": "type_expression",
           "named": true
         }
       ]
@@ -1505,7 +1505,7 @@
           "named": true
         },
         {
-          "type": "type_identifier",
+          "type": "type_expression",
           "named": true
         }
       ]
@@ -1571,11 +1571,15 @@
       "required": true,
       "types": [
         {
+          "type": "generic_type_declaration",
+          "named": true
+        },
+        {
           "type": "parameter_declaration",
           "named": true
         },
         {
-          "type": "type_identifier",
+          "type": "type_expression",
           "named": true
         }
       ]
@@ -1597,11 +1601,15 @@
       }
     },
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
-          "type": "type_identifier",
+          "type": "generic_type_declaration",
+          "named": true
+        },
+        {
+          "type": "type_expression",
           "named": true
         }
       ]
@@ -1721,15 +1729,7 @@
           "named": true
         },
         {
-          "type": "intersection_type",
-          "named": true
-        },
-        {
-          "type": "type_identifier",
-          "named": true
-        },
-        {
-          "type": "union_type",
+          "type": "type_expression",
           "named": true
         }
       ]
@@ -1805,7 +1805,7 @@
         "required": true,
         "types": [
           {
-            "type": "type_identifier",
+            "type": "type_expression",
             "named": true
           }
         ]
