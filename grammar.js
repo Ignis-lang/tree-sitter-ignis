@@ -108,7 +108,6 @@ module.exports = grammar({
         $.decorator_declaration,
         $.decorator_use,
         $.metadata_declaration,
-        $.metadata_expression,
         $.expression,
       ),
 
@@ -286,7 +285,12 @@ module.exports = grammar({
         'record',
         $.identifier,
         '{',
-        repeat(choice($.record_property_declaration, $.record_method_declaration, $.decorator_use)),
+        repeat(
+          seq(
+            optional($.metadata_expression),
+            choice($.record_property_declaration, $.record_method_declaration, $.decorator_use),
+          ),
+        ),
         '}',
       ),
 
@@ -380,6 +384,7 @@ module.exports = grammar({
 
     parameter_declaration: ($) =>
       seq(
+        optional($.metadata_expression),
         $.identifier,
         ':',
         optional($.reference_operator),
@@ -450,6 +455,7 @@ module.exports = grammar({
         $.cast,
         $.match_expression,
         $.get_expression,
+        $.metadata_expression,
       ),
 
     cast: ($) => prec(PREC.CAST, seq($.identifier, 'as', $.type_expression)),

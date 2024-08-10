@@ -69,10 +69,6 @@
         },
         {
           "type": "SYMBOL",
-          "name": "metadata_expression"
-        },
-        {
-          "type": "SYMBOL",
           "name": "expression"
         }
       ]
@@ -1445,19 +1441,36 @@
         {
           "type": "REPEAT",
           "content": {
-            "type": "CHOICE",
+            "type": "SEQ",
             "members": [
               {
-                "type": "SYMBOL",
-                "name": "record_property_declaration"
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "metadata_expression"
+                  },
+                  {
+                    "type": "BLANK"
+                  }
+                ]
               },
               {
-                "type": "SYMBOL",
-                "name": "record_method_declaration"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "decorator_use"
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "record_property_declaration"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "record_method_declaration"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "decorator_use"
+                  }
+                ]
               }
             ]
           }
@@ -2392,6 +2405,18 @@
       "type": "SEQ",
       "members": [
         {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "metadata_expression"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
           "type": "SYMBOL",
           "name": "identifier"
         },
@@ -2863,6 +2888,10 @@
         {
           "type": "SYMBOL",
           "name": "get_expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "metadata_expression"
         }
       ]
     },

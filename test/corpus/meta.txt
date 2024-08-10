@@ -39,25 +39,88 @@ function test(): void {}
 --------------------------------------------------------------------------------
 
 (source_file
-  (metadata_expression
-    (identifier)
-    (identifier)
-    (identifier)
-    (expression
-      (primary_expression
-        (literal
-          (string_literal))))
-    (identifier)
-    (expression
-      (primary_expression
-        (literal
-          (string_literal))))
-    (expression
-      (primary_expression
-        (literal
-          (string_literal)))))
+  (expression
+    (metadata_expression
+      (identifier)
+      (identifier)
+      (identifier)
+      (expression
+        (primary_expression
+          (literal
+            (string_literal))))
+      (identifier)
+      (expression
+        (primary_expression
+          (literal
+            (string_literal))))
+      (expression
+        (primary_expression
+          (literal
+            (string_literal))))))
   (function_declaration
     (identifier)
     (type_identifier
       (primitive_keyword))
     (block)))
+
+================================================================================
+VALID - Use meta in param
+================================================================================
+
+function test(#[Metadata("test", "test")] test: string): void {}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameter_declaration
+      (metadata_expression
+        (identifier)
+        (expression
+          (primary_expression
+            (literal
+              (string_literal))))
+        (expression
+          (primary_expression
+            (literal
+              (string_literal)))))
+      (identifier)
+      (type_identifier
+        (primitive_keyword)))
+    (type_identifier
+      (primitive_keyword))
+    (block)))
+
+================================================================================
+VALID - Use meta in record
+================================================================================
+
+#[Metadata]
+record Test {
+  #[Metadata]
+  test: string;
+  #[Metadata]
+  test2(): string;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (expression
+    (metadata_expression
+      (identifier)))
+  (record_declaration
+    (identifier)
+    (metadata_expression
+      (identifier))
+    (record_property_declaration
+      (identifier)
+      (type_identifier
+        (primitive_keyword)))
+    (metadata_expression
+      (identifier))
+    (record_method_declaration
+      (identifier)
+      (type_identifier
+        (primitive_keyword)))))

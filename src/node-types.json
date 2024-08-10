@@ -552,6 +552,10 @@
           "named": true
         },
         {
+          "type": "metadata_expression",
+          "named": true
+        },
+        {
           "type": "prefix_unary_expression",
           "named": true
         },
@@ -658,10 +662,6 @@
         },
         {
           "type": "metadata_declaration",
-          "named": true
-        },
-        {
-          "type": "metadata_expression",
           "named": true
         },
         {
@@ -964,10 +964,6 @@
         },
         {
           "type": "metadata_declaration",
-          "named": true
-        },
-        {
-          "type": "metadata_expression",
           "named": true
         },
         {
@@ -1370,6 +1366,10 @@
           "named": true
         },
         {
+          "type": "metadata_expression",
+          "named": true
+        },
+        {
           "type": "mutable_specifier",
           "named": true
         },
@@ -1533,6 +1533,10 @@
           "named": true
         },
         {
+          "type": "metadata_expression",
+          "named": true
+        },
+        {
           "type": "record_method_declaration",
           "named": true
         },
@@ -1668,10 +1672,6 @@
         },
         {
           "type": "metadata_declaration",
-          "named": true
-        },
-        {
-          "type": "metadata_expression",
           "named": true
         },
         {
