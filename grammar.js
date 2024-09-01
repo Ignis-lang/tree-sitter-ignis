@@ -517,7 +517,7 @@ module.exports = grammar({
 
     intersection_type: ($) => prec.left(seq($.type_identifier, repeat(seq('&', $.type_identifier)))),
 
-    type_function: ($) => seq('(', optional(commaSep($.parameter_declaration)), ')', ':', $.type_expression),
+    type_function: ($) => seq('(', optional(commaSep($.parameter_declaration)), ')', '-', '>', $.type_expression),
 
     type_expression: ($) =>
       choice($.type_function, $.type_identifier, $.union_type, $.intersection_type, $.array_type),
