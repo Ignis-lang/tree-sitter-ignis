@@ -4,3 +4,4 @@ target/
 *.so
 *.o
 build/
+.direnv/
