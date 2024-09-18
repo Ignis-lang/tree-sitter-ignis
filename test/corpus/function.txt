@@ -25,7 +25,8 @@ function main(): void {
         (expression
           (primary_expression
             (literal
-              (integer_literal)))))
+              (integer_literal
+                (decimal_literal))))))
       (expression_statement
         (expression
           (call_expression
@@ -88,11 +89,13 @@ sum<int>(1, 2)
       (expression
         (primary_expression
           (literal
-            (integer_literal))))
+            (integer_literal
+              (decimal_literal)))))
       (expression
         (primary_expression
           (literal
-            (integer_literal)))))))
+            (integer_literal
+              (decimal_literal))))))))
 
 ================================================================================
 VALID - Mut params
@@ -129,7 +132,8 @@ function fibonacci(num: mut i64): i64 {
               (primary_expression
                 (identifier)))
             (literal
-              (integer_literal))))
+              (integer_literal
+                (decimal_literal)))))
         (block
           (return_statement
             (expression
@@ -148,7 +152,8 @@ function fibonacci(num: mut i64): i64 {
                       (primary_expression
                         (identifier)))
                     (literal
-                      (integer_literal))))))
+                      (integer_literal
+                        (decimal_literal)))))))
             (expression
               (call_expression
                 (primary_expression
@@ -159,4 +164,5 @@ function fibonacci(num: mut i64): i64 {
                       (primary_expression
                         (identifier)))
                     (literal
-                      (integer_literal))))))))))))
+                      (integer_literal
+                        (decimal_literal)))))))))))))

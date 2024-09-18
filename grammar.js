@@ -50,6 +50,8 @@ const primitiveTypes = [
   'string',
   'void',
   'unknown',
+  'hex',
+  'binary',
 ];
 
 module.exports = grammar({
@@ -517,7 +519,8 @@ module.exports = grammar({
 
     intersection_type: ($) => prec.left(seq($.type_identifier, repeat(seq('&', $.type_identifier)))),
 
-    type_function: ($) => seq('(', optional(commaSep($.parameter_declaration)), ')', '-', '>', $.type_expression),
+    type_function: ($) =>
+      seq('(', optional(commaSep($.parameter_declaration)), ')', '-', '>', $.type_expression),
 
     type_expression: ($) =>
       choice($.type_function, $.type_identifier, $.union_type, $.intersection_type, $.array_type),
@@ -552,7 +555,13 @@ module.exports = grammar({
 
     array_literal: ($) => seq('[', commaSep($.expression), ']'),
 
-    integer_literal: (_) => token(seq(optional('-'), choice(/([0-9][_0-9]*[0-9])|([0-9])/))),
+    decimal_literal: (_) => token(seq(optional('-'), /[0-9]+(_[0-9]+)*/)),
+
+    hex_literal: (_) => token(seq(optional('-'), /0[xX][0-9a-fA-F]+(_[0-9a-fA-F]+)*/)),
+
+    binary_literal: (_) => token(seq(optional('-'), /0[bB][01]+(_[01]+)*/)),
+
+    integer_literal: ($) => choice($.decimal_literal, $.hex_literal, $.binary_literal),
     float_literal: (_) => token(seq(optional('-'), /\d+(_\d+)*\.\d+(_\d+)*/)),
 
     char_literal: (_) => /'(\\.|[^'\\])'/,

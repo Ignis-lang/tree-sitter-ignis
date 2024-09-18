@@ -125,7 +125,8 @@ function main(): void {
         (expression
           (primary_expression
             (literal
-              (integer_literal)))))
+              (integer_literal
+                (decimal_literal))))))
       (expression_statement
         (expression
           (cast
@@ -155,3 +156,34 @@ type Fn = (value: i64) -> i64;
         (type_expression
           (type_identifier
             (primitive_keyword)))))))
+
+======
+VALID - Use type with hex and binary
+======
+
+let h: hex = 0x1F;
+let b: binary = 0b101;
+
+-----
+
+(source_file
+  (variable_declaration
+    (identifier)
+    (type_expression
+      (type_identifier
+        (primitive_keyword)))
+    (expression
+      (primary_expression
+        (literal
+          (integer_literal
+            (hex_literal))))))
+  (variable_declaration
+    (identifier)
+    (type_expression
+      (type_identifier
+        (primitive_keyword)))
+    (expression
+      (primary_expression
+        (literal
+          (integer_literal
+            (binary_literal)))))))

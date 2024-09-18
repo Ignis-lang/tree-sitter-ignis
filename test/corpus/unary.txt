@@ -27,9 +27,11 @@ function main(): void {
               (expression
                 (binary_expression
                   (literal
-                    (integer_literal))
+                    (integer_literal
+                      (decimal_literal)))
                   (literal
-                    (integer_literal))))))))
+                    (integer_literal
+                      (decimal_literal)))))))))
       (expression_statement
         (expression
           (prefix_unary_expression

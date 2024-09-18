@@ -25,4 +25,5 @@ const HELLO_WORLD_LEN: i64 = 13;
     (expression
       (primary_expression
         (literal
-          (integer_literal))))))
+          (integer_literal
+            (decimal_literal)))))))

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "Ignis grammar for tree-sitter",
   "main": "bindings/node",
+  "types": "bindings/node",
   "repository": {
     "type": "git",
     "url": "https://github.com/Ignis-lang/tree-sitter-ignis.git"
@@ -13,13 +14,24 @@
   ],
   "scripts": {
     "build": "tree-sitter build-wasm && node-gyp rebuild",
-    "generate": "tree-sitter generate"
+    "generate": "tree-sitter generate",
+    "install": "node-gyp-build",
+    "prebuildify": "prebuildify --napi --strip"
   },
   "author": "Ignacio Perez",
   "license": "MIT",
   "dependencies": {
-    "nan": "^2.19.0",
-    "sharp": "^0.33.2"
+    "sharp": "^0.33.2",
+    "node-addon-api": "^7.1.0",
+    "node-gyp-build": "^4.8.0"
+  },
+  "peerDependencies": {
+    "tree-sitter": "^0.21.0"
+  },
+  "peerDependenciesMeta": {
+    "tree_sitter": {
+      "optional": true
+    }
   },
   "files": [
     "src/**/*",
@@ -27,7 +39,8 @@
     "tree-sitter-ignis.wasm"
   ],
   "devDependencies": {
-    "tree-sitter-cli": "^0.20.8"
+    "tree-sitter-cli": "^0.20.8",
+    "prebuildify": "^6.0.0"
   },
   "tree-sitter": [
     {

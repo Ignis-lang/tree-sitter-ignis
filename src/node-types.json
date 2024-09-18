@@ -918,6 +918,29 @@
     }
   },
   {
+    "type": "integer_literal",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "binary_literal",
+          "named": true
+        },
+        {
+          "type": "decimal_literal",
+          "named": true
+        },
+        {
+          "type": "hex_literal",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "interface_declaration",
     "named": true,
     "fields": {},
@@ -1991,6 +2014,14 @@
     "named": false
   },
   {
+    "type": "binary",
+    "named": false
+  },
+  {
+    "type": "binary_literal",
+    "named": true
+  },
+  {
     "type": "boolean",
     "named": false
   },
@@ -2021,6 +2052,10 @@
   {
     "type": "continue",
     "named": false
+  },
+  {
+    "type": "decimal_literal",
+    "named": true
   },
   {
     "type": "declare",
@@ -2087,6 +2122,14 @@
     "named": false
   },
   {
+    "type": "hex",
+    "named": false
+  },
+  {
+    "type": "hex_literal",
+    "named": true
+  },
+  {
     "type": "i16",
     "named": false
   },
@@ -2121,10 +2164,6 @@
   {
     "type": "in",
     "named": false
-  },
-  {
-    "type": "integer_literal",
-    "named": true
   },
   {
     "type": "interface",

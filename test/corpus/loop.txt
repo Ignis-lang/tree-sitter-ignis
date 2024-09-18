@@ -23,14 +23,16 @@ function main(): void {
           (expression
             (primary_expression
               (literal
-                (integer_literal)))))
+                (integer_literal
+                  (decimal_literal))))))
         (expression
           (binary_expression
             (expression
               (primary_expression
                 (identifier)))
             (literal
-              (integer_literal))))
+              (integer_literal
+                (decimal_literal)))))
         (expression
           (suffix_unary_expression
             (expression
@@ -111,7 +113,8 @@ function main(): void {
               (primary_expression
                 (identifier)))
             (literal
-              (integer_literal))))
+              (integer_literal
+                (decimal_literal)))))
         (block
           (expression_statement
             (expression

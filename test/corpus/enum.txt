@@ -40,19 +40,22 @@ enum Status {
       (expression
         (primary_expression
           (literal
-            (integer_literal)))))
+            (integer_literal
+              (decimal_literal))))))
     (enum_member_declaration
       (identifier)
       (expression
         (primary_expression
           (literal
-            (integer_literal)))))
+            (integer_literal
+              (decimal_literal))))))
     (enum_member_declaration
       (identifier)
       (expression
         (primary_expression
           (literal
-            (integer_literal)))))))
+            (integer_literal
+              (decimal_literal))))))))
 
 ================================================================================
 VALID - Enum declaration with string values

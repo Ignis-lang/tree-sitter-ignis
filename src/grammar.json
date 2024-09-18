@@ -2841,6 +2841,14 @@
               {
                 "type": "STRING",
                 "value": "unknown"
+              },
+              {
+                "type": "STRING",
+                "value": "hex"
+              },
+              {
+                "type": "STRING",
+                "value": "binary"
               }
             ]
           },
@@ -3975,6 +3983,14 @@
         {
           "type": "STRING",
           "value": "unknown"
+        },
+        {
+          "type": "STRING",
+          "value": "hex"
+        },
+        {
+          "type": "STRING",
+          "value": "binary"
         }
       ]
     },
@@ -4077,7 +4093,7 @@
         }
       ]
     },
-    "integer_literal": {
+    "decimal_literal": {
       "type": "TOKEN",
       "content": {
         "type": "SEQ",
@@ -4095,16 +4111,76 @@
             ]
           },
           {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "PATTERN",
-                "value": "([0-9][_0-9]*[0-9])|([0-9])"
-              }
-            ]
+            "type": "PATTERN",
+            "value": "[0-9]+(_[0-9]+)*"
           }
         ]
       }
+    },
+    "hex_literal": {
+      "type": "TOKEN",
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "STRING",
+                "value": "-"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
+            "type": "PATTERN",
+            "value": "0[xX][0-9a-fA-F]+(_[0-9a-fA-F]+)*"
+          }
+        ]
+      }
+    },
+    "binary_literal": {
+      "type": "TOKEN",
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "STRING",
+                "value": "-"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
+            "type": "PATTERN",
+            "value": "0[bB][01]+(_[01]+)*"
+          }
+        ]
+      }
+    },
+    "integer_literal": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "decimal_literal"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "hex_literal"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "binary_literal"
+        }
+      ]
     },
     "float_literal": {
       "type": "TOKEN",
@@ -4419,4 +4495,3 @@
   "inline": [],
   "supertypes": []
 }
-
