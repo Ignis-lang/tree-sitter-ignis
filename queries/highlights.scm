@@ -57,5 +57,3 @@
 
 (decorator_use (identifier) @decorator)
 (decorator_declaration (identifier) @decorator)
-
-(namespace_declaration (identifier) @variable)
