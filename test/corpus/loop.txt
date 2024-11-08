@@ -46,7 +46,7 @@ function main(): void {
                   (identifier))
                 (expression
                   (primary_expression
-                    (array_access_expression
+                    (vector_access_expression
                       (identifier)
                       (expression
                         (primary_expression

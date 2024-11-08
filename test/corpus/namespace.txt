@@ -1,0 +1,102 @@
+================================================================================
+VALID - Namespace
+================================================================================
+
+namespace Test {
+  function test(): void {}
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (namespace_declaration
+    (identifier)
+    (namespace_items
+      (function_declaration
+        (identifier)
+        (type_expression
+          (type_identifier
+            (primitive_keyword)))
+        (block)))))
+
+================================================================================
+VALID - Namespace with multiple items
+================================================================================
+
+namespace Foo {
+  function test(): void {}
+  class Bar {}
+  record Baz {}
+  enum Qux {}
+  type Quux = i64;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (namespace_declaration
+    (identifier)
+    (namespace_items
+      (function_declaration
+        (identifier)
+        (type_expression
+          (type_identifier
+            (primitive_keyword)))
+        (block)))
+    (namespace_items
+      (class_declaration
+        (identifier)))
+    (namespace_items
+      (record_declaration
+        (type_expression
+          (type_identifier
+            (identifier)))))
+    (namespace_items
+      (enum_declaration
+        (identifier)))
+    (namespace_items
+      (type_definition
+        (identifier)
+        (type_expression
+          (type_identifier
+            (primitive_keyword)))))))
+
+================================================================================
+VALID - Access namespace members
+================================================================================
+
+namespace Foo {
+  function test(): void {}
+}
+
+function main(): void {
+  Foo::test();
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (namespace_declaration
+    (identifier)
+    (namespace_items
+      (function_declaration
+        (identifier)
+        (type_expression
+          (type_identifier
+            (primitive_keyword)))
+        (block))))
+  (function_declaration
+    (identifier)
+    (type_expression
+      (type_identifier
+        (primitive_keyword)))
+    (block
+      (expression_statement
+        (expression
+          (get_expression
+            (method_call_expression
+              (property_access
+                (expression
+                  (primary_expression
+                    (identifier)))
+                (identifier)))))))))

@@ -32,9 +32,6 @@
 (type_identifier) @type
 (type_identifier (identifier) @type)
 
-((identifier) @type.builtin
- (#match? @type.builtin "^[A-Z]"))
- 
 (variable_declaration (identifier) @variable)
 (parameter_declaration (identifier) @parameter)
 
@@ -60,3 +57,5 @@
 
 (decorator_use (identifier) @decorator)
 (decorator_declaration (identifier) @decorator)
+
+(namespace_declaration (identifier) @variable)

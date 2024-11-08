@@ -130,7 +130,7 @@ VALID - Use decorator with record param
             (expression
               (primary_expression
                 (literal
-                  (array_literal
+                  (vector_literal
                     (expression
                       (primary_expression
                         (literal

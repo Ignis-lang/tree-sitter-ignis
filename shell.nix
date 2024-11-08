@@ -8,7 +8,6 @@
       cargo
       rustc
       gcc
-      tree-sitter
       nodejs
       yarn
     ];

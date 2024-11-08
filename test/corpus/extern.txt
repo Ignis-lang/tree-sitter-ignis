@@ -11,13 +11,14 @@ extern io {
 (source_file
   (extern_declaration
     (identifier)
-    (function_declaration
-      (identifier)
-      (parameter_declaration
+    (extern_items
+      (function_declaration
         (identifier)
+        (parameter_declaration
+          (identifier)
+          (type_expression
+            (type_identifier
+              (primitive_keyword))))
         (type_expression
           (type_identifier
-            (primitive_keyword))))
-      (type_expression
-        (type_identifier
-          (primitive_keyword))))))
+            (primitive_keyword)))))))

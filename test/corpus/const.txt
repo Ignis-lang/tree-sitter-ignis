@@ -8,7 +8,7 @@ const HELLO_WORLD_LEN: i64 = 13;
 --------------------------------------------------------------------------------
 
 (source_file
-  (variable_declaration
+  (const_declaration
     (identifier)
     (type_expression
       (type_identifier
@@ -17,7 +17,7 @@ const HELLO_WORLD_LEN: i64 = 13;
       (primary_expression
         (literal
           (string_literal)))))
-  (variable_declaration
+  (const_declaration
     (identifier)
     (type_expression
       (type_identifier

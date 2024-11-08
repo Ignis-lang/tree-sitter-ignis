@@ -65,6 +65,14 @@
         },
         {
           "type": "SYMBOL",
+          "name": "namespace_declaration"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "const_declaration"
+        },
+        {
+          "type": "SYMBOL",
           "name": "expression"
         }
       ]
@@ -913,11 +921,65 @@
         },
         {
           "type": "SYMBOL",
-          "name": "array_access_expression"
+          "name": "vector_access_expression"
         },
         {
           "type": "SYMBOL",
           "name": "class_instance_expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "lambda_expression"
+        }
+      ]
+    },
+    "lambda_expression": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "parameter_declaration"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": ")"
+        },
+        {
+          "type": "STRING",
+          "value": ":"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "type_expression"
+        },
+        {
+          "type": "STRING",
+          "value": "->"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "expression"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "block"
+            }
+          ]
         }
       ]
     },
@@ -932,8 +994,17 @@
             "name": "expression"
           },
           {
-            "type": "STRING",
-            "value": "."
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "STRING",
+                "value": "."
+              },
+              {
+                "type": "STRING",
+                "value": "::"
+              }
+            ]
           },
           {
             "type": "FIELD",
@@ -1548,12 +1619,44 @@
           "value": "{"
         },
         {
-          "type": "SYMBOL",
-          "name": "_definition"
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "extern_items"
+          }
         },
         {
           "type": "STRING",
           "value": "}"
+        }
+      ]
+    },
+    "extern_items": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "function_declaration"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "enum_declaration"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "record_declaration"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "export_statement"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "class_declaration"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "interface_declaration"
         }
       ]
     },
@@ -2062,6 +2165,67 @@
         }
       ]
     },
+    "namespace_declaration": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "namespace"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
+        },
+        {
+          "type": "STRING",
+          "value": "{"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "namespace_items"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "}"
+        }
+      ]
+    },
+    "namespace_items": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "function_declaration"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "class_declaration"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "record_declaration"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "enum_declaration"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "type_definition"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "const_declaration"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "export_statement"
+        }
+      ]
+    },
     "generic_type_declaration": {
       "type": "SEQ",
       "members": [
@@ -2222,19 +2386,8 @@
               "name": "block"
             },
             {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
               "type": "STRING",
               "value": ";"
-            },
-            {
-              "type": "BLANK"
             }
           ]
         }
@@ -2277,8 +2430,53 @@
             ]
           },
           {
-            "type": "STRING",
-            "value": "="
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "STRING",
+                "value": "="
+              },
+              {
+                "type": "STRING",
+                "value": "+="
+              },
+              {
+                "type": "STRING",
+                "value": "-="
+              },
+              {
+                "type": "STRING",
+                "value": "*="
+              },
+              {
+                "type": "STRING",
+                "value": "/="
+              },
+              {
+                "type": "STRING",
+                "value": "%="
+              },
+              {
+                "type": "STRING",
+                "value": "&="
+              },
+              {
+                "type": "STRING",
+                "value": "|="
+              },
+              {
+                "type": "STRING",
+                "value": "^="
+              },
+              {
+                "type": "STRING",
+                "value": "<<="
+              },
+              {
+                "type": "STRING",
+                "value": ">>="
+              }
+            ]
           },
           {
             "type": "SYMBOL",
@@ -2328,21 +2526,45 @@
         }
       ]
     },
+    "const_declaration": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "const"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
+        },
+        {
+          "type": "STRING",
+          "value": ":"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "type_expression"
+        },
+        {
+          "type": "STRING",
+          "value": "="
+        },
+        {
+          "type": "SYMBOL",
+          "name": "expression"
+        },
+        {
+          "type": "STRING",
+          "value": ";"
+        }
+      ]
+    },
     "variable_declaration": {
       "type": "SEQ",
       "members": [
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "STRING",
-              "value": "let"
-            },
-            {
-              "type": "STRING",
-              "value": "const"
-            }
-          ]
+          "type": "STRING",
+          "value": "let"
         },
         {
           "type": "CHOICE",
@@ -2412,6 +2634,18 @@
             {
               "type": "SYMBOL",
               "name": "metadata_expression"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "..."
             },
             {
               "type": "BLANK"
@@ -2753,7 +2987,7 @@
         }
       ]
     },
-    "array_access_expression": {
+    "vector_access_expression": {
       "type": "SEQ",
       "members": [
         {
@@ -3606,7 +3840,7 @@
     },
     "identifier": {
       "type": "PATTERN",
-      "value": "[a-zA-Z_]\\w*"
+      "value": "[a-zA-Z_][a-zA-Z0-9_]*"
     },
     "type_identifier": {
       "type": "SEQ",
@@ -3795,11 +4029,11 @@
         },
         {
           "type": "SYMBOL",
-          "name": "array_type"
+          "name": "vector_type"
         }
       ]
     },
-    "array_type": {
+    "vector_type": {
       "type": "SEQ",
       "members": [
         {
@@ -3809,6 +4043,18 @@
         {
           "type": "STRING",
           "value": "["
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "integer_literal"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         },
         {
           "type": "STRING",
@@ -4023,7 +4269,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "array_literal"
+          "name": "vector_literal"
         },
         {
           "type": "SYMBOL",
@@ -4035,7 +4281,7 @@
       "type": "STRING",
       "value": "null"
     },
-    "array_literal": {
+    "vector_literal": {
       "type": "SEQ",
       "members": [
         {
@@ -4364,6 +4610,187 @@
           "value": "}"
         }
       ]
+    },
+    "keywords": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "abstract"
+        },
+        {
+          "type": "STRING",
+          "value": "as"
+        },
+        {
+          "type": "STRING",
+          "value": "async"
+        },
+        {
+          "type": "STRING",
+          "value": "await"
+        },
+        {
+          "type": "STRING",
+          "value": "break"
+        },
+        {
+          "type": "STRING",
+          "value": "continue"
+        },
+        {
+          "type": "STRING",
+          "value": "class"
+        },
+        {
+          "type": "STRING",
+          "value": "const"
+        },
+        {
+          "type": "STRING",
+          "value": "declare"
+        },
+        {
+          "type": "STRING",
+          "value": "else"
+        },
+        {
+          "type": "STRING",
+          "value": "enum"
+        },
+        {
+          "type": "STRING",
+          "value": "export"
+        },
+        {
+          "type": "STRING",
+          "value": "extends"
+        },
+        {
+          "type": "STRING",
+          "value": "false"
+        },
+        {
+          "type": "STRING",
+          "value": "for"
+        },
+        {
+          "type": "STRING",
+          "value": "from"
+        },
+        {
+          "type": "STRING",
+          "value": "function"
+        },
+        {
+          "type": "STRING",
+          "value": "is"
+        },
+        {
+          "type": "STRING",
+          "value": "if"
+        },
+        {
+          "type": "STRING",
+          "value": "implements"
+        },
+        {
+          "type": "STRING",
+          "value": "import"
+        },
+        {
+          "type": "STRING",
+          "value": "in"
+        },
+        {
+          "type": "STRING",
+          "value": "interface"
+        },
+        {
+          "type": "STRING",
+          "value": "let"
+        },
+        {
+          "type": "STRING",
+          "value": "meta"
+        },
+        {
+          "type": "STRING",
+          "value": "namespace"
+        },
+        {
+          "type": "STRING",
+          "value": "new"
+        },
+        {
+          "type": "STRING",
+          "value": "null"
+        },
+        {
+          "type": "STRING",
+          "value": "private"
+        },
+        {
+          "type": "STRING",
+          "value": "public"
+        },
+        {
+          "type": "STRING",
+          "value": "record"
+        },
+        {
+          "type": "STRING",
+          "value": "return"
+        },
+        {
+          "type": "STRING",
+          "value": "static"
+        },
+        {
+          "type": "STRING",
+          "value": "this"
+        },
+        {
+          "type": "STRING",
+          "value": "true"
+        },
+        {
+          "type": "STRING",
+          "value": "type"
+        },
+        {
+          "type": "STRING",
+          "value": "typeof"
+        },
+        {
+          "type": "STRING",
+          "value": "void"
+        },
+        {
+          "type": "STRING",
+          "value": "when"
+        },
+        {
+          "type": "STRING",
+          "value": "while"
+        },
+        {
+          "type": "STRING",
+          "value": "with"
+        },
+        {
+          "type": "STRING",
+          "value": "mut"
+        },
+        {
+          "type": "STRING",
+          "value": "override"
+        },
+        {
+          "type": "STRING",
+          "value": "super"
+        }
+      ]
     }
   },
   "extras": [
@@ -4382,44 +4809,7 @@
   ],
   "conflicts": [
     [
-      "_statement",
-      "expression"
-    ],
-    [
-      "identifier",
-      "type_identifier"
-    ],
-    [
-      "identifier",
-      "expression"
-    ],
-    [
-      "identifier",
-      "literal"
-    ],
-    [
       "call_expression",
-      "for_statement"
-    ],
-    [
-      "call_expression",
-      "group_expression",
-      "binary_expression"
-    ],
-    [
-      "call_expression",
-      "expression"
-    ],
-    [
-      "_expression",
-      "expression"
-    ],
-    [
-      "suffix_unary_expression",
-      "expression"
-    ],
-    [
-      "prefix_unary_expression",
       "expression"
     ],
     [
@@ -4427,12 +4817,8 @@
       "suffix_unary_expression"
     ],
     [
-      "method_call_expression",
-      "call_expression"
-    ],
-    [
       "primary_expression",
-      "array_access_expression"
+      "vector_access_expression"
     ],
     [
       "primary_expression",
@@ -4457,14 +4843,7 @@
       "decorator_use"
     ],
     [
-      "decorator_declaration"
-    ],
-    [
       "function_declaration"
-    ],
-    [
-      "union_type",
-      "intersection_type"
     ],
     [
       "block",
@@ -4475,10 +4854,6 @@
       "property_modifier"
     ],
     [
-      "expression",
-      "get_expression"
-    ],
-    [
       "union_type",
       "intersection_type",
       "type_expression"
@@ -4487,7 +4862,11 @@
       "union_type",
       "intersection_type",
       "type_expression",
-      "array_type"
+      "vector_type"
+    ],
+    [
+      "lambda_expression",
+      "_expression"
     ]
   ],
   "precedences": [],
@@ -4495,3 +4874,4 @@
   "inline": [],
   "supertypes": []
 }
+

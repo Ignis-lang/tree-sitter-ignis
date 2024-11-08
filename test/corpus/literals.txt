@@ -151,11 +151,11 @@ VALID - array literal
   (expression
     (primary_expression
       (literal
-        (array_literal))))
+        (vector_literal))))
   (expression
     (primary_expression
       (literal
-        (array_literal
+        (vector_literal
           (expression
             (primary_expression
               (literal
@@ -174,61 +174,7 @@ VALID - array literal
   (expression
     (primary_expression
       (literal
-        (array_literal
-          (expression
-            (primary_expression
-              (literal
-                (integer_literal
-                  (decimal_literal)))))
-          (expression
-            (primary_expression
-              (literal
-                (integer_literal
-                  (decimal_literal)))))
-          (expression
-            (primary_expression
-              (literal
-                (integer_literal
-                  (decimal_literal)))))
-          (expression
-            (primary_expression
-              (literal
-                (integer_literal
-                  (decimal_literal)))))
-          (expression
-            (primary_expression
-              (literal
-                (integer_literal
-                  (decimal_literal)))))))))
-  (expression
-    (primary_expression
-      (literal
-        (array_literal
-          (expression
-            (primary_expression
-              (literal
-                (integer_literal
-                  (decimal_literal)))))
-          (expression
-            (primary_expression
-              (literal
-                (integer_literal
-                  (decimal_literal)))))
-          (expression
-            (primary_expression
-              (literal
-                (integer_literal
-                  (decimal_literal)))))
-          (expression
-            (primary_expression
-              (literal
-                (integer_literal
-                  (decimal_literal)))))
-          (expression
-            (primary_expression
-              (literal
-                (integer_literal
-                  (decimal_literal)))))
+        (vector_literal
           (expression
             (primary_expression
               (literal
@@ -257,12 +203,7 @@ VALID - array literal
   (expression
     (primary_expression
       (literal
-        (array_literal
-          (expression
-            (primary_expression
-              (literal
-                (integer_literal
-                  (decimal_literal)))))
+        (vector_literal
           (expression
             (primary_expression
               (literal
@@ -316,7 +257,66 @@ VALID - array literal
   (expression
     (primary_expression
       (literal
-        (array_literal
+        (vector_literal
+          (expression
+            (primary_expression
+              (literal
+                (integer_literal
+                  (decimal_literal)))))
+          (expression
+            (primary_expression
+              (literal
+                (integer_literal
+                  (decimal_literal)))))
+          (expression
+            (primary_expression
+              (literal
+                (integer_literal
+                  (decimal_literal)))))
+          (expression
+            (primary_expression
+              (literal
+                (integer_literal
+                  (decimal_literal)))))
+          (expression
+            (primary_expression
+              (literal
+                (integer_literal
+                  (decimal_literal)))))
+          (expression
+            (primary_expression
+              (literal
+                (integer_literal
+                  (decimal_literal)))))
+          (expression
+            (primary_expression
+              (literal
+                (integer_literal
+                  (decimal_literal)))))
+          (expression
+            (primary_expression
+              (literal
+                (integer_literal
+                  (decimal_literal)))))
+          (expression
+            (primary_expression
+              (literal
+                (integer_literal
+                  (decimal_literal)))))
+          (expression
+            (primary_expression
+              (literal
+                (integer_literal
+                  (decimal_literal)))))
+          (expression
+            (primary_expression
+              (literal
+                (integer_literal
+                  (decimal_literal)))))))))
+  (expression
+    (primary_expression
+      (literal
+        (vector_literal
           (expression
             (primary_expression
               (literal

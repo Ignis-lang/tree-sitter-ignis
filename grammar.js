@@ -34,7 +34,7 @@ function optionalPipeSep(rule) {
   return optional(pipeSepRepeat(rule));
 }
 
-const primitiveTypes = [
+const PRIMITIVE_TYPES = [
   'u8',
   'u16',
   'u32',
@@ -54,40 +54,109 @@ const primitiveTypes = [
   'binary',
 ];
 
+const KEYWORDS = [
+  'abstract',
+  'as',
+  'async',
+  'await',
+  'break',
+  'continue',
+  'class',
+  'const',
+  'declare',
+  'else',
+  'enum',
+  'export',
+  'extends',
+  'false',
+  'for',
+  'from',
+  'function',
+  'is',
+  'if',
+  'implements',
+  'import',
+  'in',
+  'interface',
+  'let',
+  'meta',
+  'namespace',
+  'new',
+  'null',
+  'private',
+  'public',
+  'record',
+  'return',
+  'static',
+  'this',
+  'true',
+  'type',
+  'typeof',
+  'void',
+  'when',
+  'while',
+  'with',
+  'mut',
+  'override',
+  'super',
+];
+
+const SEPARATORS = [',', ';', ':'];
+const DELIMITERS = ['.', '[', ']', '(', ')', '{', '}'];
+const ASSIGNMENT_OPERATORS = ['=', '+=', '-=', '*=', '/=', '%=', '&=', '|=', '^=', '<<=', '>>='];
+const SYMBOLS = [
+  ...SEPARATORS,
+  ...DELIMITERS,
+  '.',
+  '+',
+  '-',
+  '*',
+  '/',
+  '%',
+  '&',
+  '|',
+  '^',
+  '<<',
+  '>>',
+  '<',
+  '>',
+  '<=',
+  '>=',
+  '==',
+  '!=',
+  '!',
+  '~',
+  '?',
+  ':',
+  '||',
+  '&&',
+  '++',
+  '--',
+];
+
 module.exports = grammar({
   name: 'ignis',
 
   extras: ($) => [/\s/, $.doc_comment, $.comment],
+  words: (_) => KEYWORDS,
 
   conflicts: ($, previous) =>
     previous.concat([
-      [$._statement, $.expression],
-      [$.identifier, $.type_identifier],
-      [$.identifier, $.expression],
-      [$.identifier, $.literal],
-      [$.call_expression, $.for_statement],
-      [$.call_expression, $.group_expression, $.binary_expression],
       [$.call_expression, $.expression],
-      [$._expression, $.expression],
-      [$.suffix_unary_expression, $.expression],
-      [$.prefix_unary_expression, $.expression],
       [$.prefix_unary_expression, $.suffix_unary_expression],
-      [$.method_call_expression, $.call_expression],
-      [$.primary_expression, $.array_access_expression],
+      [$.primary_expression, $.vector_access_expression],
       [$.primary_expression, $.get_expression],
       [$._expression, $.primary_expression],
       [$.method_declaration, $.primary_expression],
       [$.for_statement, $.expression],
       [$.interface_method_declaration],
       [$.decorator_use],
-      [$.decorator_declaration],
       [$.function_declaration],
-      [$.union_type, $.intersection_type],
       [$.block, $.object_literal],
       [$.method_modifier, $.property_modifier],
-      [$.expression, $.get_expression],
       [$.union_type, $.intersection_type, $.type_expression],
-      [$.union_type, $.intersection_type, $.type_expression, $.array_type],
+      [$.union_type, $.intersection_type, $.type_expression, $.vector_type],
+      [$.lambda_expression, $._expression],
     ]),
 
   rules: {
@@ -108,6 +177,8 @@ module.exports = grammar({
         $.decorator_declaration,
         $.decorator_use,
         $.metadata_declaration,
+        $.namespace_declaration,
+        $.const_declaration,
         $.expression,
       ),
 
@@ -218,11 +289,25 @@ module.exports = grammar({
         $.method_call_expression,
         $.literal,
         $.group_expression,
-        $.array_access_expression,
+        $.vector_access_expression,
         $.class_instance_expression,
+        $.lambda_expression,
       ),
 
-    property_access: ($) => prec(PREC.FIELD, seq($.expression, '.', field('name', $.identifier))),
+    // <lambda> ::= "(" <parameters>? ")" ":" <type> "->" (<expression> | <block>)
+    lambda_expression: ($) =>
+      seq(
+        '(',
+        optional($.parameter_declaration),
+        ')',
+        ':',
+        $.type_expression,
+        '->',
+        choice($.expression, $.block),
+      ),
+
+    property_access: ($) =>
+      prec(PREC.FIELD, seq($.expression, choice('.', '::'), field('name', $.identifier))),
 
     get_expression: ($) => choice($.property_access, $.method_call_expression),
 
@@ -304,7 +389,16 @@ module.exports = grammar({
         '}',
       ),
 
-    extern_declaration: ($) => seq('extern', optional($.identifier), '{', $._definition, '}'),
+    extern_declaration: ($) => seq('extern', optional($.identifier), '{', repeat($.extern_items), '}'),
+    extern_items: ($) =>
+      choice(
+        $.function_declaration,
+        $.enum_declaration,
+        $.record_declaration,
+        $.export_statement,
+        $.class_declaration,
+        $.interface_declaration,
+      ),
 
     decorator_use: ($) => seq('@', $.identifier, optional(seq('(', optional(commaSep($.expression)), ')'))),
 
@@ -341,6 +435,18 @@ module.exports = grammar({
         ']',
       ),
 
+    namespace_declaration: ($) => seq('namespace', $.identifier, '{', repeat($.namespace_items), '}'),
+    namespace_items: ($) =>
+      choice(
+        $.function_declaration,
+        $.class_declaration,
+        $.record_declaration,
+        $.enum_declaration,
+        $.type_definition,
+        $.const_declaration,
+        $.export_statement,
+      ),
+
     // #endregion
     // #region Function
     generic_type_declaration: ($) => seq('<', commaSep1(choice($.type_expression, $.cast)), '>'),
@@ -355,8 +461,7 @@ module.exports = grammar({
         ')',
         ':',
         $.type_expression,
-        optional($.block),
-        optional(';'),
+        choice($.block, ';'),
       ),
 
     return_statement: ($) => seq('return', $.expression, ';'),
@@ -364,7 +469,10 @@ module.exports = grammar({
     // #endregion
 
     assignment_expression: ($) =>
-      prec(PREC.ASSIGN, seq(choice($.identifier, $.property_access), '=', $.expression, ';')),
+      prec(
+        PREC.ASSIGN,
+        seq(choice($.identifier, $.property_access), choice(...ASSIGNMENT_OPERATORS), $.expression, ';'),
+      ),
 
     reference_operator: (_) => '&',
     mutable_specifier: (_) => 'mut',
@@ -372,9 +480,11 @@ module.exports = grammar({
     variable_modifiers: ($) =>
       seq(repeat1(choice($.mutable_specifier, $.reference_operator, $.pointer_specifier))),
 
+    const_declaration: ($) => seq('const', $.identifier, ':', $.type_expression, '=', $.expression, ';'),
+
     variable_declaration: ($) =>
       seq(
-        choice('let', 'const'),
+        'let',
         optional($.variable_modifiers),
         $.identifier,
         ':',
@@ -386,6 +496,7 @@ module.exports = grammar({
     parameter_declaration: ($) =>
       seq(
         optional($.metadata_expression),
+        optional('...'),
         $.identifier,
         ':',
         optional($.variable_modifiers),
@@ -442,11 +553,11 @@ module.exports = grammar({
 
     group_expression: ($) => seq('(', $._expression, ')'),
 
-    array_access_expression: ($) => seq($.identifier, '[', $.expression, ']'),
+    vector_access_expression: ($) => seq($.identifier, '[', $.expression, ']'),
 
     expression: ($) =>
       choice(
-        alias(choice(...primitiveTypes), $.identifier),
+        alias(choice(...PRIMITIVE_TYPES), $.identifier),
         $.primary_expression,
         $.prefix_unary_expression,
         $.suffix_unary_expression,
@@ -511,7 +622,7 @@ module.exports = grammar({
     comment: (_) => token(choice(seq('//', /.*/), seq('/*', /[^*]*\*+([^/*][^*]*\*+)*/, '/'))),
     doc_comment: (_) => token(prec(1, seq('/**', /[^*]*\*+([^/*][^*]*\*+)*/, '/'))),
 
-    identifier: (_) => /[a-zA-Z_]\w*/,
+    identifier: (_) => /[a-zA-Z_][a-zA-Z0-9_]*/,
 
     type_identifier: ($) => seq(choice($.primitive_keyword, $.identifier), optional('[]')),
 
@@ -523,9 +634,9 @@ module.exports = grammar({
       seq('(', optional(commaSep($.parameter_declaration)), ')', '-', '>', $.type_expression),
 
     type_expression: ($) =>
-      choice($.type_function, $.type_identifier, $.union_type, $.intersection_type, $.array_type),
+      choice($.type_function, $.type_identifier, $.union_type, $.intersection_type, $.vector_type),
 
-    array_type: ($) => seq($.type_identifier, '[', ']'),
+    vector_type: ($) => seq($.type_identifier, '[', optional($.integer_literal), ']'),
 
     loop_control: (_) => choice('break', 'continue'),
 
@@ -537,7 +648,7 @@ module.exports = grammar({
 
     other_keyword: (_) => choice('in', 'as', 'readonly', 'export', 'super', 'declare', 'namespace'),
 
-    primitive_keyword: (_) => choice(...primitiveTypes),
+    primitive_keyword: (_) => choice(...PRIMITIVE_TYPES),
 
     literal: ($) =>
       choice(
@@ -547,13 +658,13 @@ module.exports = grammar({
         $.char_literal,
         $.boolean_literal,
         $.null_literal,
-        $.array_literal,
+        $.vector_literal,
         $.object_literal,
       ),
 
     null_literal: (_) => 'null',
 
-    array_literal: ($) => seq('[', commaSep($.expression), ']'),
+    vector_literal: ($) => seq('[', commaSep($.expression), ']'),
 
     decimal_literal: (_) => token(seq(optional('-'), /[0-9]+(_[0-9]+)*/)),
 
@@ -582,5 +693,7 @@ module.exports = grammar({
         optional(','),
         '}',
       ),
+
+    keywords: (_) => choice(...KEYWORDS),
   },
 });

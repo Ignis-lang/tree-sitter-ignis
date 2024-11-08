@@ -166,3 +166,59 @@ function fibonacci(num: mut i64): i64 {
                     (literal
                       (integer_literal
                         (decimal_literal)))))))))))))
+
+================================================================================
+VALID - Lambda
+================================================================================
+
+let value: (a: i64) -> i64 = (a: i64): i64 -> a;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (variable_declaration
+    (identifier)
+    (type_expression
+      (type_function
+        (parameter_declaration
+          (identifier)
+          (type_expression
+            (type_identifier
+              (primitive_keyword))))
+        (type_expression
+          (type_identifier
+            (primitive_keyword)))))
+    (expression
+      (primary_expression
+        (lambda_expression
+          (parameter_declaration
+            (identifier)
+            (type_expression
+              (type_identifier
+                (primitive_keyword))))
+          (type_expression
+            (type_identifier
+              (primitive_keyword)))
+          (expression
+            (primary_expression
+              (identifier))))))))
+
+================================================================================
+VALID - Function with variadic parameter
+================================================================================
+
+function main(...args: string[]): void;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameter_declaration
+      (identifier)
+      (type_expression
+        (type_identifier
+          (primitive_keyword))))
+    (type_expression
+      (type_identifier
+        (primitive_keyword)))))
