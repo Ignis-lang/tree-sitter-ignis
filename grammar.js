@@ -203,7 +203,7 @@ module.exports = grammar({
     enum_declaration: ($) =>
       seq(
         'enum',
-        $.identifier,
+        field('name', $.identifier),
         optional($.generic_type_declaration),
         '{',
         commaSep($.enum_member_declaration),
@@ -211,7 +211,10 @@ module.exports = grammar({
       ),
 
     enum_member_declaration: ($) =>
-      seq($.identifier, choice(optional(seq('=', $.expression)), optional(seq('(', $.expression, ')')))),
+      seq(
+        field('name', $.identifier),
+        choice(optional(seq('=', $.expression)), optional(seq('(', $.expression, ')'))),
+      ),
 
     import_statement: ($) =>
       seq(
@@ -228,7 +231,7 @@ module.exports = grammar({
     interface_declaration: ($) =>
       seq(
         'interface',
-        $.identifier,
+        field('name', $.identifier),
         optional(commaSep1($.generic_type_declaration)),
         '{',
         repeat($.interface_method_declaration),
@@ -454,7 +457,7 @@ module.exports = grammar({
     function_declaration: ($) =>
       seq(
         'function',
-        $.identifier,
+        field('name', $.identifier),
         optional($.generic_type_declaration),
         '(',
         commaSep($.parameter_declaration),
@@ -471,7 +474,12 @@ module.exports = grammar({
     assignment_expression: ($) =>
       prec(
         PREC.ASSIGN,
-        seq(choice($.identifier, $.property_access), choice(...ASSIGNMENT_OPERATORS), $.expression, ';'),
+        seq(
+          field('name', choice($.identifier, $.property_access)),
+          choice(...ASSIGNMENT_OPERATORS),
+          $.expression,
+          ';',
+        ),
       ),
 
     reference_operator: (_) => '&',
@@ -480,25 +488,26 @@ module.exports = grammar({
     variable_modifiers: ($) =>
       seq(repeat1(choice($.mutable_specifier, $.reference_operator, $.pointer_specifier))),
 
-    const_declaration: ($) => seq('const', $.identifier, ':', $.type_expression, '=', $.expression, ';'),
+    const_declaration: ($) =>
+      seq('const', field('name', $.identifier), ':', $.type_expression, '=', $.expression, ';'),
 
     variable_declaration: ($) =>
       seq(
-        'let',
+        token('let'),
         optional($.variable_modifiers),
-        $.identifier,
-        ':',
+        field('name', $.identifier),
+        token(':'),
         field('type', $.type_expression),
         optional(seq('=', field('value', $.expression))),
-        ';',
+        token(';'),
       ),
 
     parameter_declaration: ($) =>
       seq(
         optional($.metadata_expression),
         optional('...'),
-        $.identifier,
-        ':',
+        field('name', $.identifier),
+        token(':'),
         optional($.variable_modifiers),
         $.type_expression,
       ),
