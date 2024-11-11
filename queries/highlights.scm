@@ -28,11 +28,14 @@
   "match" "when" "abstract" "mut" "namespace" "meta" (primitive_keyword)
 ] @keyword
 
+((identifier) @variable
+ (#match? @variable "/[a-zA-Z_][a-zA-Z0-9_]*/"))
+
 (type_identifier) @type
 (type_identifier (identifier) @type)
 
 (variable_declaration (identifier) @variable)
-(parameter_declaration (identifier) @parameter)
+(parameter_declaration (identifier) @variable)
 
 (enum_declaration (identifier) @type.enum)
 (class_declaration (identifier) @type.class)
@@ -44,7 +47,15 @@
 (function_declaration (identifier) @function)
 
 (constructor_declaration (identifier) @function)
-(method_declaration name: (identifier) @function)
+
+(method_declaration name: (identifier) @method)
+
+(method_call_expression
+  function:
+  (property_access
+    (expression (primary_expression (identifier) @variable))
+    name: (identifier) @variable)
+)
 
 (primary_expression (identifier) @function)
 (property_access name: (identifier) @property)
@@ -58,3 +69,4 @@
 (decorator_declaration (identifier) @decorator)
 
 (namespace_declaration (identifier) @variable)
+
