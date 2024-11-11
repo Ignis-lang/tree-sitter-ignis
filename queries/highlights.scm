@@ -24,9 +24,8 @@
 [
   "if" "else" "let" "return" "function" "import" "from" "for" "enum" "export"
   "while" "of" "interface" "extends" "public" "private" "new" "class"
-  "implements" "super" "static" "final" "readonly" "in" "const" "as" "break"
-  "void" "extern" "continue" "unknown" "type" "record" "decorator" (this_expression)
-  "match" "when" "abstract" "mut" "namespace" "declare" "meta" (primitive_keyword)
+  "implements" "static" "final" "const" "as" "void" "extern" "unknown" "type" "record" "decorator" (this_expression)
+  "match" "when" "abstract" "mut" "namespace" "meta" (primitive_keyword)
 ] @keyword
 
 (type_identifier) @type
@@ -57,3 +56,5 @@
 
 (decorator_use (identifier) @decorator)
 (decorator_declaration (identifier) @decorator)
+
+(namespace_declaration (identifier) @variable)
