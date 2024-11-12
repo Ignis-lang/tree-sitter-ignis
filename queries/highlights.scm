@@ -13,7 +13,7 @@
 ;; Symbols
 ["(" ")" "{" "}" "[" "]"] @punctuation.bracket
 [":" "." "," ";" ] @punctuation.delimiter
-["+" "-" "*" "/" "%" "&" "|" "^" "<<" ">>" "<" ">" "<=" ">=" "==" "!=" "!"] @operator
+["+" "-" "*" "/" "%" "&" "|" "^" "<<" ">>" "<" ">" "<=" ">=" "==" "!=" "!" "..." ".." "::" "=" "+=" "-=" "*=" "/=" "%=" "&=" "|=" "^=" "<<=" ">>="] @operator
 
 ;; keyword
 [
@@ -23,9 +23,9 @@
   "decorator" (this_expression) "match" "when" "abstract" "mut" "namespace" "meta"
 ] @keyword
 
-(primitive_keyword) @keyword
-
 (identifier) @variable
+
+(primitive_keyword) @keyword
 
 ;; Types
 (type_identifier) @type
@@ -44,7 +44,6 @@
   name: (identifier) @variable)
 (parameter_declaration
   name: (identifier) @variable.parameter)
-
 
 ;; Propiedades
 (property_declaration
