@@ -25,8 +25,7 @@
 
 (primitive_keyword) @keyword
 
-((identifier) @variable
- (#match? @variable "/[a-zA-Z_][a-zA-Z0-9_]*/"))
+(identifier) @variable
 
 ;; Types
 (type_identifier) @type
@@ -46,11 +45,15 @@
 (parameter_declaration
   name: (identifier) @variable.parameter)
 
+
 ;; Propiedades
 (property_declaration
   (identifier) @property)
 (property_access
   name: (identifier) @property)
+
+(primary_expression
+  (identifier) @variable)
 
 ;; Decorators
 (decorator_use

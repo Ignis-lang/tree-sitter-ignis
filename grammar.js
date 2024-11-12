@@ -595,6 +595,7 @@ module.exports = grammar({
         [PREC.SHIFT, choice('<<', '>>')],
         [PREC.ADDITIVE, choice('+', '-')],
         [PREC.MULTIPLICATIVE, choice('*', '/', '%')],
+        [PREC.RANGE, choice('..')],
       ];
 
       return choice(
