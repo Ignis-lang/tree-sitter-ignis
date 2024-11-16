@@ -179,6 +179,7 @@ module.exports = grammar({
         $.metadata_declaration,
         $.namespace_declaration,
         $.const_declaration,
+        $.declare_declaration,
         $.expression,
       ),
 
@@ -197,6 +198,7 @@ module.exports = grammar({
           $.extern_declaration,
           $.decorator_declaration,
           $.metadata_declaration,
+          $.declare_declaration,
         ),
       ),
 
@@ -401,6 +403,7 @@ module.exports = grammar({
         $.export_statement,
         $.class_declaration,
         $.interface_declaration,
+        $.declare_declaration,
       ),
 
     decorator_use: ($) => seq('@', $.identifier, optional(seq('(', optional(commaSep($.expression)), ')'))),
@@ -412,6 +415,19 @@ module.exports = grammar({
         optional($.generic_type_declaration),
         optional(seq('(', optional(commaSep($.type_expression)), ')')),
         ';',
+      ),
+
+    declare_declaration: ($) => seq('declare', $.declare_item, optional(';')),
+    declare_item: ($) =>
+      choice(
+        $.function_declaration,
+        $.class_declaration,
+        $.record_declaration,
+        $.const_declaration,
+        $.enum_declaration,
+        $.type_definition,
+        $.interface_declaration,
+        $.metadata_declaration,
       ),
 
     metadata_declaration: ($) =>
@@ -507,6 +523,7 @@ module.exports = grammar({
         optional($.metadata_expression),
         optional('...'),
         field('name', $.identifier),
+        optional('?'),
         token(':'),
         optional($.variable_modifiers),
         $.type_expression,

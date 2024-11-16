@@ -381,6 +381,64 @@
     }
   },
   {
+    "type": "declare_declaration",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "declare_item",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "declare_item",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "class_declaration",
+          "named": true
+        },
+        {
+          "type": "const_declaration",
+          "named": true
+        },
+        {
+          "type": "enum_declaration",
+          "named": true
+        },
+        {
+          "type": "function_declaration",
+          "named": true
+        },
+        {
+          "type": "interface_declaration",
+          "named": true
+        },
+        {
+          "type": "metadata_declaration",
+          "named": true
+        },
+        {
+          "type": "record_declaration",
+          "named": true
+        },
+        {
+          "type": "type_definition",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "decorator_declaration",
     "named": true,
     "fields": {},
@@ -488,6 +546,10 @@
       "types": [
         {
           "type": "class_declaration",
+          "named": true
+        },
+        {
+          "type": "declare_declaration",
           "named": true
         },
         {
@@ -639,6 +701,10 @@
       "types": [
         {
           "type": "class_declaration",
+          "named": true
+        },
+        {
+          "type": "declare_declaration",
           "named": true
         },
         {
@@ -1694,6 +1760,10 @@
         },
         {
           "type": "const_declaration",
+          "named": true
+        },
+        {
+          "type": "declare_declaration",
           "named": true
         },
         {

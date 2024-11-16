@@ -73,6 +73,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "declare_declaration"
+        },
+        {
+          "type": "SYMBOL",
           "name": "expression"
         }
       ]
@@ -147,6 +151,10 @@
             {
               "type": "SYMBOL",
               "name": "metadata_declaration"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "declare_declaration"
             }
           ]
         }
@@ -1669,6 +1677,10 @@
         {
           "type": "SYMBOL",
           "name": "interface_declaration"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "declare_declaration"
         }
       ]
     },
@@ -1859,6 +1871,68 @@
         {
           "type": "STRING",
           "value": ";"
+        }
+      ]
+    },
+    "declare_declaration": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "declare"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "declare_item"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "STRING",
+              "value": ";"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        }
+      ]
+    },
+    "declare_item": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "function_declaration"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "class_declaration"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "record_declaration"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "const_declaration"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "enum_declaration"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "type_definition"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "interface_declaration"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "metadata_declaration"
         }
       ]
     },
