@@ -441,17 +441,22 @@ module.exports = grammar({
       ),
 
     metadata_expression: ($) =>
-      seq(
-        '#',
-        '[',
-        repeat(
+      prec.left(
+        choice(
           seq(
-            $.identifier,
-            optional(commaSep1(seq('(', optional(commaSep($.expression)), ')'))),
-            optional(','),
+            '#',
+            '[',
+            repeat(
+              seq(
+                $.identifier,
+                optional(commaSep1(seq('(', optional(commaSep($.expression)), ')'))),
+                optional(','),
+              ),
+            ),
+            ']',
           ),
+          seq('#', seq($.identifier, optional(commaSep1(seq('(', optional(commaSep($.expression)), ')'))))),
         ),
-        ']',
       ),
 
     namespace_declaration: ($) => seq('namespace', $.identifier, '{', repeat($.namespace_items), '}'),
