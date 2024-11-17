@@ -596,6 +596,10 @@
       "required": true,
       "types": [
         {
+          "type": "assignment_expression",
+          "named": true
+        },
+        {
           "type": "binary_expression",
           "named": true
         },
@@ -1737,7 +1741,7 @@
     "fields": {},
     "children": {
       "multiple": false,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "expression",
@@ -1919,9 +1923,13 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "generic_type_declaration",
+          "named": true
+        },
         {
           "type": "identifier",
           "named": true

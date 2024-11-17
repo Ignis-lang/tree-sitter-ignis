@@ -56,33 +56,39 @@ class User {
           (type_identifier
             (primitive_keyword))))
       (block
-        (assignment_expression
-          (property_access
-            (expression
-              (primary_expression
-                (this_expression)))
-            (identifier))
+        (expression_statement
           (expression
-            (primary_expression
-              (identifier))))
-        (assignment_expression
-          (property_access
-            (expression
-              (primary_expression
-                (this_expression)))
-            (identifier))
+            (assignment_expression
+              (property_access
+                (expression
+                  (primary_expression
+                    (this_expression)))
+                (identifier))
+              (expression
+                (primary_expression
+                  (identifier))))))
+        (expression_statement
           (expression
-            (primary_expression
-              (identifier))))
-        (assignment_expression
-          (property_access
-            (expression
-              (primary_expression
-                (this_expression)))
-            (identifier))
+            (assignment_expression
+              (property_access
+                (expression
+                  (primary_expression
+                    (this_expression)))
+                (identifier))
+              (expression
+                (primary_expression
+                  (identifier))))))
+        (expression_statement
           (expression
-            (primary_expression
-              (identifier))))))))
+            (assignment_expression
+              (property_access
+                (expression
+                  (primary_expression
+                    (this_expression)))
+                (identifier))
+              (expression
+                (primary_expression
+                  (identifier))))))))))
 
 ================================================================================
 VALID - Class instance

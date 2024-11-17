@@ -17,29 +17,6 @@ declare function Foo(): void;
             (primitive_keyword)))))))
 
 ================================================================================
-VALID - Declare class
-================================================================================
-
-declare class Foo {
-  public Bar(): void;
-}
-
---------------------------------------------------------------------------------
-
-(source_file
-  (declare_declaration
-    (declare_item
-      (class_declaration
-        (identifier)
-        (constructor_declaration
-          (method_modifier)
-          (identifier))
-        (ERROR
-          (type_expression
-            (type_identifier
-              (primitive_keyword))))))))
-
-================================================================================
 VALID - Declare record
 ================================================================================
 

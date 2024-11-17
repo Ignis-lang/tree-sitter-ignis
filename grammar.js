@@ -14,8 +14,8 @@ const PREC = {
   AND: 3,
   OR: 2,
   RANGE: 1,
-  ASSIGN: 0,
-  CLOSURE: -1,
+  ASSIGN: -1,
+  CLOSURE: -2,
 };
 
 function commaSep1(rule) {
@@ -157,6 +157,7 @@ module.exports = grammar({
       [$.union_type, $.intersection_type, $.type_expression],
       [$.union_type, $.intersection_type, $.type_expression, $.vector_type],
       [$.lambda_expression, $._expression],
+      [$._statement, $.expression],
     ]),
 
   rules: {
@@ -288,15 +289,17 @@ module.exports = grammar({
     this_expression: (_) => 'this',
 
     primary_expression: ($) =>
-      choice(
-        $.identifier,
-        $.this_expression,
-        $.method_call_expression,
-        $.literal,
-        $.group_expression,
-        $.vector_access_expression,
-        $.class_instance_expression,
-        $.lambda_expression,
+      prec.left(
+        choice(
+          $.identifier,
+          $.this_expression,
+          $.method_call_expression,
+          $.literal,
+          $.group_expression,
+          $.vector_access_expression,
+          $.class_instance_expression,
+          $.lambda_expression,
+        ),
       ),
 
     // <lambda> ::= "(" <parameters>? ")" ":" <type> "->" (<expression> | <block>)
@@ -314,7 +317,7 @@ module.exports = grammar({
     property_access: ($) =>
       prec(PREC.FIELD, seq($.expression, choice('.', '::'), field('name', $.identifier))),
 
-    get_expression: ($) => choice($.property_access, $.method_call_expression),
+    get_expression: ($) => prec.left(choice($.property_access, $.method_call_expression)),
 
     method_call_expression: ($) =>
       prec(
@@ -488,18 +491,18 @@ module.exports = grammar({
         choice($.block, ';'),
       ),
 
-    return_statement: ($) => seq('return', $.expression, ';'),
+    return_statement: ($) => seq('return', optional($.expression), ';'),
 
     // #endregion
 
     assignment_expression: ($) =>
-      prec(
+      prec.left(
         PREC.ASSIGN,
         seq(
           field('name', choice($.identifier, $.property_access)),
           choice(...ASSIGNMENT_OPERATORS),
           $.expression,
-          ';',
+          optional(';'),
         ),
       ),
 
@@ -598,6 +601,7 @@ module.exports = grammar({
         $.match_expression,
         $.get_expression,
         $.metadata_expression,
+        $.assignment_expression,
       ),
 
     cast: ($) => prec(PREC.CAST, seq($.identifier, 'as', $.type_expression)),
@@ -654,9 +658,12 @@ module.exports = grammar({
     comment: (_) => token(choice(seq('//', /.*/), seq('/*', /[^*]*\*+([^/*][^*]*\*+)*/, '/'))),
     doc_comment: (_) => token(prec(1, seq('/**', /[^*]*\*+([^/*][^*]*\*+)*/, '/'))),
 
-    identifier: (_) => /[a-zA-Z_][a-zA-Z0-9_]*/,
+    identifier: (_) => /[_a-zA-Z_][a-zA-Z0-9_]*/,
 
-    type_identifier: ($) => seq(choice($.primitive_keyword, $.identifier), optional('[]')),
+    type_identifier: ($) =>
+      prec.left(
+        seq(choice($.primitive_keyword, $.identifier), optional($.generic_type_declaration), optional('[]')),
+      ),
 
     union_type: ($) => prec.left(seq($.type_identifier, repeat(seq('|', $.type_identifier)))),
 

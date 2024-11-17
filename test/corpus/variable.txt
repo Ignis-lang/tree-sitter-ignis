@@ -76,3 +76,89 @@ let result: i64 = math.sum(x, y);
           (expression
             (primary_expression
               (identifier))))))))
+
+================================================================================
+VALID - Assignment expression
+================================================================================
+
+a = b;
+a += b;
+a -= b;
+a *= b;
+a /= b;
+a %= b;
+a &= b;
+a |= b;
+a ^= b;
+a <<= b;
+a >>= b;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (expression
+    (assignment_expression
+      (identifier)
+      (expression
+        (primary_expression
+          (identifier)))))
+  (expression
+    (assignment_expression
+      (identifier)
+      (expression
+        (primary_expression
+          (identifier)))))
+  (expression
+    (assignment_expression
+      (identifier)
+      (expression
+        (primary_expression
+          (identifier)))))
+  (expression
+    (assignment_expression
+      (identifier)
+      (expression
+        (primary_expression
+          (identifier)))))
+  (expression
+    (assignment_expression
+      (identifier)
+      (expression
+        (primary_expression
+          (identifier)))))
+  (expression
+    (assignment_expression
+      (identifier)
+      (expression
+        (primary_expression
+          (identifier)))))
+  (expression
+    (assignment_expression
+      (identifier)
+      (expression
+        (primary_expression
+          (identifier)))))
+  (expression
+    (assignment_expression
+      (identifier)
+      (expression
+        (primary_expression
+          (identifier)))))
+  (expression
+    (assignment_expression
+      (identifier)
+      (expression
+        (primary_expression
+          (identifier)))))
+  (expression
+    (assignment_expression
+      (identifier)
+      (expression
+        (primary_expression
+          (identifier)))))
+  (expression
+    (assignment_expression
+      (identifier)
+      (expression
+        (primary_expression
+          (identifier))))))
