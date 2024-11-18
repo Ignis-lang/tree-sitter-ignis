@@ -458,7 +458,11 @@ module.exports = grammar({
             ),
             ']',
           ),
-          seq('#', seq($.identifier, optional(commaSep1(seq('(', optional(commaSep($.expression)), ')'))))),
+          seq(
+            '#',
+            seq($.identifier, optional(commaSep1(seq('(', optional(commaSep($.expression)), ')')))),
+            optional(';'),
+          ),
         ),
       ),
 
