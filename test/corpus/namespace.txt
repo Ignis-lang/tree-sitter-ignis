@@ -10,7 +10,8 @@ namespace Test {
 
 (source_file
   (namespace_declaration
-    (identifier)
+    (qualified_identifier
+      (identifier))
     (namespace_items
       (function_declaration
         (identifier)
@@ -35,7 +36,8 @@ namespace Foo {
 
 (source_file
   (namespace_declaration
-    (identifier)
+    (qualified_identifier
+      (identifier))
     (namespace_items
       (function_declaration
         (identifier)
@@ -77,7 +79,8 @@ function main(): void {
 
 (source_file
   (namespace_declaration
-    (identifier)
+    (qualified_identifier
+      (identifier))
     (namespace_items
       (function_declaration
         (identifier)

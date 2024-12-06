@@ -249,6 +249,11 @@
     }
   },
   {
+    "type": "char_literal",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "class_declaration",
     "named": true,
     "fields": {},
@@ -636,6 +641,10 @@
           "named": true
         },
         {
+          "type": "spread_expression",
+          "named": true
+        },
+        {
           "type": "suffix_unary_expression",
           "named": true
         }
@@ -689,7 +698,7 @@
           "named": true
         },
         {
-          "type": "identifier",
+          "type": "qualified_identifier",
           "named": true
         }
       ]
@@ -705,6 +714,10 @@
       "types": [
         {
           "type": "class_declaration",
+          "named": true
+        },
+        {
+          "type": "const_declaration",
           "named": true
         },
         {
@@ -729,6 +742,10 @@
         },
         {
           "type": "record_declaration",
+          "named": true
+        },
+        {
+          "type": "string_literal",
           "named": true
         }
       ]
@@ -1354,11 +1371,11 @@
       "required": true,
       "types": [
         {
-          "type": "identifier",
+          "type": "namespace_items",
           "named": true
         },
         {
-          "type": "namespace_items",
+          "type": "qualified_identifier",
           "named": true
         }
       ]
@@ -1624,6 +1641,22 @@
     "fields": {}
   },
   {
+    "type": "qualified_identifier",
+    "named": true,
+    "fields": {
+      "identifier": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "record_declaration",
     "named": true,
     "fields": {},
@@ -1828,6 +1861,30 @@
         }
       ]
     }
+  },
+  {
+    "type": "spread_expression",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "expression",
+          "named": true
+        },
+        {
+          "type": "literal",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "string_literal",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "suffix_unary_expression",
@@ -2132,6 +2189,10 @@
     "named": false
   },
   {
+    "type": "\"",
+    "named": false
+  },
+  {
     "type": "#",
     "named": false
   },
@@ -2153,6 +2214,10 @@
   },
   {
     "type": "&=",
+    "named": false
+  },
+  {
+    "type": "'",
     "named": false
   },
   {
@@ -2344,10 +2409,6 @@
     "named": false
   },
   {
-    "type": "char_literal",
-    "named": true
-  },
-  {
     "type": "class",
     "named": false
   },
@@ -2476,6 +2537,10 @@
     "named": false
   },
   {
+    "type": "include",
+    "named": false
+  },
+  {
     "type": "interface",
     "named": false
   },
@@ -2540,16 +2605,16 @@
     "named": false
   },
   {
+    "type": "source",
+    "named": false
+  },
+  {
     "type": "static",
     "named": false
   },
   {
     "type": "string",
     "named": false
-  },
-  {
-    "type": "string_literal",
-    "named": true
   },
   {
     "type": "super",

@@ -42,17 +42,6 @@
     "tree-sitter-cli": "^0.20.8",
     "prebuildify": "^6.0.0"
   },
-  "tree-sitter": [
-    {
-      "scope": "source.ignis",
-      "file-types": [
-        "ign"
-      ],
-      "highlights": [
-        "queries/highlights.scm"
-      ]
-    }
-  ],
   "engines": {
     "node": ">=14.21.3"
   }

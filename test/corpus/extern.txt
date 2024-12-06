@@ -10,7 +10,8 @@ extern io {
 
 (source_file
   (extern_declaration
-    (identifier)
+    (qualified_identifier
+      (identifier))
     (extern_items
       (function_declaration
         (identifier)

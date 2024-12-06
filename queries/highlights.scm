@@ -4,7 +4,7 @@
 
 ;; Lietrals
 (string_literal) @string
-(char_literal) @string.char
+(char_literal) @character
 (integer_literal) @number
 (float_literal) @float
 (boolean_literal) @boolean
@@ -21,6 +21,7 @@
   "while" "of" "interface" "extends" "public" "private" "new" "class"
   "implements" "static" "final" "const" "as" "void" "extern" "unknown" "type" "record"
   "decorator" (this_expression) "match" "when" "abstract" "mut" "namespace" "meta" "declare"
+  "include" "source"
 ] @keyword
 
 (identifier) @variable
@@ -63,10 +64,6 @@
   (identifier) @annotation)
 (decorator_declaration
   (identifier) @annotation)
-
-;; Namespaces
-(namespace_declaration
-  (identifier) @namespace)
 
 (class_declaration (identifier) @class)
 (enum_declaration name: (identifier) @enum)

@@ -1,0 +1,37 @@
+{
+  "grammars": [
+    {
+      "name": "ignis",
+      "camelcase": "Ignis",
+      "scope": "source.ignis",
+      "path": ".",
+      "file-types": [
+        "ign"
+      ],
+      "highlights": [
+        "queries/highlights.scm"
+      ]
+    }
+  ],
+  "metadata": {
+    "version": "0.1.0",
+    "license": "MIT",
+    "description": "Ignis grammar for tree-sitter",
+    "authors": [
+      {
+        "name": "Ignacio Perez"
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/Ignis-lang/tree-sitter-ignis.git"
+    }
+  },
+  "bindings": {
+    "c": true,
+    "go": true,
+    "node": true,
+    "python": true,
+    "rust": true,
+    "swift": true
+  }
+}
