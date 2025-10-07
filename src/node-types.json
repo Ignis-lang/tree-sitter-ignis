@@ -799,6 +799,22 @@
     }
   },
   {
+    "type": "guard_clause",
+    "named": true,
+    "fields": {
+      "condition": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "expression",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "if_statement",
     "named": true,
     "fields": {},
@@ -948,34 +964,30 @@
     "type": "match_arm",
     "named": true,
     "fields": {
+      "body": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "block",
+            "named": true
+          },
+          {
+            "type": "expression",
+            "named": true
+          }
+        ]
+      },
       "pattern": {
         "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "pattern",
+            "type": "match_pattern",
             "named": true
           }
         ]
       }
-    },
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "block",
-          "named": true
-        },
-        {
-          "type": "expression",
-          "named": true
-        },
-        {
-          "type": "literal",
-          "named": true
-        }
-      ]
     }
   },
   {
@@ -1003,6 +1015,21 @@
       "types": [
         {
           "type": "match_arm",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "match_pattern",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "pattern",
           "named": true
         }
       ]
@@ -1272,11 +1299,19 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": false,
       "types": [
         {
           "type": "expression",
+          "named": true
+        },
+        {
+          "type": "guard_clause",
+          "named": true
+        },
+        {
+          "type": "literal",
           "named": true
         },
         {
@@ -1935,7 +1970,11 @@
         "required": true,
         "types": [
           {
-            "type": "pattern",
+            "type": "expression",
+            "named": true
+          },
+          {
+            "type": "literal",
             "named": true
           }
         ]

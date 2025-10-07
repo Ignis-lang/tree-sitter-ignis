@@ -148,6 +148,8 @@ module.exports = grammar({
       [$.method_modifier, $.property_modifier],
       [$.variable_modifiers, $.type_identifier, $.vector_type],
       [$.type_identifier],
+      [$._expression, $.guard_clause],
+      [$._expression, $.when_clause],
       [$.union_type, $.intersection_type, $.type_expression],
       [$.union_type, $.intersection_type, $.type_expression, $.vector_type],
       [$.lambda_expression, $._expression],
@@ -583,11 +585,32 @@ module.exports = grammar({
     match_expression: ($) =>
       seq('match', '(', field('value', $._expression), ')', '{', repeat1($.match_arm), '}'),
 
-    match_arm: ($) => seq(field('pattern', $.pattern), '->', choice($._expression, $.block), optional(',')),
+    match_arm: ($) =>
+      seq(
+        field('pattern', $.match_pattern),
+        '->',
+        field('body', choice($.expression, $.block)),
+        optional(','),
+      ),
 
-    when_clause: ($) => seq(field('pattern', $.pattern), 'when', field('condition', $.expression)),
+    match_pattern: ($) =>
+      seq(
+        $.pattern,
+        repeat(seq('|', $.pattern)),
+      ),
 
-    pattern: ($) => choice($.expression, $.when_clause, '_'),
+    pattern: ($) =>
+      choice(
+        seq($._expression, optional($.guard_clause)),
+        $.when_clause,
+        '_',
+      ),
+
+    guard_clause: ($) =>
+      seq('if', field('condition', $.expression)),
+
+    when_clause: ($) =>
+      seq(field('pattern', $._expression), 'when', field('condition', $.expression)),
 
     comment: (_) => token(choice(seq('//', /.*/), seq('/*', /[^*]*\*+([^/*][^*]*\*+)*/, '/'))),
     doc_comment: (_) => token(prec(1, seq('/**', /[^*]*\*+([^/*][^*]*\*+)*/, '/'))),
