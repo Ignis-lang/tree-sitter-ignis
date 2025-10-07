@@ -32,6 +32,146 @@ record User {
           (primitive_keyword))))))
 
 ================================================================================
+VALID - Record property with default value
+================================================================================
+
+record User {
+  age: i32 = 20;
+  name: string;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (record_declaration
+    (type_expression
+      (type_identifier
+        (identifier)))
+    (record_property_declaration
+      (identifier)
+      (type_expression
+        (type_identifier
+          (primitive_keyword)))
+      (expression
+        (primary_expression
+          (literal
+            (integer_literal
+              (decimal_literal))))))
+    (record_property_declaration
+      (identifier)
+      (type_expression
+        (type_identifier
+          (primitive_keyword))))))
+
+================================================================================
+VALID - Record with init and free
+================================================================================
+
+record User {
+  age: i32 = 20;
+  name: string;
+  public init(age: i32, name: string): User {
+    self.age = age;
+    self.name = name;
+
+    return self;
+  }
+  public free(): void {
+    free(name);
+    free(self);
+  }
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (record_declaration
+    (type_expression
+      (type_identifier
+        (identifier)))
+    (record_property_declaration
+      (identifier)
+      (type_expression
+        (type_identifier
+          (primitive_keyword)))
+      (expression
+        (primary_expression
+          (literal
+            (integer_literal
+              (decimal_literal))))))
+    (record_property_declaration
+      (identifier)
+      (type_expression
+        (type_identifier
+          (primitive_keyword))))
+    (record_method_declaration
+      (method_modifier)
+      (identifier)
+      (parameter_declaration
+        (identifier)
+        (type_expression
+          (type_identifier
+            (primitive_keyword))))
+      (parameter_declaration
+        (identifier)
+        (type_expression
+          (type_identifier
+            (primitive_keyword))))
+      (type_expression
+        (type_identifier
+          (identifier)))
+      (block
+        (expression_statement
+          (expression
+            (assignment_expression
+              (property_access
+                (expression
+                  (primary_expression
+                    (self_expression)))
+                (identifier))
+              (expression
+                (primary_expression
+                  (identifier))))))
+        (expression_statement
+          (expression
+            (assignment_expression
+              (property_access
+                (expression
+                  (primary_expression
+                    (self_expression)))
+                (identifier))
+              (expression
+                (primary_expression
+                  (identifier))))))
+        (return_statement
+          (expression
+            (primary_expression
+              (self_expression))))))
+    (record_method_declaration
+      (method_modifier)
+      (identifier)
+      (type_expression
+        (type_identifier
+          (primitive_keyword)))
+      (block
+        (expression_statement
+          (expression
+            (call_expression
+              (primary_expression
+                (identifier))
+              (expression
+                (primary_expression
+                  (identifier))))))
+        (expression_statement
+          (expression
+            (call_expression
+              (primary_expression
+                (identifier))
+              (expression
+                (primary_expression
+                  (self_expression))))))))))
+
+================================================================================
 VALID - Export record
 ================================================================================
 
@@ -97,7 +237,7 @@ let user: User = {
   firstName,
   email: "example@example.com",
   getName(): string {
-    return this.firstName;
+    return self.firstName;
   }
 };
 
@@ -131,5 +271,5 @@ let user: User = {
                       (property_access
                         (expression
                           (primary_expression
-                            (this_expression)))
+                            (self_expression)))
                         (identifier)))))))))))))

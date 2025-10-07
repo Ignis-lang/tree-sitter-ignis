@@ -55,29 +55,24 @@ const PRIMITIVE_TYPES = [
 ];
 
 const KEYWORDS = [
-  'abstract',
   'as',
   'async',
   'await',
   'break',
   'continue',
-  'class',
   'const',
   'declare',
   'else',
   'enum',
   'export',
-  'extends',
   'false',
   'for',
   'from',
   'function',
   'is',
   'if',
-  'implements',
   'import',
   'in',
-  'interface',
   'let',
   'meta',
   'namespace',
@@ -87,6 +82,7 @@ const KEYWORDS = [
   'public',
   'record',
   'return',
+  'self',
   'static',
   'this',
   'true',
@@ -97,8 +93,6 @@ const KEYWORDS = [
   'while',
   'with',
   'mut',
-  'override',
-  'super',
   'include',
   'source',
 ];
@@ -149,7 +143,6 @@ module.exports = grammar({
       [$.primary_expression, $.get_expression],
       [$._expression, $.primary_expression],
       [$.for_statement, $.expression],
-      [$.interface_method_declaration],
       [$.decorator_use],
       [$.block, $.object_literal],
       [$.method_modifier, $.property_modifier],
@@ -166,10 +159,8 @@ module.exports = grammar({
       choice(
         $.export_statement,
         $.import_statement,
-        $.class_declaration,
         $.function_declaration,
         $.variable_declaration,
-        $.interface_declaration,
         $.enum_declaration,
         $.type_definition,
         $.record_declaration,
@@ -189,9 +180,7 @@ module.exports = grammar({
       seq(
         'export',
         choice(
-          $.class_declaration,
           $.function_declaration,
-          $.interface_declaration,
           $.enum_declaration,
           $.type_definition,
           $.record_declaration,
@@ -229,74 +218,23 @@ module.exports = grammar({
         ';',
       ),
 
-    // #region Class
-    interface_declaration: ($) =>
-      seq(
-        'interface',
-        field('name', $.identifier),
-        optional(commaSep1($.generic_type_declaration)),
-        '{',
-        repeat($.interface_method_declaration),
-        '}',
-      ),
-
-    interface_method_declaration: ($) =>
-      seq(
-        field('function', $.identifier),
-        optional(commaSep1($.generic_type_declaration)),
-        '(',
-        commaSep1(optional($.parameter_declaration)),
-        ')',
-        ':',
-        $.type_expression,
-        ';',
-      ),
-
-    implement_statement: ($) =>
-      seq('implements', commaSep1(seq($.identifier, optional($.generic_type_declaration)))),
-
-    extends_statement: ($) => seq('extends', $.identifier, optional($.generic_type_declaration)),
-
-    class_declaration: ($) =>
-      prec(
-        1,
-        seq(
-          optional($.class_modifier),
-          'class',
-          optional($.generic_type_declaration),
-          $.identifier,
-          optional(choice($.extends_statement, $.implement_statement)),
-          '{',
-          repeat($._class_body_declaration),
-          '}',
-        ),
-      ),
-
-    class_instance_expression: ($) =>
-      seq(
-        'new',
-        $.identifier,
-        optional(repeat($.generic_type_declaration)),
-        '(',
-        optional(commaSep1($.expression)),
-        ')',
-      ),
-
-    _class_body_declaration: ($) =>
-      choice($.constructor_declaration, $.method_declaration, $.property_declaration),
+    // #region Records and Objects
 
     this_expression: (_) => 'this',
+
+    self_expression: (_) => 'self',
 
     primary_expression: ($) =>
       prec.left(
         choice(
+          seq($.identifier, optional($.generic_type_declaration)),
           $.identifier,
           $.this_expression,
+          $.self_expression,
           $.method_call_expression,
           $.literal,
           $.group_expression,
           $.vector_access_expression,
-          $.class_instance_expression,
           $.lambda_expression,
         ),
       ),
@@ -314,7 +252,14 @@ module.exports = grammar({
       ),
 
     property_access: ($) =>
-      prec(PREC.FIELD, seq($.expression, choice('.', '::'), field('name', $.identifier))),
+      prec.left(
+        PREC.FIELD,
+        seq(
+          $.expression,
+          choice('.', '::'),
+          field('name', $.identifier),
+        ),
+      ),
 
     get_expression: ($) => prec.left(choice($.property_access, $.method_call_expression)),
 
@@ -330,20 +275,6 @@ module.exports = grammar({
         ),
       ),
 
-    constructor_declaration: ($) =>
-      seq(
-        optional(repeat($.method_modifier)),
-        $.identifier,
-        optional($.generic_type_declaration),
-        '(',
-        optional(commaSep1($.parameter_declaration)),
-        ')',
-        optional($.block),
-      ),
-
-    property_declaration: ($) =>
-      seq(optional(repeat($.property_modifier)), $.identifier, ':', $.type_expression, ';'),
-
     method_declaration: ($) =>
       seq(
         optional(repeat($.method_modifier)),
@@ -358,17 +289,20 @@ module.exports = grammar({
 
     record_property_declaration: ($) =>
       seq(
+        optional(repeat($.property_modifier)),
         field('name', $.identifier),
         optional($.variable_modifiers),
         optional($.generic_type_declaration),
         optional('?'),
         ':',
         $.type_expression,
+        optional(seq('=', $.expression)),
         ';',
       ),
 
     record_method_declaration: ($) =>
       seq(
+        optional(repeat($.method_modifier)),
         field('name', $.identifier),
         optional($.generic_type_declaration),
         '(',
@@ -377,7 +311,7 @@ module.exports = grammar({
         optional('?'),
         ':',
         $.type_expression,
-        ';',
+        choice($.block, ';'),
       ),
 
     record_declaration: ($) =>
@@ -404,8 +338,6 @@ module.exports = grammar({
         $.enum_declaration,
         $.record_declaration,
         $.export_statement,
-        $.class_declaration,
-        $.interface_declaration,
         $.declare_declaration,
         $.const_declaration,
         seq('include', $.string_literal, ';'),
@@ -427,12 +359,10 @@ module.exports = grammar({
     declare_item: ($) =>
       choice(
         $.function_declaration,
-        $.class_declaration,
         $.record_declaration,
         $.const_declaration,
         $.enum_declaration,
         $.type_definition,
-        $.interface_declaration,
         $.metadata_declaration,
       ),
 
@@ -474,7 +404,6 @@ module.exports = grammar({
     namespace_items: ($) =>
       choice(
         $.function_declaration,
-        $.class_declaration,
         $.record_declaration,
         $.enum_declaration,
         $.type_definition,
@@ -695,8 +624,6 @@ module.exports = grammar({
     vector_type: ($) => seq($.type_identifier, '[', optional($.integer_literal), ']'),
 
     loop_control: (_) => choice('break', 'continue'),
-
-    class_modifier: (_) => 'abstract',
 
     property_modifier: (_) => choice('public', 'private', 'static', 'mut', 'abstract'),
 

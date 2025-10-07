@@ -21,10 +21,9 @@
 ;; keyword
 [
   "if" "else" "let" "return" "function" "import" "from" "for" "enum" "export"
-  "while" "of" "interface" "extends" "public" "private" "new" "class"
-  "implements" "static" "final" "const" "as" "void" "extern" "unknown" "type" "record"
-  "decorator" (this_expression) "match" "when" "abstract" "mut" "namespace" "meta" "declare"
-  "include" "source"
+  "while" "of" "public" "private" "new" "static" "final" "const" "as" "void" 
+  "extern" "unknown" "type" "record" "decorator" (this_expression) (self_expression)
+  "match" "when" "mut" "namespace" "meta" "declare" "include" "source"
 ] @keyword
 
 (identifier) @variable
@@ -44,8 +43,6 @@
   name: (identifier) @function)
 (method_declaration
   name: (identifier) @function.method)
-(constructor_declaration
-   (identifier) @function.special)
 
 ;; Variables
 (variable_declaration
@@ -54,8 +51,8 @@
   name: (identifier) @variable.parameter)
 
 ;; Propiedades
-(property_declaration
-  (identifier) @property)
+(record_property_declaration
+  name: (identifier) @property)
 (property_access
   name: (identifier) @property)
 
@@ -68,7 +65,8 @@
 (decorator_declaration
   (identifier) @annotation)
 
-(class_declaration (identifier) @class)
+;; Records y Enums
+(record_declaration (type_expression) @type)
 (enum_declaration name: (identifier) @enum)
 (type_definition (identifier) @type)
 

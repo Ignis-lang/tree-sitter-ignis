@@ -26,7 +26,6 @@ VALID - Namespace with multiple items
 
 namespace Foo {
   function test(): void {}
-  class Bar {}
   record Baz {}
   enum Qux {}
   type Quux = i64;
@@ -45,9 +44,6 @@ namespace Foo {
           (type_identifier
             (primitive_keyword)))
         (block)))
-    (namespace_items
-      (class_declaration
-        (identifier)))
     (namespace_items
       (record_declaration
         (type_expression

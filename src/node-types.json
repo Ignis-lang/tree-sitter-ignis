@@ -254,77 +254,6 @@
     "fields": {}
   },
   {
-    "type": "class_declaration",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "class_modifier",
-          "named": true
-        },
-        {
-          "type": "constructor_declaration",
-          "named": true
-        },
-        {
-          "type": "extends_statement",
-          "named": true
-        },
-        {
-          "type": "generic_type_declaration",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "implement_statement",
-          "named": true
-        },
-        {
-          "type": "method_declaration",
-          "named": true
-        },
-        {
-          "type": "property_declaration",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "class_instance_expression",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "expression",
-          "named": true
-        },
-        {
-          "type": "generic_type_declaration",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "class_modifier",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "const_declaration",
     "named": true,
     "fields": {
@@ -355,37 +284,6 @@
     }
   },
   {
-    "type": "constructor_declaration",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "block",
-          "named": true
-        },
-        {
-          "type": "generic_type_declaration",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "method_modifier",
-          "named": true
-        },
-        {
-          "type": "parameter_declaration",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "declare_declaration",
     "named": true,
     "fields": {},
@@ -409,10 +307,6 @@
       "required": true,
       "types": [
         {
-          "type": "class_declaration",
-          "named": true
-        },
-        {
           "type": "const_declaration",
           "named": true
         },
@@ -422,10 +316,6 @@
         },
         {
           "type": "function_declaration",
-          "named": true
-        },
-        {
-          "type": "interface_declaration",
           "named": true
         },
         {
@@ -550,10 +440,6 @@
       "required": true,
       "types": [
         {
-          "type": "class_declaration",
-          "named": true
-        },
-        {
           "type": "declare_declaration",
           "named": true
         },
@@ -571,10 +457,6 @@
         },
         {
           "type": "function_declaration",
-          "named": true
-        },
-        {
-          "type": "interface_declaration",
           "named": true
         },
         {
@@ -667,25 +549,6 @@
     }
   },
   {
-    "type": "extends_statement",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "generic_type_declaration",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "extern_declaration",
     "named": true,
     "fields": {},
@@ -713,10 +576,6 @@
       "required": true,
       "types": [
         {
-          "type": "class_declaration",
-          "named": true
-        },
-        {
           "type": "const_declaration",
           "named": true
         },
@@ -734,10 +593,6 @@
         },
         {
           "type": "function_declaration",
-          "named": true
-        },
-        {
-          "type": "interface_declaration",
           "named": true
         },
         {
@@ -963,25 +818,6 @@
     }
   },
   {
-    "type": "implement_statement",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "generic_type_declaration",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "import_statement",
     "named": true,
     "fields": {},
@@ -1018,70 +854,6 @@
         },
         {
           "type": "hex_literal",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "interface_declaration",
-    "named": true,
-    "fields": {
-      "name": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "generic_type_declaration",
-          "named": true
-        },
-        {
-          "type": "interface_method_declaration",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "interface_method_declaration",
-    "named": true,
-    "fields": {
-      "function": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "generic_type_declaration",
-          "named": true
-        },
-        {
-          "type": "parameter_declaration",
-          "named": true
-        },
-        {
-          "type": "type_expression",
           "named": true
         }
       ]
@@ -1390,10 +1162,6 @@
       "required": true,
       "types": [
         {
-          "type": "class_declaration",
-          "named": true
-        },
-        {
           "type": "const_declaration",
           "named": true
         },
@@ -1543,11 +1311,11 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
-          "type": "class_instance_expression",
+          "type": "generic_type_declaration",
           "named": true
         },
         {
@@ -1568,6 +1336,10 @@
         },
         {
           "type": "method_call_expression",
+          "named": true
+        },
+        {
+          "type": "self_expression",
           "named": true
         },
         {
@@ -1607,29 +1379,6 @@
       "types": [
         {
           "type": "expression",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "property_declaration",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "property_modifier",
-          "named": true
-        },
-        {
-          "type": "type_expression",
           "named": true
         }
       ]
@@ -1715,7 +1464,15 @@
       "required": true,
       "types": [
         {
+          "type": "block",
+          "named": true
+        },
+        {
           "type": "generic_type_declaration",
+          "named": true
+        },
+        {
+          "type": "method_modifier",
           "named": true
         },
         {
@@ -1749,7 +1506,15 @@
       "required": true,
       "types": [
         {
+          "type": "expression",
+          "named": true
+        },
+        {
           "type": "generic_type_declaration",
+          "named": true
+        },
+        {
+          "type": "property_modifier",
           "named": true
         },
         {
@@ -1784,6 +1549,11 @@
     }
   },
   {
+    "type": "self_expression",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "source_file",
     "named": true,
     "fields": {},
@@ -1791,10 +1561,6 @@
       "multiple": true,
       "required": false,
       "types": [
-        {
-          "type": "class_declaration",
-          "named": true
-        },
         {
           "type": "const_declaration",
           "named": true
@@ -1833,10 +1599,6 @@
         },
         {
           "type": "import_statement",
-          "named": true
-        },
-        {
-          "type": "interface_declaration",
           "named": true
         },
         {
@@ -2409,10 +2171,6 @@
     "named": false
   },
   {
-    "type": "class",
-    "named": false
-  },
-  {
     "type": "comment",
     "named": true
   },
@@ -2450,10 +2208,6 @@
   },
   {
     "type": "export",
-    "named": false
-  },
-  {
-    "type": "extends",
     "named": false
   },
   {
@@ -2525,10 +2279,6 @@
     "named": false
   },
   {
-    "type": "implements",
-    "named": false
-  },
-  {
     "type": "import",
     "named": false
   },
@@ -2538,10 +2288,6 @@
   },
   {
     "type": "include",
-    "named": false
-  },
-  {
-    "type": "interface",
     "named": false
   },
   {
@@ -2581,10 +2327,6 @@
     "named": false
   },
   {
-    "type": "override",
-    "named": false
-  },
-  {
     "type": "private",
     "named": false
   },
@@ -2602,6 +2344,10 @@
   },
   {
     "type": "return",
+    "named": false
+  },
+  {
+    "type": "self",
     "named": false
   },
   {
