@@ -46,9 +46,7 @@ namespace Foo {
         (block)))
     (namespace_items
       (record_declaration
-        (type_expression
-          (type_identifier
-            (identifier)))))
+        (identifier)))
     (namespace_items
       (enum_declaration
         (identifier)))

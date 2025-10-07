@@ -1408,10 +1408,21 @@
   {
     "type": "record_declaration",
     "named": true,
-    "fields": {},
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "decorator_use",
@@ -1431,14 +1442,6 @@
         },
         {
           "type": "record_property_declaration",
-          "named": true
-        },
-        {
-          "type": "type_expression",
-          "named": true
-        },
-        {
-          "type": "variable_modifiers",
           "named": true
         }
       ]
@@ -1754,7 +1757,15 @@
           "named": true
         },
         {
+          "type": "pointer_specifier",
+          "named": true
+        },
+        {
           "type": "primitive_keyword",
+          "named": true
+        },
+        {
+          "type": "reference_operator",
           "named": true
         }
       ]
@@ -1888,6 +1899,14 @@
       "types": [
         {
           "type": "integer_literal",
+          "named": true
+        },
+        {
+          "type": "pointer_specifier",
+          "named": true
+        },
+        {
+          "type": "reference_operator",
           "named": true
         },
         {

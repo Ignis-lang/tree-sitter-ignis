@@ -30,9 +30,7 @@ declare record Foo {
   (declare_declaration
     (declare_item
       (record_declaration
-        (type_expression
-          (type_identifier
-            (identifier)))
+        (identifier)
         (record_property_declaration
           (identifier)
           (type_expression

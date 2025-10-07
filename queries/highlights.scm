@@ -66,7 +66,7 @@
   (identifier) @annotation)
 
 ;; Records y Enums
-(record_declaration (type_expression) @type)
+(record_declaration name: (identifier) @type)
 (enum_declaration name: (identifier) @enum)
 (type_definition (identifier) @type)
 

@@ -12,9 +12,7 @@ record User {
 
 (source_file
   (record_declaration
-    (type_expression
-      (type_identifier
-        (identifier)))
+    (identifier)
     (record_property_declaration
       (identifier)
       (type_expression
@@ -44,9 +42,7 @@ record User {
 
 (source_file
   (record_declaration
-    (type_expression
-      (type_identifier
-        (identifier)))
+    (identifier)
     (record_property_declaration
       (identifier)
       (type_expression
@@ -86,9 +82,7 @@ record User {
 
 (source_file
   (record_declaration
-    (type_expression
-      (type_identifier
-        (identifier)))
+    (identifier)
     (record_property_declaration
       (identifier)
       (type_expression
@@ -190,9 +184,7 @@ export record FFIConfig {
 (source_file
   (export_statement
     (record_declaration
-      (type_expression
-        (type_identifier
-          (identifier)))
+      (identifier)
       (record_property_declaration
         (identifier)
         (type_expression

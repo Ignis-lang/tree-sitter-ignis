@@ -146,6 +146,8 @@ module.exports = grammar({
       [$.decorator_use],
       [$.block, $.object_literal],
       [$.method_modifier, $.property_modifier],
+      [$.variable_modifiers, $.type_identifier, $.vector_type],
+      [$.type_identifier],
       [$.union_type, $.intersection_type, $.type_expression],
       [$.union_type, $.intersection_type, $.type_expression, $.vector_type],
       [$.lambda_expression, $._expression],
@@ -252,14 +254,7 @@ module.exports = grammar({
       ),
 
     property_access: ($) =>
-      prec.left(
-        PREC.FIELD,
-        seq(
-          $.expression,
-          choice('.', '::'),
-          field('name', $.identifier),
-        ),
-      ),
+      prec.left(PREC.FIELD, seq($.expression, choice('.', '::'), field('name', $.identifier))),
 
     get_expression: ($) => prec.left(choice($.property_access, $.method_call_expression)),
 
@@ -318,8 +313,7 @@ module.exports = grammar({
       seq(
         'record',
         optional($.generic_type_declaration),
-        optional($.variable_modifiers),
-        $.type_expression,
+        field('name', $.identifier),
         '{',
         repeat(
           seq(
@@ -447,7 +441,7 @@ module.exports = grammar({
     mutable_specifier: (_) => 'mut',
     pointer_specifier: (_) => '*',
     variable_modifiers: ($) =>
-      seq(repeat1(choice($.mutable_specifier, $.reference_operator, $.pointer_specifier))),
+      prec.left(repeat1(choice($.mutable_specifier, $.reference_operator, $.pointer_specifier))),
 
     const_declaration: ($) =>
       seq('const', field('name', $.identifier), ':', $.type_expression, '=', $.expression, ';'),
@@ -608,7 +602,12 @@ module.exports = grammar({
 
     type_identifier: ($) =>
       prec.left(
-        seq(choice($.primitive_keyword, $.identifier), optional($.generic_type_declaration), optional('[]')),
+        seq(
+          optional(repeat1(choice($.pointer_specifier, $.reference_operator))),
+          choice($.primitive_keyword, $.identifier),
+          optional($.generic_type_declaration),
+          optional('[]'),
+        ),
       ),
 
     union_type: ($) => prec.left(seq($.type_identifier, repeat(seq('|', $.type_identifier)))),
@@ -621,7 +620,14 @@ module.exports = grammar({
     type_expression: ($) =>
       choice($.type_function, $.type_identifier, $.union_type, $.intersection_type, $.vector_type),
 
-    vector_type: ($) => seq($.type_identifier, '[', optional($.integer_literal), ']'),
+    vector_type: ($) =>
+      seq(
+        optional(repeat1(choice($.pointer_specifier, $.reference_operator))),
+        $.type_identifier,
+        '[',
+        optional($.integer_literal),
+        ']',
+      ),
 
     loop_control: (_) => choice('break', 'continue'),
 

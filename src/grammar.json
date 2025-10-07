@@ -1005,20 +1005,12 @@
           ]
         },
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "variable_modifiers"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "SYMBOL",
-          "name": "type_expression"
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
         },
         {
           "type": "STRING",
@@ -2290,29 +2282,28 @@
       "value": "*"
     },
     "variable_modifiers": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "REPEAT1",
-          "content": {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "mutable_specifier"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "reference_operator"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "pointer_specifier"
-              }
-            ]
-          }
+      "type": "PREC_LEFT",
+      "value": 0,
+      "content": {
+        "type": "REPEAT1",
+        "content": {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "mutable_specifier"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "reference_operator"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "pointer_specifier"
+            }
+          ]
         }
-      ]
+      }
     },
     "const_declaration": {
       "type": "SEQ",
@@ -3781,6 +3772,30 @@
             "type": "CHOICE",
             "members": [
               {
+                "type": "REPEAT1",
+                "content": {
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "SYMBOL",
+                      "name": "pointer_specifier"
+                    },
+                    {
+                      "type": "SYMBOL",
+                      "name": "reference_operator"
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
                 "type": "SYMBOL",
                 "name": "primitive_keyword"
               },
@@ -3981,6 +3996,30 @@
     "vector_type": {
       "type": "SEQ",
       "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "REPEAT1",
+              "content": {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "pointer_specifier"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "reference_operator"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
         {
           "type": "SYMBOL",
           "name": "type_identifier"
@@ -4819,6 +4858,14 @@
     [
       "method_modifier",
       "property_modifier"
+    ],
+    [
+      "variable_modifiers",
+      "type_identifier",
+      "vector_type"
+    ],
+    [
+      "type_identifier"
     ],
     [
       "union_type",

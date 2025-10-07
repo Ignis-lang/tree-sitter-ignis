@@ -117,9 +117,7 @@ record Test {
     (metadata_expression
       (identifier)))
   (record_declaration
-    (type_expression
-      (type_identifier
-        (identifier)))
+    (identifier)
     (metadata_expression
       (identifier))
     (record_property_declaration
