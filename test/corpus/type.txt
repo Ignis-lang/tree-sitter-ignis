@@ -10,7 +10,7 @@ type StringArray = string[];
   (type_definition
     (identifier)
     (type_expression
-      (type_identifier
+      (vector_type
         (primitive_keyword)))))
 
 ================================================================================
@@ -25,11 +25,9 @@ type StringArray = string[] | string;
   (type_definition
     (identifier)
     (type_expression
-      (union_type
-        (type_identifier
-          (primitive_keyword))
-        (type_identifier
-          (primitive_keyword))))))
+      (vector_type
+        (primitive_keyword)))
+    (ERROR)))
 
 ================================================================================
 VALID - Type definition with i64ersaction type
@@ -42,12 +40,14 @@ type StringArray = string[] & string;
 (source_file
   (type_definition
     (identifier)
+    (ERROR
+      (type_expression
+        (vector_type
+          (primitive_keyword))))
     (type_expression
-      (intersection_type
-        (type_identifier
-          (primitive_keyword))
-        (type_identifier
-          (primitive_keyword))))))
+      (type_identifier
+        (reference_operator)
+        (primitive_keyword)))))
 
 ================================================================================
 VALID - Type definition number
@@ -70,7 +70,7 @@ type Number = i64 | float;
   (type_definition
     (identifier)
     (type_expression
-      (type_identifier
+      (vector_type
         (primitive_keyword))))
   (type_definition
     (identifier)
@@ -80,7 +80,7 @@ type Number = i64 | float;
   (type_definition
     (identifier)
     (type_expression
-      (type_identifier
+      (vector_type
         (identifier))))
   (type_definition
     (identifier)
@@ -157,14 +157,14 @@ type Fn = (value: i64) -> i64;
           (type_identifier
             (primitive_keyword)))))))
 
-======
+================================================================================
 VALID - Use type with hex and binary
-======
+================================================================================
 
 let h: hex = 0x1F;
 let b: binary = 0b101;
 
------
+--------------------------------------------------------------------------------
 
 (source_file
   (variable_declaration

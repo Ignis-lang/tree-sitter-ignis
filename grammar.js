@@ -629,7 +629,6 @@ module.exports = grammar({
           optional(repeat1(choice($.pointer_specifier, $.reference_operator))),
           choice($.primitive_keyword, $.identifier),
           optional($.generic_type_declaration),
-          optional('[]'),
         ),
       ),
 
@@ -646,7 +645,8 @@ module.exports = grammar({
     vector_type: ($) =>
       seq(
         optional(repeat1(choice($.pointer_specifier, $.reference_operator))),
-        $.type_identifier,
+        choice($.primitive_keyword, $.identifier),
+        optional($.generic_type_declaration),
         '[',
         optional($.integer_literal),
         ']',

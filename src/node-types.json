@@ -1933,6 +1933,14 @@
       "required": true,
       "types": [
         {
+          "type": "generic_type_declaration",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
           "type": "integer_literal",
           "named": true
         },
@@ -1941,11 +1949,11 @@
           "named": true
         },
         {
-          "type": "reference_operator",
+          "type": "primitive_keyword",
           "named": true
         },
         {
-          "type": "type_identifier",
+          "type": "reference_operator",
           "named": true
         }
       ]
@@ -2170,10 +2178,6 @@
   },
   {
     "type": "[",
-    "named": false
-  },
-  {
-    "type": "[]",
     "named": false
   },
   {

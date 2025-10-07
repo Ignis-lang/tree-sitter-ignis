@@ -203,7 +203,7 @@ export record FFIConfig {
       (record_property_declaration
         (identifier)
         (type_expression
-          (type_identifier
+          (vector_type
             (identifier))))
       (record_property_declaration
         (identifier)

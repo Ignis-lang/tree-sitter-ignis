@@ -217,7 +217,7 @@ function main(...args: string[]): void;
     (parameter_declaration
       (identifier)
       (type_expression
-        (type_identifier
+        (vector_type
           (primitive_keyword))))
     (type_expression
       (type_identifier
