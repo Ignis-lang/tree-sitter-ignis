@@ -238,9 +238,7 @@ module.exports = grammar({
     import_statement: ($) =>
       seq(
         'import',
-        '{',
         commaSep1(seq($.identifier, optional(seq('as', $.identifier)))),
-        '}',
         'from',
         $.string_literal,
         ';',

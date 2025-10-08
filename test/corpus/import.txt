@@ -2,7 +2,7 @@
 VALID - import
 ================================================================================
 
-import { println } from "std:io";
+import println from "std::io";
 
 --------------------------------------------------------------------------------
 
@@ -15,7 +15,7 @@ import { println } from "std:io";
 VALID - import with alias
 ================================================================================
 
-import { println as test } from "std:io";
+import println as test from "std::io";
 
 --------------------------------------------------------------------------------
 
@@ -29,14 +29,14 @@ import { println as test } from "std:io";
 VALID - Import multiple items
 ================================================================================
 
-import {
+import 
   IgnisLanguageSupported,
   ExternDeclarationType,
   LuaType,
   Only,
   NotTranspile,
   Language,
-} from "std:ffi";
+from "std::ffi";
 
 --------------------------------------------------------------------------------
 
