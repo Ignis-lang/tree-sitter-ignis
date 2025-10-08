@@ -201,14 +201,38 @@ module.exports = grammar({
         field('name', $.identifier),
         optional($.generic_type_declaration),
         '{',
-        commaSep($.enum_member_declaration),
+        repeat(
+          seq(
+            optional($.metadata_expression),
+            choice($.enum_variant_declaration, $.enum_method_declaration, $.decorator_use),
+          ),
+        ),
         '}',
       ),
 
-    enum_member_declaration: ($) =>
+    enum_variant_declaration: ($) =>
       seq(
         field('name', $.identifier),
-        choice(optional(seq('=', $.expression)), optional(seq('(', $.expression, ')'))),
+        optional(
+          choice(
+            seq('=', $.expression),
+            seq('(', commaSep($.type_expression), ')'),
+          ),
+        ),
+        ',',
+      ),
+
+    enum_method_declaration: ($) =>
+      seq(
+        optional(repeat($.method_modifier)),
+        field('name', $.identifier),
+        optional($.generic_type_declaration),
+        '(',
+        optional(commaSep1($.parameter_declaration)),
+        ')',
+        ':',
+        $.type_expression,
+        $.block,
       ),
 
     import_statement: ($) =>
@@ -378,19 +402,18 @@ module.exports = grammar({
           seq(
             '#',
             '[',
-            repeat(
+            commaSep(
               seq(
                 $.identifier,
-                optional(commaSep1(seq('(', optional(commaSep($.expression)), ')'))),
-                optional(','),
+                optional(seq('(', commaSep($.expression), ')')),
               ),
             ),
             ']',
           ),
           seq(
             '#',
-            seq($.identifier, optional(commaSep1(seq('(', optional(commaSep($.expression)), ')')))),
-            optional(';'),
+            $.identifier,
+            optional(seq('(', commaSep($.expression), ')')),
           ),
         ),
       ),

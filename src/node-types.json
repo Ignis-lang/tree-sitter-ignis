@@ -395,18 +395,30 @@
       "required": false,
       "types": [
         {
-          "type": "enum_member_declaration",
+          "type": "decorator_use",
+          "named": true
+        },
+        {
+          "type": "enum_method_declaration",
+          "named": true
+        },
+        {
+          "type": "enum_variant_declaration",
           "named": true
         },
         {
           "type": "generic_type_declaration",
+          "named": true
+        },
+        {
+          "type": "metadata_expression",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "enum_member_declaration",
+    "type": "enum_method_declaration",
     "named": true,
     "fields": {
       "name": {
@@ -421,11 +433,57 @@
       }
     },
     "children": {
-      "multiple": false,
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "block",
+          "named": true
+        },
+        {
+          "type": "generic_type_declaration",
+          "named": true
+        },
+        {
+          "type": "method_modifier",
+          "named": true
+        },
+        {
+          "type": "parameter_declaration",
+          "named": true
+        },
+        {
+          "type": "type_expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "enum_variant_declaration",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
       "required": false,
       "types": [
         {
           "type": "expression",
+          "named": true
+        },
+        {
+          "type": "type_expression",
           "named": true
         }
       ]
