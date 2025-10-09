@@ -17,6 +17,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "inline_statement"
+        },
+        {
+          "type": "SYMBOL",
           "name": "import_statement"
         },
         {
@@ -139,6 +143,32 @@
             {
               "type": "SYMBOL",
               "name": "declare_declaration"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "const_declaration"
+            }
+          ]
+        }
+      ]
+    },
+    "inline_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "inline"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "function_declaration"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "const_declaration"
             }
           ]
         }
@@ -4178,6 +4208,10 @@
         {
           "type": "STRING",
           "value": "abstract"
+        },
+        {
+          "type": "STRING",
+          "value": "inline"
         }
       ]
     },
@@ -4789,6 +4823,10 @@
         {
           "type": "STRING",
           "value": "import"
+        },
+        {
+          "type": "STRING",
+          "value": "inline"
         },
         {
           "type": "STRING",

@@ -166,6 +166,54 @@ record User {
                   (self_expression))))))))))
 
 ================================================================================
+VALID - Record with inline method
+================================================================================
+
+record User {
+  age: i32 = 20;
+  name: string;
+  inline getName(): string {
+    return self.name;
+  }
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (record_declaration
+    (identifier)
+    (record_property_declaration
+      (identifier)
+      (type_expression
+        (type_identifier
+          (primitive_keyword)))
+      (expression
+        (primary_expression
+          (literal
+            (integer_literal
+              (decimal_literal))))))
+    (record_property_declaration
+      (identifier)
+      (type_expression
+        (type_identifier
+          (primitive_keyword))))
+    (record_method_declaration
+      (method_modifier)
+      (identifier)
+      (type_expression
+        (type_identifier
+          (primitive_keyword)))
+      (block
+        (return_statement
+          (expression
+            (get_expression
+              (property_access
+                (expression
+                  (primary_expression
+                    (self_expression)))
+                (identifier)))))))))
+
+================================================================================
 VALID - Export record
 ================================================================================
 

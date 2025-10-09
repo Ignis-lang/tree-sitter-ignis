@@ -23,7 +23,7 @@
   "if" "else" "let" "return" "function" "import" "from" "for" "enum" "export"
   "while" "of" "public" "private" "new" "static" "final" "const" "as" "void" 
   "extern" "unknown" "type" "record" "decorator" (this_expression) (self_expression)
-  "match" "when" "mut" "namespace" "meta" "declare" "include" "source"
+  "match" "when" "mut" "namespace" "meta" "declare" "include" "source" "inline"
 ] @keyword
 
 (identifier) @variable

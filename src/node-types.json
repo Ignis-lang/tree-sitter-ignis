@@ -498,6 +498,10 @@
       "required": true,
       "types": [
         {
+          "type": "const_declaration",
+          "named": true
+        },
+        {
           "type": "declare_declaration",
           "named": true
         },
@@ -905,6 +909,25 @@
         },
         {
           "type": "string_literal",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "inline_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "const_declaration",
+          "named": true
+        },
+        {
+          "type": "function_declaration",
           "named": true
         }
       ]
@@ -1698,6 +1721,10 @@
           "named": true
         },
         {
+          "type": "inline_statement",
+          "named": true
+        },
+        {
           "type": "metadata_declaration",
           "named": true
         },
@@ -2408,6 +2435,10 @@
   },
   {
     "type": "include",
+    "named": false
+  },
+  {
+    "type": "inline",
     "named": false
   },
   {

@@ -27,3 +27,35 @@ const HELLO_WORLD_LEN: i64 = 13;
         (literal
           (integer_literal
             (decimal_literal)))))))
+
+================================================================================
+VALID - const inline
+================================================================================
+
+inline const HELLO_WORLD: string = "Hello, World!";
+inline const HELLO_WORLD_LEN: i64 = 13;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (inline_statement
+    (const_declaration
+      (identifier)
+      (type_expression
+        (type_identifier
+          (primitive_keyword)))
+      (expression
+        (primary_expression
+          (literal
+            (string_literal))))))
+  (inline_statement
+    (const_declaration
+      (identifier)
+      (type_expression
+        (type_identifier
+          (primitive_keyword)))
+      (expression
+        (primary_expression
+          (literal
+            (integer_literal
+              (decimal_literal))))))))

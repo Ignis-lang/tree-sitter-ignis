@@ -72,6 +72,7 @@ const KEYWORDS = [
   'is',
   'if',
   'import',
+  'inline',
   'in',
   'let',
   'meta',
@@ -162,6 +163,7 @@ module.exports = grammar({
     _definition: ($) =>
       choice(
         $.export_statement,
+        $.inline_statement,
         $.import_statement,
         $.function_declaration,
         $.variable_declaration,
@@ -192,6 +194,16 @@ module.exports = grammar({
           $.decorator_declaration,
           $.metadata_declaration,
           $.declare_declaration,
+          $.const_declaration,
+        ),
+      ),
+
+    inline_statement: ($) =>
+      seq(
+        'inline',
+        choice(
+          $.function_declaration,
+          $.const_declaration,
         ),
       ),
 
@@ -677,7 +689,7 @@ module.exports = grammar({
 
     property_modifier: (_) => choice('public', 'private', 'static', 'mut', 'abstract'),
 
-    method_modifier: (_) => choice('public', 'private', 'static', 'final', 'abstract'),
+    method_modifier: (_) => choice('public', 'private', 'static', 'final', 'abstract', 'inline'),
 
     other_keyword: (_) => choice('in', 'as', 'readonly', 'export', 'super', 'declare', 'namespace'),
 

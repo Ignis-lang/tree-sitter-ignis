@@ -222,3 +222,19 @@ function main(...args: string[]): void;
     (type_expression
       (type_identifier
         (primitive_keyword)))))
+
+================================================================================
+VALID - Function inline
+================================================================================
+
+inline function main(): void;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (inline_statement
+    (function_declaration
+      (identifier)
+      (type_expression
+        (type_identifier
+          (primitive_keyword))))))
