@@ -14,6 +14,7 @@ const PREC = {
   AND: 3,
   OR: 2,
   RANGE: 1,
+  TERNARY: 0,
   ASSIGN: -1,
   CLOSURE: -2,
 };
@@ -151,6 +152,8 @@ module.exports = grammar({
       [$.type_identifier],
       [$._expression, $.guard_clause],
       [$._expression, $.when_clause],
+      [$._expression, $.ternary_expression],
+      [$.lambda_expression, $.ternary_expression],
       [$.union_type, $.intersection_type, $.type_expression],
       [$.union_type, $.intersection_type, $.type_expression, $.vector_type],
       [$.lambda_expression, $._expression],
@@ -564,6 +567,7 @@ module.exports = grammar({
         $.prefix_unary_expression,
         $.suffix_unary_expression,
         $.binary_expression,
+        $.ternary_expression,
         $.call_expression,
         $.cast,
         $.match_expression,
@@ -574,6 +578,18 @@ module.exports = grammar({
       ),
 
     cast: ($) => prec(PREC.CAST, seq($.identifier, 'as', $.type_expression)),
+
+    ternary_expression: ($) =>
+      prec.right(
+        PREC.TERNARY,
+        seq(
+          field('condition', $.expression),
+          '?',
+          field('consequence', $.expression),
+          ':',
+          field('alternative', $.expression),
+        ),
+      ),
 
     prefix_unary_expression: ($) => prec(PREC.UNARY, seq(choice('!', '++', '--'), $.expression)),
 
