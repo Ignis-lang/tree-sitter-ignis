@@ -1,0 +1,73 @@
+================================================================================
+VALID - Declare function
+================================================================================
+
+declare function Foo(): void;
+
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (declare_declaration
+    (declare_item
+      (function_declaration
+        (identifier)
+        (type_expression
+          (type_identifier
+            (primitive_keyword)))))))
+
+================================================================================
+VALID - Declare record
+================================================================================
+
+declare record Foo {
+  Bar: string;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (declare_declaration
+    (declare_item
+      (record_declaration
+        (identifier)
+        (record_property_declaration
+          (identifier)
+          (type_expression
+            (type_identifier
+              (primitive_keyword))))))))
+
+================================================================================
+VALID - Declare const
+================================================================================
+
+declare const Foo: string = "bar";
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (declare_declaration
+    (declare_item
+      (const_declaration
+        (identifier)
+        (type_expression
+          (type_identifier
+            (primitive_keyword)))
+        (expression
+          (primary_expression
+            (literal
+              (string_literal))))))))
+
+================================================================================
+VALID - Declare metadata
+================================================================================
+
+declare meta NotTranspile;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (declare_declaration
+    (declare_item
+      (metadata_declaration
+        (identifier)))))
