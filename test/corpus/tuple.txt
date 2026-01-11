@@ -1,0 +1,93 @@
+================================================================================
+VALID - Tuple literal
+================================================================================
+
+let pair: (i32, i32) = (1, 2);
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (variable_declaration
+    name: (identifier)
+    type: (type_expression
+      (tuple_type
+        (type_expression
+          (type_identifier
+            (primitive_keyword)))
+        (type_expression
+          (type_identifier
+            (primitive_keyword)))))
+    value: (expression
+      (primary_expression
+        (literal
+          (tuple_literal
+            (expression
+              (primary_expression
+                (literal
+                  (integer_literal
+                    (decimal_literal)))))
+            (expression
+              (primary_expression
+                (literal
+                  (integer_literal
+                    (decimal_literal)))))))))))
+
+================================================================================
+VALID - Tuple with three elements
+================================================================================
+
+let triple: (string, i32, boolean) = ("hello", 42, true);
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (variable_declaration
+    name: (identifier)
+    type: (type_expression
+      (tuple_type
+        (type_expression
+          (type_identifier
+            (primitive_keyword)))
+        (type_expression
+          (type_identifier
+            (primitive_keyword)))
+        (type_expression
+          (type_identifier
+            (primitive_keyword)))))
+    value: (expression
+      (primary_expression
+        (literal
+          (tuple_literal
+            (expression
+              (primary_expression
+                (literal
+                  (string_literal))))
+            (expression
+              (primary_expression
+                (literal
+                  (integer_literal
+                    (decimal_literal)))))
+            (expression
+              (primary_expression
+                (literal
+                  (boolean_literal))))))))))
+
+================================================================================
+VALID - Tuple type alias
+================================================================================
+
+type Point = (f64, f64);
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (type_definition
+    (identifier)
+    (type_expression
+      (tuple_type
+        (type_expression
+          (type_identifier
+            (primitive_keyword)))
+        (type_expression
+          (type_identifier
+            (primitive_keyword)))))))

@@ -1,0 +1,41 @@
+================================================================================
+VALID - Atom literal
+================================================================================
+
+let x: atom = :ok;
+let y: atom = :error;
+let status: atom = :pending_approval;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (variable_declaration
+    name: (identifier)
+    type: (type_expression
+      (type_identifier
+        (primitive_keyword)))
+    value: (expression
+      (primary_expression
+        (literal
+          (atom_literal
+            (identifier))))))
+  (variable_declaration
+    name: (identifier)
+    type: (type_expression
+      (type_identifier
+        (primitive_keyword)))
+    value: (expression
+      (primary_expression
+        (literal
+          (atom_literal
+            (identifier))))))
+  (variable_declaration
+    name: (identifier)
+    type: (type_expression
+      (type_identifier
+        (primitive_keyword)))
+    value: (expression
+      (primary_expression
+        (literal
+          (atom_literal
+            (identifier)))))))

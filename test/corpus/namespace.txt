@@ -12,7 +12,7 @@ namespace Test {
   (namespace_declaration
     (qualified_identifier
       (identifier))
-    (namespace_items
+    (namespace_item
       (function_declaration
         (identifier)
         (type_expression
@@ -37,20 +37,20 @@ namespace Foo {
   (namespace_declaration
     (qualified_identifier
       (identifier))
-    (namespace_items
+    (namespace_item
       (function_declaration
         (identifier)
         (type_expression
           (type_identifier
             (primitive_keyword)))
         (block)))
-    (namespace_items
+    (namespace_item
       (record_declaration
         (identifier)))
-    (namespace_items
+    (namespace_item
       (enum_declaration
         (identifier)))
-    (namespace_items
+    (namespace_item
       (type_definition
         (identifier)
         (type_expression
@@ -75,7 +75,7 @@ function main(): void {
   (namespace_declaration
     (qualified_identifier
       (identifier))
-    (namespace_items
+    (namespace_item
       (function_declaration
         (identifier)
         (type_expression

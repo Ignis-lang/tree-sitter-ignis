@@ -1,5 +1,5 @@
 ================================================================================
-VALID - Extern
+VALID - Extern block
 ================================================================================
 
 extern io {
@@ -12,8 +12,8 @@ extern io {
   (extern_declaration
     (qualified_identifier
       (identifier))
-    (extern_items
-      (function_declaration
+    (extern_item
+      (extern_function
         (identifier)
         (parameter_declaration
           (identifier)
@@ -37,66 +37,70 @@ extern function allocateZeroed(size: u32, count: u32): *mut u8;
 
 (source_file
   (extern_declaration
-    (function_declaration
-      (identifier)
-      (parameter_declaration
+    (extern_item
+      (extern_function
         (identifier)
-        (type_expression
-          (type_identifier
-            (primitive_keyword))))
-      (type_expression
-        (type_identifier
-          (pointer_specifier)
-          (mutable_specifier)
-          (primitive_keyword)))))
-  (extern_declaration
-    (function_declaration
-      (identifier)
-      (parameter_declaration
-        (identifier)
+        (parameter_declaration
+          (identifier)
+          (type_expression
+            (type_identifier
+              (primitive_keyword))))
         (type_expression
           (type_identifier
             (pointer_specifier)
             (mutable_specifier)
-            (primitive_keyword))))
-      (type_expression
-        (type_identifier
-          (primitive_keyword)))))
+            (primitive_keyword))))))
   (extern_declaration
-    (function_declaration
-      (identifier)
-      (parameter_declaration
+    (extern_item
+      (extern_function
         (identifier)
+        (parameter_declaration
+          (identifier)
+          (type_expression
+            (type_identifier
+              (pointer_specifier)
+              (mutable_specifier)
+              (primitive_keyword))))
+        (type_expression
+          (type_identifier
+            (primitive_keyword))))))
+  (extern_declaration
+    (extern_item
+      (extern_function
+        (identifier)
+        (parameter_declaration
+          (identifier)
+          (type_expression
+            (type_identifier
+              (pointer_specifier)
+              (mutable_specifier)
+              (primitive_keyword))))
+        (parameter_declaration
+          (identifier)
+          (type_expression
+            (type_identifier
+              (primitive_keyword))))
         (type_expression
           (type_identifier
             (pointer_specifier)
             (mutable_specifier)
-            (primitive_keyword))))
-      (parameter_declaration
-        (identifier)
-        (type_expression
-          (type_identifier
-            (primitive_keyword))))
-      (type_expression
-        (type_identifier
-          (pointer_specifier)
-          (mutable_specifier)
-          (primitive_keyword)))))
+            (primitive_keyword))))))
   (extern_declaration
-    (function_declaration
-      (identifier)
-      (parameter_declaration
+    (extern_item
+      (extern_function
         (identifier)
+        (parameter_declaration
+          (identifier)
+          (type_expression
+            (type_identifier
+              (primitive_keyword))))
+        (parameter_declaration
+          (identifier)
+          (type_expression
+            (type_identifier
+              (primitive_keyword))))
         (type_expression
           (type_identifier
-            (primitive_keyword))))
-      (parameter_declaration
-        (identifier)
-        (type_expression
-          (type_identifier
-            (primitive_keyword))))
-      (type_expression
-        (type_identifier
-          (pointer_specifier)
-          (mutable_specifier)
-          (primitive_keyword))))))
+            (pointer_specifier)
+            (mutable_specifier)
+            (primitive_keyword)))))))

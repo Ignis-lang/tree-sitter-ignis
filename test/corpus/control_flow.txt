@@ -1,0 +1,194 @@
+================================================================================
+VALID - Break statement
+================================================================================
+
+function test(): void {
+  for (let i = 0; i < 10; i++) {
+    if (i == 5) {
+      break;
+    }
+  }
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_declaration
+    name: (identifier)
+    (type_expression
+      (type_identifier
+        (primitive_keyword)))
+    (block
+      (for_statement
+        (for_variable_declaration
+          (identifier)
+          value: (expression
+            (primary_expression
+              (literal
+                (integer_literal
+                  (decimal_literal))))))
+        (expression
+          (binary_expression
+            left: (expression
+              (primary_expression
+                (identifier)))
+            right: (literal
+              (integer_literal
+                (decimal_literal)))))
+        (expression
+          (suffix_unary_expression
+            (expression
+              (primary_expression
+                (identifier)))))
+        (block
+          (if_statement
+            (expression
+              (binary_expression
+                left: (expression
+                  (primary_expression
+                    (identifier)))
+                right: (literal
+                  (integer_literal
+                    (decimal_literal)))))
+            (block
+              (break_statement))))))))
+
+================================================================================
+VALID - Continue statement
+================================================================================
+
+function test(): void {
+  for (let i = 0; i < 10; i++) {
+    if (i == 5) {
+      continue;
+    }
+  }
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_declaration
+    name: (identifier)
+    (type_expression
+      (type_identifier
+        (primitive_keyword)))
+    (block
+      (for_statement
+        (for_variable_declaration
+          (identifier)
+          value: (expression
+            (primary_expression
+              (literal
+                (integer_literal
+                  (decimal_literal))))))
+        (expression
+          (binary_expression
+            left: (expression
+              (primary_expression
+                (identifier)))
+            right: (literal
+              (integer_literal
+                (decimal_literal)))))
+        (expression
+          (suffix_unary_expression
+            (expression
+              (primary_expression
+                (identifier)))))
+        (block
+          (if_statement
+            (expression
+              (binary_expression
+                left: (expression
+                  (primary_expression
+                    (identifier)))
+                right: (literal
+                  (integer_literal
+                    (decimal_literal)))))
+            (block
+              (continue_statement))))))))
+
+================================================================================
+VALID - Else if clause
+================================================================================
+
+function test(x: i32): i32 {
+  if (x < 0) {
+    return -1;
+  } else if (x == 0) {
+    return 0;
+  } else if (x > 100) {
+    return 100;
+  } else {
+    return x;
+  }
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_declaration
+    name: (identifier)
+    (parameter_declaration
+      name: (identifier)
+      (type_expression
+        (type_identifier
+          (primitive_keyword))))
+    (type_expression
+      (type_identifier
+        (primitive_keyword)))
+    (block
+      (if_statement
+        (expression
+          (binary_expression
+            left: (expression
+              (primary_expression
+                (identifier)))
+            right: (literal
+              (integer_literal
+                (decimal_literal)))))
+        (block
+          (return_statement
+            (expression
+              (primary_expression
+                (literal
+                  (integer_literal
+                    (decimal_literal)))))))
+        (else_if_clause
+          (expression
+            (binary_expression
+              left: (expression
+                (primary_expression
+                  (identifier)))
+              right: (literal
+                (integer_literal
+                  (decimal_literal)))))
+          (block
+            (return_statement
+              (expression
+                (primary_expression
+                  (literal
+                    (integer_literal
+                      (decimal_literal))))))))
+        (else_if_clause
+          (expression
+            (binary_expression
+              left: (expression
+                (primary_expression
+                  (identifier)))
+              right: (literal
+                (integer_literal
+                  (decimal_literal)))))
+          (block
+            (return_statement
+              (expression
+                (primary_expression
+                  (literal
+                    (integer_literal
+                      (decimal_literal))))))))
+        (else_clause
+          (block
+            (return_statement
+              (expression
+                (primary_expression
+                  (identifier))))))))))

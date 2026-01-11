@@ -251,7 +251,7 @@ export record FFIConfig {
       (record_property_declaration
         (identifier)
         (type_expression
-          (vector_type
+          (type_identifier
             (identifier))))
       (record_property_declaration
         (identifier)

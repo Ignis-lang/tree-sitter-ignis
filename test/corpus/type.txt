@@ -10,7 +10,7 @@ type StringArray = string[];
   (type_definition
     (identifier)
     (type_expression
-      (vector_type
+      (type_identifier
         (primitive_keyword)))))
 
 ================================================================================
@@ -25,9 +25,11 @@ type StringArray = string[] | string;
   (type_definition
     (identifier)
     (type_expression
-      (vector_type
-        (primitive_keyword)))
-    (ERROR)))
+      (union_type
+        (type_identifier
+          (primitive_keyword))
+        (type_identifier
+          (primitive_keyword))))))
 
 ================================================================================
 VALID - Type definition with i64ersaction type
@@ -40,14 +42,12 @@ type StringArray = string[] & string;
 (source_file
   (type_definition
     (identifier)
-    (ERROR
-      (type_expression
-        (vector_type
-          (primitive_keyword))))
     (type_expression
-      (type_identifier
-        (reference_operator)
-        (primitive_keyword)))))
+      (intersection_type
+        (type_identifier
+          (primitive_keyword))
+        (type_identifier
+          (primitive_keyword))))))
 
 ================================================================================
 VALID - Type definition number
@@ -70,7 +70,7 @@ type Number = i64 | float;
   (type_definition
     (identifier)
     (type_expression
-      (vector_type
+      (type_identifier
         (primitive_keyword))))
   (type_definition
     (identifier)
@@ -80,7 +80,7 @@ type Number = i64 | float;
   (type_definition
     (identifier)
     (type_expression
-      (vector_type
+      (type_identifier
         (identifier))))
   (type_definition
     (identifier)
@@ -139,7 +139,7 @@ function main(): void {
 VALID - Declare type function
 ================================================================================
 
-type Fn = (value: i64) -> i64;
+type Fn = (i64) -> i64;
 
 --------------------------------------------------------------------------------
 
@@ -148,11 +148,9 @@ type Fn = (value: i64) -> i64;
     (identifier)
     (type_expression
       (type_function
-        (parameter_declaration
-          (identifier)
-          (type_expression
-            (type_identifier
-              (primitive_keyword))))
+        (type_expression
+          (type_identifier
+            (primitive_keyword)))
         (type_expression
           (type_identifier
             (primitive_keyword)))))))

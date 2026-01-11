@@ -70,7 +70,7 @@
 
 <type-alias> ::= <directive-attrs>? "type" <identifier> <generic-type>? "=" <type> ";"
 
-<extern> ::= <directive-attrs>? "extern" <qualified-identifier> "{" <extern-item>* "}"
+<extern> ::= <directive-attrs>? "extern" <qualified-identifier> "{" <extern-item>* "}" | <directive-attrs>? "extern" <extern-item>
 
 <extern-item> ::= <directive-attrs>? ( <extern-function> | <record> | <enum> | <type-alias> )
 

@@ -1,0 +1,45 @@
+================================================================================
+VALID - Exclusive range
+================================================================================
+
+let r: i32 = 0..10;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (variable_declaration
+    name: (identifier)
+    type: (type_expression
+      (type_identifier
+        (primitive_keyword)))
+    value: (expression
+      (binary_expression
+        left: (literal
+          (integer_literal
+            (decimal_literal)))
+        right: (literal
+          (integer_literal
+            (decimal_literal)))))))
+
+================================================================================
+VALID - Inclusive range
+================================================================================
+
+let r: i32 = 0..=10;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (variable_declaration
+    name: (identifier)
+    type: (type_expression
+      (type_identifier
+        (primitive_keyword)))
+    value: (expression
+      (binary_expression
+        left: (literal
+          (integer_literal
+            (decimal_literal)))
+        right: (literal
+          (integer_literal
+            (decimal_literal)))))))

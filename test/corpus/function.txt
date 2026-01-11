@@ -170,7 +170,7 @@ function fibonacci(num: mut i64): i64 {
 VALID - Lambda
 ================================================================================
 
-let value: (a: i64) -> i64 = (a: i64): i64 -> a;
+let value: (i64) -> i64 = (a: i64): i64 -> a;
 
 --------------------------------------------------------------------------------
 
@@ -179,11 +179,9 @@ let value: (a: i64) -> i64 = (a: i64): i64 -> a;
     (identifier)
     (type_expression
       (type_function
-        (parameter_declaration
-          (identifier)
-          (type_expression
-            (type_identifier
-              (primitive_keyword))))
+        (type_expression
+          (type_identifier
+            (primitive_keyword)))
         (type_expression
           (type_identifier
             (primitive_keyword)))))
@@ -206,7 +204,7 @@ let value: (a: i64) -> i64 = (a: i64): i64 -> a;
 VALID - Function with variadic parameter
 ================================================================================
 
-function main(...args: string[]): void;
+function main(...args: string[]): void {}
 
 --------------------------------------------------------------------------------
 
@@ -216,17 +214,18 @@ function main(...args: string[]): void;
     (parameter_declaration
       (identifier)
       (type_expression
-        (vector_type
+        (type_identifier
           (primitive_keyword))))
     (type_expression
       (type_identifier
-        (primitive_keyword)))))
+        (primitive_keyword)))
+    (block)))
 
 ================================================================================
 VALID - Function inline
 ================================================================================
 
-inline function main(): void;
+inline function main(): void {}
 
 --------------------------------------------------------------------------------
 
@@ -236,4 +235,5 @@ inline function main(): void;
       (identifier)
       (type_expression
         (type_identifier
-          (primitive_keyword))))))
+          (primitive_keyword)))
+      (block))))

@@ -1,18 +1,19 @@
 const PREC = {
-  CALL: 15,
-  FIELD: 14,
-  TRY: 13,
-  UNARY: 12,
-  CAST: 11,
-  MULTIPLICATIVE: 10,
-  ADDITIVE: 9,
-  SHIFT: 8,
-  BITAND: 7,
-  BITXOR: 6,
-  BITOR: 5,
-  COMPARATIVE: 4,
-  AND: 3,
-  OR: 2,
+  CALL: 16,
+  FIELD: 15,
+  TRY: 14,
+  UNARY: 13,
+  CAST: 12,
+  MULTIPLICATIVE: 11,
+  ADDITIVE: 10,
+  SHIFT: 9,
+  BITAND: 8,
+  BITXOR: 7,
+  BITOR: 6,
+  COMPARATIVE: 5,
+  AND: 4,
+  OR: 3,
+  PIPE: 2,
   RANGE: 1,
   TERNARY: 0,
   ASSIGN: -1,
@@ -53,6 +54,7 @@ const PRIMITIVE_TYPES = [
   'unknown',
   'hex',
   'binary',
+  'atom',
 ];
 
 const KEYWORDS = [
@@ -62,10 +64,11 @@ const KEYWORDS = [
   'break',
   'continue',
   'const',
-  'declare',
+  'directive',
   'else',
   'enum',
   'export',
+  'extern',
   'false',
   'for',
   'from',
@@ -76,7 +79,6 @@ const KEYWORDS = [
   'inline',
   'in',
   'let',
-  'meta',
   'namespace',
   'new',
   'null',
@@ -95,8 +97,6 @@ const KEYWORDS = [
   'while',
   'with',
   'mut',
-  'include',
-  'source',
 ];
 
 const SEPARATORS = [',', ';', ':'];
@@ -145,7 +145,6 @@ module.exports = grammar({
       [$.primary_expression, $.get_expression],
       [$._expression, $.primary_expression],
       [$.for_statement, $.expression],
-      [$.decorator_use],
       [$.block, $.object_literal],
       [$.method_modifier, $.property_modifier],
       [$.variable_modifiers, $.type_identifier, $.vector_type],
@@ -158,6 +157,16 @@ module.exports = grammar({
       [$.union_type, $.intersection_type, $.type_expression, $.vector_type],
       [$.lambda_expression, $._expression],
       [$._statement, $.expression],
+      [$.tuple_literal, $.group_expression],
+      [$.tuple_type, $.type_function],
+      [$.directive_attr, $.directive_expression],
+      [$._definition, $._expression],
+      [$.primary_expression, $.qualified_identifier],
+      [$.tuple_type],
+      [$.enum_declaration],
+      [$.record_declaration],
+      [$.type_definition],
+      [$._expression, $.match_arm],
     ]),
 
   rules: {
@@ -174,30 +183,37 @@ module.exports = grammar({
         $.type_definition,
         $.record_declaration,
         $.extern_declaration,
-        $.decorator_declaration,
-        $.decorator_use,
-        $.metadata_declaration,
+        $.directive_statement,
+        $.directive_declaration,
         $.namespace_declaration,
         $.const_declaration,
-        $.declare_declaration,
         $.expression,
       ),
 
-    type_definition: ($) => seq('type', $.identifier, '=', $.type_expression, ';'),
+    // <type-alias> ::= <directive-attrs>? "type" <identifier> <generic-type>? "=" <type> ";"
+    type_definition: ($) =>
+      seq(
+        optional($.directive_attrs),
+        'type',
+        $.identifier,
+        optional($.generic_type_declaration),
+        '=',
+        $.type_expression,
+        ';',
+      ),
 
+    // <export> ::= "export" (<function> | <const> | <record> | <enum> | <type-alias> | <directive-statement> | <directive>)
     export_statement: ($) =>
       seq(
         'export',
         choice(
           $.function_declaration,
+          $.const_declaration,
+          $.record_declaration,
           $.enum_declaration,
           $.type_definition,
-          $.record_declaration,
-          $.extern_declaration,
-          $.decorator_declaration,
-          $.metadata_declaration,
-          $.declare_declaration,
-          $.const_declaration,
+          $.directive_statement,
+          $.directive_declaration,
         ),
       ),
 
@@ -210,16 +226,20 @@ module.exports = grammar({
         ),
       ),
 
+    // <enum> ::= <directive-attrs>? "enum" <identifier> <generic-type>?
+    //            "{" (<enum-item>)* "}"
+    // <enum-item> ::= <directive-attrs>? (<enum-variant> | <enum-method>)
     enum_declaration: ($) =>
       seq(
+        optional($.directive_attrs),
         'enum',
         field('name', $.identifier),
         optional($.generic_type_declaration),
         '{',
         repeat(
           seq(
-            optional($.metadata_expression),
-            choice($.enum_variant_declaration, $.enum_method_declaration, $.decorator_use),
+            optional($.directive_attrs),
+            choice($.enum_variant_declaration, $.enum_method_declaration),
           ),
         ),
         '}',
@@ -280,11 +300,12 @@ module.exports = grammar({
         ),
       ),
 
-    // <lambda> ::= "(" <parameters>? ")" ":" <type> "->" (<expression> | <block>)
+    // <lambda> ::= (<generic-type>)? "(" <parameters>? ")" ":" <type> "->" (<expression> | <block>)
     lambda_expression: ($) =>
       seq(
+        optional($.generic_type_declaration),
         '(',
-        optional($.parameter_declaration),
+        commaSep($.parameter_declaration),
         ')',
         ':',
         $.type_expression,
@@ -348,115 +369,51 @@ module.exports = grammar({
         choice($.block, ';'),
       ),
 
+    // <record> ::= <directive-attrs>? "record" <generic-type>? <identifier> "{" <record-item>* "}"
+    // <record-item> ::= <directive-attrs>? (<record-property> | <record-method>)
     record_declaration: ($) =>
       seq(
+        optional($.directive_attrs),
         'record',
         optional($.generic_type_declaration),
         field('name', $.identifier),
         '{',
         repeat(
           seq(
-            optional($.metadata_expression),
-            choice($.record_property_declaration, $.record_method_declaration, $.decorator_use),
+            optional($.directive_attrs),
+            choice($.record_property_declaration, $.record_method_declaration),
           ),
         ),
         '}',
       ),
 
+    // <extern> ::= <directive-attrs>? "extern" <qualified-identifier> "{" <extern-item>* "}"
+    //            | <directive-attrs>? "extern" <extern-item>
     extern_declaration: ($) =>
       seq(
+        optional($.directive_attrs),
         'extern',
         choice(
-          seq(optional($.qualified_identifier), '{', repeat($.extern_items), '}'),
-          $.function_declaration,
-          $.enum_declaration,
-          $.record_declaration,
-          $.const_declaration,
+          seq($.qualified_identifier, '{', repeat($.extern_item), '}'),
+          $.extern_item,
         ),
       ),
-    extern_items: ($) =>
-      choice(
-        $.function_declaration,
-        $.enum_declaration,
-        $.record_declaration,
-        $.export_statement,
-        $.declare_declaration,
-        $.const_declaration,
-        seq('include', $.string_literal, ';'),
-        seq('source', $.string_literal, ';'),
-      ),
 
-    decorator_use: ($) => seq('@', $.identifier, optional(seq('(', optional(commaSep($.expression)), ')'))),
-
-    decorator_declaration: ($) =>
+    // <extern-item> ::= <directive-attrs>? ( <extern-function> | <record> | <enum> | <type-alias> )
+    extern_item: ($) =>
       seq(
-        'decorator',
-        $.identifier,
-        optional($.generic_type_declaration),
-        optional(seq('(', optional(commaSep($.type_expression)), ')')),
-        ';',
-      ),
-
-    declare_declaration: ($) => seq('declare', $.declare_item, optional(';')),
-    declare_item: ($) =>
-      choice(
-        $.function_declaration,
-        $.record_declaration,
-        $.const_declaration,
-        $.enum_declaration,
-        $.type_definition,
-        $.metadata_declaration,
-      ),
-
-    metadata_declaration: ($) =>
-      prec.left(
-        seq(
-          'meta',
-          $.identifier,
-          optional(seq('(', optional(commaSep1(choice($.parameter_declaration, $.type_expression))), ')')),
-          ';',
-        ),
-      ),
-
-    metadata_expression: ($) =>
-      prec.left(
+        optional($.directive_attrs),
         choice(
-          seq(
-            '#',
-            '[',
-            commaSep(
-              seq(
-                $.identifier,
-                optional(seq('(', commaSep($.expression), ')')),
-              ),
-            ),
-            ']',
-          ),
-          seq(
-            '#',
-            $.identifier,
-            optional(seq('(', commaSep($.expression), ')')),
-          ),
+          $.extern_function,
+          $.record_declaration,
+          $.enum_declaration,
+          $.type_definition,
         ),
       ),
 
-    namespace_declaration: ($) =>
-      seq('namespace', $.qualified_identifier, '{', repeat($.namespace_items), '}'),
-    namespace_items: ($) =>
-      choice(
-        $.function_declaration,
-        $.record_declaration,
-        $.enum_declaration,
-        $.type_definition,
-        $.const_declaration,
-        $.export_statement,
-      ),
-
-    // #endregion
-    // #region Function
-    generic_type_declaration: ($) => seq('<', commaSep1(choice($.type_expression, $.cast)), '>'),
-
-    function_declaration: ($) =>
+    // <extern-function> ::= "function" <identifier> (<generic-type>)?
+    //                       "(" <parameters>? ")" ":" <type> ";"
+    extern_function: ($) =>
       seq(
         'function',
         field('name', $.identifier),
@@ -466,7 +423,96 @@ module.exports = grammar({
         ')',
         ':',
         $.type_expression,
-        choice($.block, ';'),
+        ';',
+      ),
+
+    // <directive-attrs> ::= (<directive-attr>)+
+    directive_attrs: ($) => prec.left(repeat1($.directive_attr)),
+
+    // <directive-attr> ::= "#[" <directive-attr-list>? "]"
+    //                    | "#" <qualified-identifier> ("(" <expression-list>? ")")?
+    directive_attr: ($) =>
+      choice(
+        seq('#', '[', commaSep($.directive_attr_item), ']'),
+        seq('#', $.qualified_identifier, optional(seq('(', commaSep($.expression), ')'))),
+      ),
+
+    // <directive-attr-item> ::= <qualified-identifier> ("(" <expression-list>? ")")?
+    directive_attr_item: ($) =>
+      seq($.qualified_identifier, optional(seq('(', commaSep($.expression), ')'))),
+
+    // <directive-statement> ::= "directive" <qualified-identifier>
+    //                           ("(" <expression-list>? ")")?
+    //                           (";" | <block>)
+    directive_statement: ($) =>
+      seq(
+        'directive',
+        $.qualified_identifier,
+        optional(seq('(', commaSep($.expression), ')')),
+        choice(';', $.block),
+      ),
+
+    // <directive> ::= "directive" <identifier> ("(" <parameters>? ")")? ";"
+    directive_declaration: ($) =>
+      seq(
+        'directive',
+        $.identifier,
+        optional(seq('(', commaSep($.parameter_declaration), ')')),
+        ';',
+      ),
+
+    // <directive-expression> ::= "#" <qualified-identifier> ("(" <expression-list>? ")")?
+    //                          | "#[" <expression-list>? "]"
+    directive_expression: ($) =>
+      prec.left(
+        choice(
+          seq('#', $.qualified_identifier, optional(seq('(', commaSep($.expression), ')'))),
+          seq('#', '[', commaSep($.expression), ']'),
+        ),
+      ),
+
+    // <namespace> ::= <directive-attrs>? "namespace" <qualified-identifier> "{" <namespace-item>* "}"
+    namespace_declaration: ($) =>
+      seq(
+        optional($.directive_attrs),
+        'namespace',
+        $.qualified_identifier,
+        '{',
+        repeat($.namespace_item),
+        '}',
+      ),
+
+    // <namespace-item> ::= <function> | <const> | <record> | <enum> | <type-alias> | <extern> | <directive-statement> | <directive>
+    namespace_item: ($) =>
+      choice(
+        $.function_declaration,
+        $.const_declaration,
+        $.record_declaration,
+        $.enum_declaration,
+        $.type_definition,
+        $.extern_declaration,
+        $.directive_statement,
+        $.directive_declaration,
+      ),
+
+    // #endregion
+    // #region Function
+    generic_type_declaration: ($) => seq('<', commaSep1(choice($.type_expression, $.cast)), '>'),
+
+    // <function> ::= <directive-attrs>? "function" <identifier> (<generic-type>)?
+    //                "(" <parameters>? ")" ":" <type> <block>
+    function_declaration: ($) =>
+      seq(
+        optional($.directive_attrs),
+        'function',
+        field('name', $.identifier),
+        optional($.generic_type_declaration),
+        '(',
+        commaSep($.parameter_declaration),
+        ')',
+        ':',
+        $.type_expression,
+        $.block,
       ),
 
     return_statement: ($) => seq('return', optional($.expression), ';'),
@@ -490,27 +536,40 @@ module.exports = grammar({
     variable_modifiers: ($) =>
       prec.left(repeat1(choice($.mutable_specifier, $.reference_operator, $.pointer_specifier))),
 
+    // <const> ::= <directive-attrs>? "const" <identifier> ":" <type> "=" <expression> ";"
     const_declaration: ($) =>
-      seq('const', field('name', $.identifier), ':', $.type_expression, '=', $.expression, ';'),
-
-    variable_declaration: ($) =>
       seq(
-        token('let'),
-        optional($.variable_modifiers),
+        optional($.directive_attrs),
+        'const',
         field('name', $.identifier),
-        token(':'),
-        field('type', $.type_expression),
-        optional(seq('=', field('value', $.expression))),
-        token(';'),
+        ':',
+        $.type_expression,
+        '=',
+        $.expression,
+        ';',
       ),
 
+    // <variable> ::= <directive-attrs>? "let" "mut"? <identifier> ":" <type> ("=" <expression>)? ";"
+    variable_declaration: ($) =>
+      seq(
+        optional($.directive_attrs),
+        'let',
+        optional($.mutable_specifier),
+        field('name', $.identifier),
+        ':',
+        field('type', $.type_expression),
+        optional(seq('=', field('value', $.expression))),
+        ';',
+      ),
+
+    // <parameter> ::= <directive-attrs>? "..."? <identifier> "?"? ":" <variable-modifiers>? <type>
     parameter_declaration: ($) =>
       seq(
-        optional($.metadata_expression),
+        optional($.directive_attrs),
         optional('...'),
         field('name', $.identifier),
         optional('?'),
-        token(':'),
+        ':',
         optional($.variable_modifiers),
         $.type_expression,
       ),
@@ -521,6 +580,8 @@ module.exports = grammar({
       choice(
         $.variable_declaration,
         $.return_statement,
+        $.break_statement,
+        $.continue_statement,
         $.if_statement,
         $.while_statement,
         $.for_statement,
@@ -529,9 +590,31 @@ module.exports = grammar({
         $.expression_statement,
       ),
 
+    // <break> ::= "break" ";"
+    break_statement: (_) => seq('break', ';'),
+
+    // <continue> ::= "continue" ";"
+    continue_statement: (_) => seq('continue', ';'),
+
     expression_statement: ($) => seq($.expression, ';'),
 
-    if_statement: ($) => seq('if', '(', $.expression, ')', $.block, optional(seq('else', $.block))),
+    // <if> ::= "if" "(" <expression> ")" <block>
+    //          ("else if" "(" <expression> ")" <block>)*
+    //          ("else" <block>)?
+    if_statement: ($) =>
+      seq(
+        'if',
+        '(',
+        $.expression,
+        ')',
+        $.block,
+        repeat($.else_if_clause),
+        optional($.else_clause),
+      ),
+
+    else_if_clause: ($) => seq('else', 'if', '(', $.expression, ')', $.block),
+
+    else_clause: ($) => seq('else', $.block),
 
     while_statement: ($) => seq('while', '(', $.expression, ')', $.block),
 
@@ -581,7 +664,7 @@ module.exports = grammar({
         $.cast,
         $.match_expression,
         $.get_expression,
-        $.metadata_expression,
+        $.directive_expression,
         $.assignment_expression,
         $.spread_expression,
       ),
@@ -600,7 +683,8 @@ module.exports = grammar({
         ),
       ),
 
-    prefix_unary_expression: ($) => prec(PREC.UNARY, seq(choice('!', '++', '--'), $.expression)),
+    // <unary> ::= ( "++" | "--" | "-" | "!" | "~" )* <postfix>
+    prefix_unary_expression: ($) => prec(PREC.UNARY, seq(choice('!', '++', '--', '-', '~'), $.expression)),
 
     suffix_unary_expression: ($) => prec(PREC.UNARY, seq($.expression, choice('++', '--'))),
 
@@ -608,6 +692,7 @@ module.exports = grammar({
       const table = [
         [PREC.AND, '&&'],
         [PREC.OR, '||'],
+        [PREC.PIPE, '|>'],
         [PREC.BITAND, '&'],
         [PREC.BITOR, '|'],
         [PREC.BITXOR, '^'],
@@ -615,7 +700,7 @@ module.exports = grammar({
         [PREC.SHIFT, choice('<<', '>>')],
         [PREC.ADDITIVE, choice('+', '-')],
         [PREC.MULTIPLICATIVE, choice('*', '/', '%')],
-        [PREC.RANGE, choice('..')],
+        [PREC.RANGE, choice('..', '..=')],
       ];
 
       return choice(
@@ -674,11 +759,13 @@ module.exports = grammar({
     doc_comment: (_) => token(prec(1, seq('/**', /[^*]*\*+([^/*][^*]*\*+)*/, '/'))),
 
     identifier: (_) => /[_a-zA-Z_][a-zA-Z0-9_]*/,
-    // <qualified_identifier> ::= <identifier> (("." | "::") <identifier>)*
+    // <qualified-identifier> ::= <identifier> ("::" <identifier>)*
     qualified_identifier: ($) =>
-      seq(
-        field('identifier', $.identifier),
-        repeat(seq(choice('.', '::'), field('identifier', $.identifier))),
+      prec.left(
+        seq(
+          field('identifier', $.identifier),
+          repeat(seq('::', field('identifier', $.identifier))),
+        ),
       ),
 
     type_identifier: ($) =>
@@ -687,6 +774,7 @@ module.exports = grammar({
           optional(repeat1(choice($.pointer_specifier, $.reference_operator, $.mutable_specifier))),
           choice($.primitive_keyword, $.identifier),
           optional($.generic_type_declaration),
+          optional('[]'),
         ),
       ),
 
@@ -694,11 +782,26 @@ module.exports = grammar({
 
     intersection_type: ($) => prec.left(seq($.type_identifier, repeat(seq('&', $.type_identifier)))),
 
+    // <function-type> ::= "(" <type-list>? ")" "->" <type>
     type_function: ($) =>
-      seq('(', optional(commaSep($.parameter_declaration)), ')', '-', '>', $.type_expression),
+      seq('(', commaSep($.type_expression), ')', '->', $.type_expression),
 
     type_expression: ($) =>
-      choice($.type_function, $.type_identifier, $.union_type, $.intersection_type, $.vector_type),
+      choice($.type_function, $.type_identifier, $.union_type, $.intersection_type, $.vector_type, $.tuple_type),
+
+    // <tuple-type> ::= "(" <type> "," <type> ("," <type>)* ","? ")"
+    tuple_type: ($) =>
+      prec.left(
+        seq(
+          '(',
+          $.type_expression,
+          ',',
+          $.type_expression,
+          repeat(seq(',', $.type_expression)),
+          optional(','),
+          ')',
+        ),
+      ),
 
     vector_type: ($) =>
       seq(
@@ -710,13 +813,11 @@ module.exports = grammar({
         ']',
       ),
 
-    loop_control: (_) => choice('break', 'continue'),
-
     property_modifier: (_) => choice('public', 'private', 'static', 'mut', 'abstract'),
 
     method_modifier: (_) => choice('public', 'private', 'static', 'final', 'abstract', 'inline'),
 
-    other_keyword: (_) => choice('in', 'as', 'readonly', 'export', 'super', 'declare', 'namespace'),
+    other_keyword: (_) => choice('in', 'as', 'readonly', 'export', 'super', 'namespace'),
 
     primitive_keyword: (_) => choice(...PRIMITIVE_TYPES),
 
@@ -728,8 +829,25 @@ module.exports = grammar({
         $.char_literal,
         $.boolean_literal,
         $.null_literal,
+        $.atom_literal,
         $.vector_literal,
+        $.tuple_literal,
         $.object_literal,
+      ),
+
+    // <atom> ::= ":" <identifier>
+    atom_literal: ($) => seq(':', $.identifier),
+
+    // <tuple> ::= "(" <expression> "," <expression> ("," <expression>)* ","? ")"
+    tuple_literal: ($) =>
+      seq(
+        '(',
+        $.expression,
+        ',',
+        $.expression,
+        repeat(seq(',', $.expression)),
+        optional(','),
+        ')',
       ),
 
     null_literal: (_) => 'null',
