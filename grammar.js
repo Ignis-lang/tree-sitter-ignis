@@ -364,7 +364,16 @@ module.exports = grammar({
       ),
 
     extern_declaration: ($) =>
-      seq('extern', optional($.qualified_identifier), '{', repeat($.extern_items), '}'),
+      seq(
+        'extern',
+        choice(
+          seq(optional($.qualified_identifier), '{', repeat($.extern_items), '}'),
+          $.function_declaration,
+          $.enum_declaration,
+          $.record_declaration,
+          $.const_declaration,
+        ),
+      ),
     extern_items: ($) =>
       choice(
         $.function_declaration,
@@ -675,7 +684,7 @@ module.exports = grammar({
     type_identifier: ($) =>
       prec.left(
         seq(
-          optional(repeat1(choice($.pointer_specifier, $.reference_operator))),
+          optional(repeat1(choice($.pointer_specifier, $.reference_operator, $.mutable_specifier))),
           choice($.primitive_keyword, $.identifier),
           optional($.generic_type_declaration),
         ),
@@ -693,7 +702,7 @@ module.exports = grammar({
 
     vector_type: ($) =>
       seq(
-        optional(repeat1(choice($.pointer_specifier, $.reference_operator))),
+        optional(repeat1(choice($.pointer_specifier, $.reference_operator, $.mutable_specifier))),
         choice($.primitive_keyword, $.identifier),
         optional($.generic_type_declaration),
         '[',

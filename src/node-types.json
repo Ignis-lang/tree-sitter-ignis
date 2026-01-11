@@ -623,11 +623,27 @@
       "required": false,
       "types": [
         {
+          "type": "const_declaration",
+          "named": true
+        },
+        {
+          "type": "enum_declaration",
+          "named": true
+        },
+        {
           "type": "extern_items",
           "named": true
         },
         {
+          "type": "function_declaration",
+          "named": true
+        },
+        {
           "type": "qualified_identifier",
+          "named": true
+        },
+        {
+          "type": "record_declaration",
           "named": true
         }
       ]
@@ -1917,6 +1933,10 @@
           "named": true
         },
         {
+          "type": "mutable_specifier",
+          "named": true
+        },
+        {
           "type": "pointer_specifier",
           "named": true
         },
@@ -2067,6 +2087,10 @@
         },
         {
           "type": "integer_literal",
+          "named": true
+        },
+        {
+          "type": "mutable_specifier",
           "named": true
         },
         {

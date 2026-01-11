@@ -23,3 +23,80 @@ extern io {
         (type_expression
           (type_identifier
             (primitive_keyword)))))))
+
+================================================================================
+VALID - Extern functions
+================================================================================
+
+extern function allocate(size: u32): *mut u8;
+extern function deallocate(ptr: *mut u8): void;
+extern function reallocate(ptr: *mut u8, newSize: u32): *mut u8;
+extern function allocateZeroed(size: u32, count: u32): *mut u8;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (extern_declaration
+    (function_declaration
+      (identifier)
+      (parameter_declaration
+        (identifier)
+        (type_expression
+          (type_identifier
+            (primitive_keyword))))
+      (type_expression
+        (type_identifier
+          (pointer_specifier)
+          (mutable_specifier)
+          (primitive_keyword)))))
+  (extern_declaration
+    (function_declaration
+      (identifier)
+      (parameter_declaration
+        (identifier)
+        (type_expression
+          (type_identifier
+            (pointer_specifier)
+            (mutable_specifier)
+            (primitive_keyword))))
+      (type_expression
+        (type_identifier
+          (primitive_keyword)))))
+  (extern_declaration
+    (function_declaration
+      (identifier)
+      (parameter_declaration
+        (identifier)
+        (type_expression
+          (type_identifier
+            (pointer_specifier)
+            (mutable_specifier)
+            (primitive_keyword))))
+      (parameter_declaration
+        (identifier)
+        (type_expression
+          (type_identifier
+            (primitive_keyword))))
+      (type_expression
+        (type_identifier
+          (pointer_specifier)
+          (mutable_specifier)
+          (primitive_keyword)))))
+  (extern_declaration
+    (function_declaration
+      (identifier)
+      (parameter_declaration
+        (identifier)
+        (type_expression
+          (type_identifier
+            (primitive_keyword))))
+      (parameter_declaration
+        (identifier)
+        (type_expression
+          (type_identifier
+            (primitive_keyword))))
+      (type_expression
+        (type_identifier
+          (pointer_specifier)
+          (mutable_specifier)
+          (primitive_keyword))))))

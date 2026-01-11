@@ -1226,28 +1226,54 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "qualified_identifier"
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "SYMBOL",
+                      "name": "qualified_identifier"
+                    },
+                    {
+                      "type": "BLANK"
+                    }
+                  ]
+                },
+                {
+                  "type": "STRING",
+                  "value": "{"
+                },
+                {
+                  "type": "REPEAT",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "extern_items"
+                  }
+                },
+                {
+                  "type": "STRING",
+                  "value": "}"
+                }
+              ]
             },
             {
-              "type": "BLANK"
+              "type": "SYMBOL",
+              "name": "function_declaration"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "enum_declaration"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "record_declaration"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "const_declaration"
             }
           ]
-        },
-        {
-          "type": "STRING",
-          "value": "{"
-        },
-        {
-          "type": "REPEAT",
-          "content": {
-            "type": "SYMBOL",
-            "name": "extern_items"
-          }
-        },
-        {
-          "type": "STRING",
-          "value": "}"
         }
       ]
     },
@@ -3921,6 +3947,10 @@
                     {
                       "type": "SYMBOL",
                       "name": "reference_operator"
+                    },
+                    {
+                      "type": "SYMBOL",
+                      "name": "mutable_specifier"
                     }
                   ]
                 }
@@ -4137,6 +4167,10 @@
                   {
                     "type": "SYMBOL",
                     "name": "reference_operator"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "mutable_specifier"
                   }
                 ]
               }

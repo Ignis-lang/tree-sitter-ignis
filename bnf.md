@@ -11,68 +11,79 @@
   | <type-alias>
   | <extern>
   | <namespace>
-  | <declare>
-  | <meta>
-  | <decorator>
+  | <directive-statement>
+  | <directive>
 
-<function> ::= "function" <identifier> (<generic-type>)? "(" <parameters>? ")" ":" <type> <block>
+<function> ::= <directive-attrs>? "function" <identifier> (<generic-type>)?
+               "(" <parameters>? ")" ":" <type> <block>
+
 <parameters> ::= <parameter> ("," <parameter>)*
-<parameter> ::= <metadata-expression>? "..."? <identifier> "?"? ":" <variable-modifiers>? <type-expression>
+<parameter> ::= <directive-attrs>? "..."? <identifier> "?"? ":" <variable-modifiers>? <type>
 
 <import> ::= "import" <import-list> "from" <string> ";"
-<import-list> ::= <import-item> | <import-item> "," <import-list>
+<import-list> ::= <import-item> ("," <import-item>)*
 <import-item> ::= <identifier> | <identifier> "as" <identifier>
 
-<export> ::= "export" (<function> | <const> | <record> | <enum> | <type-alias> | <declare> | <meta> | <decorator>)
-
+<export> ::= "export" (<function> | <const> | <record> | <enum> | <type-alias> | <directive-statement> | <directive>)
 <inline> ::= "inline" (<function> | <const>)
 
-<const> ::= "const" <identifier> ":" <type> "=" <expression> ";"
+<const> ::= <directive-attrs>? "const" <identifier> ":" <type> "=" <expression> ";"
 
-# Record syntax
-<record> ::= "record" <generic-type>? <identifier> "{" <record-item>* "}"
-<record-item> ::= <metadata-expression>? (<record-property> | <record-method> | <decorator-use>)
-<record-property> ::= <property-modifier>* <identifier> <variable-modifiers>? <generic-type>? "?"? ":" <type-expression> ("=" <expression>)? ";"
-<record-method> ::= <method-modifier>* <identifier> <generic-type>? "(" <parameters>? ")" "?"? ":" <type-expression> (<block> | ";")
+<directive-attrs> ::= (<directive-attr>)+
+
+<directive-attr> ::= "#[" <directive-attr-list>? "]"
+                   | "#" <qualified-identifier> ("(" <expression-list>? ")")?
+
+<directive-attr-list> ::= <directive-attr-item> ("," <directive-attr-item>)* ","?
+<directive-attr-item> ::= <qualified-identifier> ("(" <expression-list>? ")")?
+
+<directive-statement> ::= "directive" <qualified-identifier>
+                          ("(" <expression-list>? ")")?
+                          (";" | <block>)
+
+<directive> ::= "directive" <identifier> ("(" <parameters>? ")")? ";"
+
+<record> ::= <directive-attrs>? "record" <generic-type>? <identifier> "{" <record-item>* "}"
+
+<record-item> ::= <directive-attrs>? (<record-property> | <record-method>)
+
+<record-property> ::= <property-modifier>* <identifier>
+                      <variable-modifiers>? "?"? ":" <type>
+                      ("=" <expression>)? ";"
+
+<record-method> ::= <method-modifier>* <identifier> <generic-type>?
+                    "(" <parameters>? ")" "?"? ":" <type>
+                    (<block> | ";")
 
 <property-modifier> ::= "public" | "private" | "static" | "mut" | "abstract"
 <method-modifier> ::= "public" | "private" | "static" | "final" | "abstract" | "inline"
-<variable-modifiers> ::= ("mut" | "&" | "*")+
-<metadata-expression> ::= "#" "[" (<identifier> ("(" <expression-list>? ")")? ","?)* "]"
-                        | "#" <identifier> ("(" <expression-list>? ")")?
 
-<generic-type> ::= "<" (<type-expression> | <cast>) ("," (<type-expression> | <cast>))* ">"
+<enum> ::= <directive-attrs>? "enum" <identifier> <generic-type>?
+           "{" (<enum-item>)* "}"
 
-# Enum syntax
-<enum> ::= "enum" <identifier> <generic-type>? "{" (<metadata-expression>? (<enum-variant> | <enum-method> | <decorator-use>))* "}"
-<enum-variant> ::= <identifier> ("=" <expression> | "(" <type-list> ")")? ","
-<enum-method> ::= <method-modifier>* <identifier> <generic-type>? "(" <parameters>? ")" ":" <type-expression> <block>
+<enum-item> ::= <directive-attrs>? (<enum-variant> | <enum-method>)
 
-# Type alias syntax
-<type-alias> ::= "type" <identifier> <generic-type>? "=" <type> ";"
+<enum-variant> ::= <identifier> ("=" <expression> | "(" <type-list>? ")" )? ","
 
-# Extern syntax
-<extern> ::= "extern" (<qualified-identifier>) "{" <extern-item>* "}"
-<extern-item> ::= <function> | <record> | <enum> | <type-alias> | <declare>
+<enum-method> ::= <method-modifier>* <identifier> <generic-type>?
+                  "(" <parameters>? ")" ":" <type> <block>
 
-# Namespace syntax
-<namespace> ::= "namespace" <qualified-identifier> "{" <namespace-item>* "}"
-<namespace-item> ::= <function> | <const> | <record> | <enum> | <type-alias> | <declare> | <extern>
+<type-alias> ::= <directive-attrs>? "type" <identifier> <generic-type>? "=" <type> ";"
 
-# Declare syntax
-<declare> ::= "declare" <identifier> ":" <type>
+<extern> ::= <directive-attrs>? "extern" <qualified-identifier> "{" <extern-item>* "}"
 
-# Meta syntax
-<meta> ::= "meta" <identifier> ("(" <parameters> ")")? ";"
+<extern-item> ::= <directive-attrs>? ( <extern-function> | <record> | <enum> | <type-alias> )
 
-# Decorator syntax
-<decorator> ::= "decorator" <qualified-identifier> "(" <expression>? ")" (";" | <block>)
+<extern-function> ::= "function" <identifier> (<generic-type>)?
+                      "(" <parameters>? ")" ":" <type> ";"
 
-# Statements
+<namespace> ::= <directive-attrs>? "namespace" <qualified-identifier> "{" <namespace-item>* "}"
+<namespace-item> ::= <function> | <const> | <record> | <enum> | <type-alias> | <extern> | <directive-statement> | <directive>
+
 <statement> ::= <declaration>
   | <if>
   | <for>
-  | <for-in>
+  | <for-of>
   | <while>
   | <return>
   | <break>
@@ -81,7 +92,10 @@
   | <variable>
   | <expression> ";"
 
-<if> ::= "if" "(" <expression> ")" <block> ("else if" "(" <expression> ")" <block>)* ("else" <block>)?
+<if> ::= "if" "(" <expression> ")" <block>
+         ("else if" "(" <expression> ")" <block>)*
+         ("else" <block>)?
+
 <for> ::= "for" "(" "let" <identifier> "=" <expression> ";" <expression> ";" <expression> ")" <block>
 <for-of> ::= "for" "(" ("let" <identifier> | <identifier>) "of" <expression> ")" <block>
 <while> ::= "while" "(" <expression> ")" <block>
@@ -91,20 +105,35 @@
 <continue> ::= "continue" ";"
 
 <block> ::= "{" <statement>* "}"
-<variable> ::= "let" "mut"? <identifier> ":" <type> ("=" <expression>)? ";"
+<variable> ::= <directive-attrs>? "let" "mut"? <identifier> ":" <type> ("=" <expression>)? ";"
 
 <expression> ::= <assignment> | <match>
 
-## Match expression
 <match> ::= "match" "(" <expression> ")" "{" <match-arm>+ "}"
 <match-arm> ::= <match-pattern> "->" (<expression> | <block>) ","?
-<match-pattern> ::= <pattern> ( "|" <pattern> )*
-<pattern> ::= <expression> <guard-clause>? | <when-clause> | "_"
-<guard-clause> ::= "if" <expression>
-<when-clause> ::= <expression> "when" <expression>
 
-<assignment> ::= <ternary-expression> ( ( <assignment-operators> ) <assignment> )?
-<ternary-expression> ::= <or-expression> ( "?" <expression> ":" <expression> )?
+<match-pattern> ::= <pattern> ( "|" <pattern> )* <guard-clause>?
+
+<guard-clause> ::= "if" <expression>
+
+<pattern> ::= "_"
+  | <literal-pattern>
+  | <binding-pattern>
+  | <qualified-variant-pattern>
+  | <tuple-pattern>
+
+<literal-pattern> ::= <integer> | <float> | <hex> | <binary> | <string> | <char> | <boolean> | <null> | <atom>
+<binding-pattern> ::= <identifier>
+<qualified-variant-pattern> ::= <qualified-identifier> ("(" <pattern-list>? ")")?
+<tuple-pattern> ::= "(" <pattern-list> ")"
+<pattern-list> ::= <pattern> ("," <pattern>)* ","?
+
+<assignment> ::= <ternary-expression> ( <assignment-operators> <assignment> )?
+
+<ternary-expression> ::= <pipe-expression> ( "?" <expression> ":" <expression> )?
+
+<pipe-expression> ::= <or-expression> ( "|>" <or-expression> )*
+
 <or-expression> ::= <and-expression> ( "||" <and-expression> )*
 <and-expression> ::= <bitwise-or-expression> ( "&&" <bitwise-or-expression> )*
 
@@ -114,175 +143,123 @@
 
 <equality> ::= <comparison> ( ( "==" | "!=" ) <comparison> )*
 <comparison> ::= <range> ( ( "<" | ">" | "<=" | ">=" ) <range> )*
-<range> ::= <shift> ( ( ".." | "..=" ) <shift> )*
+
+<range> ::= <shift> ( ( ".." | "..=" ) <shift> )?
+
 <shift> ::= <term> ( ( "<<" | ">>" ) <term> )*
 <term> ::= <factor> ( ( "+" | "-" ) <factor> )*
 <factor> ::= <cast> ( ( "*" | "/" | "%" ) <cast> )*
 <cast> ::= <unary> ( "as" <type> )?
+
 <unary> ::= ( "++" | "--" | "-" | "!" | "~" )* <postfix>
-<postfix> ::= <primary> <generic-type>? ( ("++" | "--") | <call-suffix> )*
-<call-suffix> ::= <arguments> | "[" <expression> "]" | <member-access>
-<arguments> ::= "(" <expression> ("," <expression>)* ")"
-<member-access> ::= <generic-type>? ("." | "::") <identifier>
+
+<postfix> ::= <primary> ( <postfix-suffix> )*
+
+<postfix-suffix> ::= ("++" | "--")
+  | <arguments>
+  | "[" <expression> "]"
+  | <member-access>
+
+<arguments> ::= <generic-type>? "(" <expression-list>? ")"
+<expression-list> ::= <expression> ("," <expression>)* ","?
+
+<member-access> ::= ("." | "::") <identifier> <generic-type>?
 
 <primary> ::= <identifier>
   | <literal>
   | <group>
   | <this>
   | <self>
-  | <decorator-expression>
-  | <meta-expression>
+  | <directive-expression>
   | <lambda>
 
-# Literals
-<integer> ::= <numbers> ("_" <numbers>)*
-<float> ::= (<integer>? "." <numbers>) | (<integer> "." <numbers>?)
+<group> ::= "(" <expression> ")"
+<this> ::= "this"
+<self> ::= "self"
+
+<directive-expression> ::= "#" <qualified-identifier> ("(" <expression-list>? ")")?
+                         | "#[" <expression-list>? "]"
+
+<lambda> ::= (<generic-type>)? "(" <parameters>? ")" ":" <type> "->" (<expression> | <block>)
+
+<digits> ::= [0-9]+
+<integer> ::= <digits> ("_" <digits>)*
+<float> ::= <digits>? "." <digits> | <digits> "." <digits>?
+
 <hex> ::= <hex-numbers>
 <binary> ::= <binary-numbers>
+
 <string> ::= "\"" (<string-char> | <escape-sequence>)* "\""
 <string-char> ::= [^"\\] | <escape-sequence>
 <char> ::= "'" ( [^'\\] | <escape-sequence> ) "'"
 <escape-sequence> ::= "\\" [abfnrtv'"\\]
+
 <boolean> ::= "true" | "false"
 <null> ::= "null"
-<vector> ::= "[" <expression> ("," <expression>)* "]"
+
+<vector> ::= "[" <expression-list>? "]"
+
+<atom> ::= ":" <identifier>
 
 <object> ::= "{" <object-item>* "}"
 <object-item> ::= (<object-property> | <object-method>) ","?
 <object-property> ::= <identifier> ":" <expression>
-<object-method> ::= <identifier> "(" <expression>? ")" ":" <type> <block>
+<object-method> ::= <identifier> <generic-type>? "(" <parameters>? ")" ":" <type> <block>
 
-<tuple> ::= "(" <expression> ("," <expression>)* ")"
+<tuple> ::= "(" <expression> "," <expression> ("," <expression>)* ","? ")"
 
 <literal> ::= <integer>
   | <float>
   | <hex>
   | <binary>
   | <string>
+  | <char>
   | <boolean>
   | <null>
+  | <atom>
   | <vector>
   | <object>
   | <tuple>
 
-<group> ::= "(" <expression> ")"
-<this> ::= "this"
-<self> ::= "self"
-
-<decorator-expression> ::= "@" <qualified-identifier> "(" <expression>? ")"
-<meta-expression> ::= "#" <qualified-identifier> ("(" <expression>*? ")")? | "#" "[" (<expression>? ","?)* "]"
-<lambda> ::= (<generic-type>)? "(" <parameters>? ")" ":" <type> "->" (<expression> | <block>)
-
-<comment> ::= "//" ([a-zA-Z_][a-zA-Z0-9_]*)?
-<multiline-comment> ::= "/*" ([a-zA-Z_][a-zA-Z0-9_]*)?
-<documentation-comment> ::= "/**" ([a-zA-Z_][a-zA-Z0-9_]*)? "**/"
-
 <type-modifier> ::= ("mut" | "&" | "*")+
 <type-parameter> ::= <type> ("as" <type>)?
-<qualified-identifier> ::= <identifier> ( (":" | ".") <identifier> )*
 
-<type> ::= <type-identifier> | <union-type> | <intersection-type> | <vector-type> | <function-type>
-<type-identifier> ::= <type-modifier>? (<primitive> | <identifier>) <generic-type>? "[]"?
+<qualified-identifier> ::= <identifier> ("::" <identifier>)*
 
-<tuple-type> ::= "(" <type> ("," <type>)* ")"
+<type> ::= <union-type> | <intersection-type> | <function-type> | <vector-type> | <tuple-type> | <type-identifier>
+
+<type-identifier> ::= <type-modifier>? (<primitive> | <qualified-identifier>) <generic-type>? "[]"?
+
+<tuple-type> ::= "(" <type> "," <type> ("," <type>)* ","? ")"
+
 <function-type> ::= "(" <type-list>? ")" "->" <type>
-<type-list> ::= <type> ("," <type>)*
+<type-list> ::= <type> ("," <type>)* ","?
 
 <vector-type> ::= <type-modifier>? <type-identifier> "[" <number>? "]"
+
+<generic-type> ::= "<" <type-parameter> ("," <type-parameter>)* ","? ">"
+
 <primitive> ::= "void"
   | "boolean"
   | "char"
   | "string"
-  | "i8"
-  | "i16"
-  | "i32"
-  | "i64"
-  | "u8"
-  | "u16"
-  | "u32"
-  | "u64"
-  | "f32"
-  | "f64"
+  | "atom"
+  | "i8" | "i16" | "i32" | "i64"
+  | "u8" | "u16" | "u32" | "u64"
+  | "f32" | "f64"
   | "unknown"
   | "hex"
   | "binary"
-<union-type> ::= <type> ("|" <type>)+
-<intersection-type> ::= <type> ("&" <type>)+
+
+<union-type> ::= <type-identifier> ("|" <type-identifier>)+
+<intersection-type> ::= <type-identifier> ("&" <type-identifier>)+
 
 <identifier> ::= [a-zA-Z_][a-zA-Z0-9_]*
-<numbers> ::= [0-9]+ ("." [0-9]+)?
+<number> ::= [0-9]+
+
 <hex-numbers> ::= "0x" [0-9a-fA-F]+
 <binary-numbers> ::= "0b" [01]+
 
 <assignment-operators> ::= "=" | "+=" | "-=" | "*=" | "/=" | "%=" | "&=" | "|=" | "^=" | "<<=" | ">>="
-<separator> ::= "," | ";" | ":"
-<delimiter> ::= <separator> | "[" | "]" | "(" | ")" | "{" | "}"
-<symbol> ::= <assignment-operators>
-  | <delimiter>
-  | "."
-  | "+"
-  | "-"
-  | "*"
-  | "/"
-  | "%"
-  | "&"
-  | "|"
-  | "^"
-  | "<<"
-  | ">>"
-  | "<"
-  | ">"
-  | "<="
-  | ">="
-  | "=="
-  | "!="
-  | "!"
-  | "~"
-  | "?"
-  | ":"
-  | "||"
-  | "&&"
-  | "++"
-  | "--"
-<keyword> ::= "as"
-  | "async"
-  | "await"
-  | "break"
-  | "continue"
-  | "const"
-  | "declare"
-  | "else"
-  | "enum"
-  | "export"
-  | "false"
-  | "for"
-  | "from"
-  | "function"
-  | "is"
-  | "if"
-  | "import"
-  | "in"
-  | "include"
-  | "inline"
-  | "let"
-  | "meta"
-  | "namespace"
-  | "new"
-  | "null"
-  | "private"
-  | "public"
-  | "record"
-  | "return"
-  | "self"
-  | "source"
-  | "static"
-  | "this"
-  | "true"
-  | "type"
-  | "typeof"
-  | "void"
-  | "when"
-  | "while"
-  | "with"
-  | "mut"
+<variable-modifiers> ::= ("mut" | "&" | "*")+
 ```

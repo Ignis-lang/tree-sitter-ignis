@@ -116,10 +116,9 @@ function fibonacci(num: mut i64): i64 {
     (identifier)
     (parameter_declaration
       (identifier)
-      (variable_modifiers
-        (mutable_specifier))
       (type_expression
         (type_identifier
+          (mutable_specifier)
           (primitive_keyword))))
     (type_expression
       (type_identifier
