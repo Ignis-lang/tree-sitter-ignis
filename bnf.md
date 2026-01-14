@@ -43,7 +43,7 @@
 
 <directive> ::= "directive" <identifier> ("(" <parameters>? ")")? ";"
 
-<record> ::= <directive-attrs>? "record" <generic-type>? <identifier> "{" <record-item>* "}"
+<record> ::= <directive-attrs>? "record" <identifier> <generic-type>? "{" <record-item>* "}"
 
 <record-item> ::= <directive-attrs>? (<record-property> | <record-method>)
 
@@ -201,6 +201,8 @@
 
 <atom> ::= ":" <identifier>
 
+<typed-object> ::= <qualified-identifier> <generic-type>? <object>
+
 <object> ::= "{" <object-item>* "}"
 <object-item> ::= (<object-property> | <object-method>) ","?
 <object-property> ::= <identifier> ":" <expression>
@@ -218,6 +220,7 @@
   | <null>
   | <atom>
   | <vector>
+  | <typed-object>
   | <object>
   | <tuple>
 

@@ -1186,6 +1186,10 @@
           "named": true
         },
         {
+          "type": "typed_object_literal",
+          "named": true
+        },
+        {
           "type": "vector_literal",
           "named": true
         }
@@ -2073,6 +2077,36 @@
         },
         {
           "type": "reference_operator",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "typed_object_literal",
+    "named": true,
+    "fields": {
+      "type": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "qualified_identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "generic_type_declaration",
+          "named": true
+        },
+        {
+          "type": "object_literal",
           "named": true
         }
       ]

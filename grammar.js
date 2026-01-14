@@ -369,14 +369,14 @@ module.exports = grammar({
         choice($.block, ';'),
       ),
 
-    // <record> ::= <directive-attrs>? "record" <generic-type>? <identifier> "{" <record-item>* "}"
+    // <record> ::= <directive-attrs>? "record" <identifier> <generic-type>? "{" <record-item>* "}"
     // <record-item> ::= <directive-attrs>? (<record-property> | <record-method>)
     record_declaration: ($) =>
       seq(
         optional($.directive_attrs),
         'record',
-        optional($.generic_type_declaration),
         field('name', $.identifier),
+        optional($.generic_type_declaration),
         '{',
         repeat(
           seq(
@@ -832,6 +832,7 @@ module.exports = grammar({
         $.atom_literal,
         $.vector_literal,
         $.tuple_literal,
+        $.typed_object_literal,
         $.object_literal,
       ),
 
@@ -868,6 +869,13 @@ module.exports = grammar({
       seq('"', repeat(choice(token.immediate(prec(1, /\\./)), token.immediate(/[^"\\]/))), '"'),
 
     boolean_literal: (_) => choice('true', 'false'),
+
+    typed_object_literal: ($) =>
+      seq(
+        field('type', $.qualified_identifier),
+        optional($.generic_type_declaration),
+        $.object_literal,
+      ),
 
     object_literal: ($) =>
       seq(

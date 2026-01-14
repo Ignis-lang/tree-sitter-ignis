@@ -30,6 +30,41 @@ record User {
           (primitive_keyword))))))
 
 ================================================================================
+VALID - Record declaration with generics
+================================================================================
+
+record User<T> {
+  name: T;
+  email: string;
+  getName(): string;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (record_declaration
+    (identifier)
+    (generic_type_declaration
+      (type_expression
+        (type_identifier
+          (identifier))))
+    (record_property_declaration
+      (identifier)
+      (type_expression
+        (type_identifier
+          (identifier))))
+    (record_property_declaration
+      (identifier)
+      (type_expression
+        (type_identifier
+          (primitive_keyword))))
+    (record_method_declaration
+      (identifier)
+      (type_expression
+        (type_identifier
+          (primitive_keyword))))))
+
+================================================================================
 VALID - Record property with default value
 ================================================================================
 
@@ -273,7 +308,7 @@ export record FFIConfig {
 VALID - Object literal
 ================================================================================
 
-let user: User = {
+let user: User = User {
   firstName,
   email: "example@example.com",
   getName(): string {
@@ -292,24 +327,27 @@ let user: User = {
     (expression
       (primary_expression
         (literal
-          (object_literal
-            (identifier)
-            (identifier)
-            (expression
-              (primary_expression
-                (literal
-                  (string_literal))))
-            (method_declaration
+          (typed_object_literal
+            (qualified_identifier
+              (identifier))
+            (object_literal
               (identifier)
-              (type_expression
-                (type_identifier
-                  (primitive_keyword)))
-              (block
-                (return_statement
-                  (expression
-                    (get_expression
-                      (property_access
-                        (expression
-                          (primary_expression
-                            (self_expression)))
-                        (identifier)))))))))))))
+              (identifier)
+              (expression
+                (primary_expression
+                  (literal
+                    (string_literal))))
+              (method_declaration
+                (identifier)
+                (type_expression
+                  (type_identifier
+                    (primitive_keyword)))
+                (block
+                  (return_statement
+                    (expression
+                      (get_expression
+                        (property_access
+                          (expression
+                            (primary_expression
+                              (self_expression)))
+                          (identifier))))))))))))))
