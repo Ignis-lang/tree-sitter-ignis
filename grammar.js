@@ -523,7 +523,7 @@ module.exports = grammar({
       prec.left(
         PREC.ASSIGN,
         seq(
-          field('name', choice($.identifier, $.property_access)),
+          field('name', choice($.identifier, $.property_access, $.vector_access_expression)),
           choice(...ASSIGNMENT_OPERATORS),
           $.expression,
           optional(';'),
@@ -648,7 +648,7 @@ module.exports = grammar({
 
     group_expression: ($) => seq('(', $._expression, ')'),
 
-    vector_access_expression: ($) => seq($.identifier, '[', $.expression, ']'),
+    vector_access_expression: ($) => prec(PREC.FIELD, seq(choice($.identifier, $.property_access), '[', $.expression, ']')),
 
     spread_expression: ($) => prec.left(seq('...', $._expression)),
 
@@ -683,8 +683,14 @@ module.exports = grammar({
         ),
       ),
 
-    // <unary> ::= ( "++" | "--" | "-" | "!" | "~" )* <postfix>
-    prefix_unary_expression: ($) => prec(PREC.UNARY, seq(choice('!', '++', '--', '-', '~'), $.expression)),
+    // <unary> ::= ( "++" | "--" | "-" | "!" | "~" | "*" | "&" )* <postfix>
+    prefix_unary_expression: ($) => 
+      prec(PREC.UNARY, 
+        choice(
+          seq('&', 'mut', $.expression),
+          seq(choice('!', '++', '--', '-', '~', '*', '&'), $.expression)
+        )
+      ),
 
     suffix_unary_expression: ($) => prec(PREC.UNARY, seq($.expression, choice('++', '--'))),
 

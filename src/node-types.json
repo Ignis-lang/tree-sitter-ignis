@@ -14,6 +14,10 @@
           {
             "type": "property_access",
             "named": true
+          },
+          {
+            "type": "vector_access_expression",
+            "named": true
           }
         ]
       }
@@ -2214,6 +2218,10 @@
         },
         {
           "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "property_access",
           "named": true
         }
       ]
