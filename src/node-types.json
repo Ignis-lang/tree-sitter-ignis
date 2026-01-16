@@ -1476,7 +1476,7 @@
     "fields": {
       "name": {
         "multiple": false,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "identifier",
@@ -1491,6 +1491,10 @@
       "types": [
         {
           "type": "directive_attrs",
+          "named": true
+        },
+        {
+          "type": "self_parameter",
           "named": true
         },
         {
@@ -1796,6 +1800,21 @@
     "type": "self_expression",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "self_parameter",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "variable_modifiers",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "source_file",

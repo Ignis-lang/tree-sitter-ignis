@@ -167,6 +167,8 @@ module.exports = grammar({
       [$.record_declaration],
       [$.type_definition],
       [$._expression, $.match_arm],
+      [$.self_expression, $.parameter_declaration],
+      [$.self_expression, $.self_parameter],
     ]),
 
   rules: {
@@ -562,16 +564,27 @@ module.exports = grammar({
         ';',
       ),
 
-    // <parameter> ::= <directive-attrs>? "..."? <identifier> "?"? ":" <variable-modifiers>? <type>
-    parameter_declaration: ($) =>
+    // Special case for self parameter without type annotation
+    self_parameter: ($) =>
       seq(
-        optional($.directive_attrs),
-        optional('...'),
-        field('name', $.identifier),
-        optional('?'),
-        ':',
         optional($.variable_modifiers),
-        $.type_expression,
+        'self',
+      ),
+
+    // <parameter> ::= <directive-attrs>? "..."? <variable-modifiers>? <identifier> "?"? ":" <variable-modifiers>? <type>
+    parameter_declaration: ($) =>
+      choice(
+        $.self_parameter,
+        seq(
+          optional($.directive_attrs),
+          optional('...'),
+          optional($.variable_modifiers),
+          field('name', $.identifier),
+          optional('?'),
+          ':',
+          optional($.variable_modifiers),
+          $.type_expression,
+        ),
       ),
 
     block: ($) => seq('{', repeat($._statement), '}'),
