@@ -169,6 +169,14 @@ module.exports = grammar({
       [$._expression, $.match_arm],
       [$.self_expression, $.parameter_declaration],
       [$.self_expression, $.self_parameter],
+      [$._non_cast_expression, $.call_expression],
+      [$._non_cast_expression, $.primary_expression],
+      [$._non_cast_expression, $.primitive_keyword],
+      [$.primary_expression, $.type_identifier],
+      [$.generic_type_declaration, $.expression],
+      [$._statement, $._non_cast_expression],
+      [$.vector_type, $.literal],
+      [$.for_statement, $._non_cast_expression],
     ]),
 
   rules: {
@@ -665,7 +673,8 @@ module.exports = grammar({
 
     spread_expression: ($) => prec.left(seq('...', $._expression)),
 
-    expression: ($) =>
+    // Non-cast expressions (used to avoid left-recursion in cast)
+    _non_cast_expression: ($) =>
       choice(
         alias(choice(...PRIMITIVE_TYPES), $.identifier),
         $.primary_expression,
@@ -674,7 +683,6 @@ module.exports = grammar({
         $.binary_expression,
         $.ternary_expression,
         $.call_expression,
-        $.cast,
         $.match_expression,
         $.get_expression,
         $.directive_expression,
@@ -682,7 +690,13 @@ module.exports = grammar({
         $.spread_expression,
       ),
 
-    cast: ($) => prec(PREC.CAST, seq($.identifier, 'as', $.type_expression)),
+    expression: ($) =>
+      choice(
+        $._non_cast_expression,
+        $.cast,
+      ),
+
+    cast: ($) => prec(PREC.CAST, seq($._non_cast_expression, 'as', $.type_expression)),
 
     ternary_expression: ($) =>
       prec.right(

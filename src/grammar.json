@@ -3110,7 +3110,7 @@
         ]
       }
     },
-    "expression": {
+    "_non_cast_expression": {
       "type": "CHOICE",
       "members": [
         {
@@ -3221,10 +3221,6 @@
         },
         {
           "type": "SYMBOL",
-          "name": "cast"
-        },
-        {
-          "type": "SYMBOL",
           "name": "match_expression"
         },
         {
@@ -3245,6 +3241,19 @@
         }
       ]
     },
+    "expression": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_non_cast_expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "cast"
+        }
+      ]
+    },
     "cast": {
       "type": "PREC",
       "value": 12,
@@ -3253,7 +3262,7 @@
         "members": [
           {
             "type": "SYMBOL",
-            "name": "identifier"
+            "name": "_non_cast_expression"
           },
           {
             "type": "STRING",
@@ -5566,6 +5575,38 @@
     [
       "self_expression",
       "self_parameter"
+    ],
+    [
+      "_non_cast_expression",
+      "call_expression"
+    ],
+    [
+      "_non_cast_expression",
+      "primary_expression"
+    ],
+    [
+      "_non_cast_expression",
+      "primitive_keyword"
+    ],
+    [
+      "primary_expression",
+      "type_identifier"
+    ],
+    [
+      "generic_type_declaration",
+      "expression"
+    ],
+    [
+      "_statement",
+      "_non_cast_expression"
+    ],
+    [
+      "vector_type",
+      "literal"
+    ],
+    [
+      "for_statement",
+      "_non_cast_expression"
     ]
   ],
   "precedences": [],
