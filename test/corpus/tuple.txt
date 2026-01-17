@@ -13,10 +13,12 @@ let pair: (i32, i32) = (1, 2);
       (tuple_type
         (type_expression
           (type_identifier
-            (primitive_keyword)))
+            (base_type
+              (primitive_keyword))))
         (type_expression
           (type_identifier
-            (primitive_keyword)))))
+            (base_type
+              (primitive_keyword))))))
     value: (expression
       (primary_expression
         (literal
@@ -47,13 +49,16 @@ let triple: (string, i32, boolean) = ("hello", 42, true);
       (tuple_type
         (type_expression
           (type_identifier
-            (primitive_keyword)))
+            (base_type
+              (primitive_keyword))))
         (type_expression
           (type_identifier
-            (primitive_keyword)))
+            (base_type
+              (primitive_keyword))))
         (type_expression
           (type_identifier
-            (primitive_keyword)))))
+            (base_type
+              (primitive_keyword))))))
     value: (expression
       (primary_expression
         (literal
@@ -87,7 +92,9 @@ type Point = (f64, f64);
       (tuple_type
         (type_expression
           (type_identifier
-            (primitive_keyword)))
+            (base_type
+              (primitive_keyword))))
         (type_expression
           (type_identifier
-            (primitive_keyword)))))))
+            (base_type
+              (primitive_keyword))))))))

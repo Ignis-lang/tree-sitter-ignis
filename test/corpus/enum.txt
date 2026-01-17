@@ -108,20 +108,24 @@ enum Result<O, E> {
     (generic_type_declaration
       (type_expression
         (type_identifier
-          (identifier)))
+          (base_type
+            (identifier))))
       (type_expression
         (type_identifier
-          (identifier))))
+          (base_type
+            (identifier)))))
     (enum_variant_declaration
       (identifier)
       (type_expression
         (type_identifier
-          (identifier))))
+          (base_type
+            (identifier)))))
     (enum_variant_declaration
       (identifier)
       (type_expression
         (type_identifier
-          (identifier))))))
+          (base_type
+            (identifier)))))))
 
 ================================================================================
 VALID - Enum declaration with methods
@@ -148,12 +152,14 @@ export enum Option<S> {
       (generic_type_declaration
         (type_expression
           (type_identifier
-            (identifier))))
+            (base_type
+              (identifier)))))
       (enum_variant_declaration
         (identifier)
         (type_expression
           (type_identifier
-            (identifier))))
+            (base_type
+              (identifier)))))
       (enum_variant_declaration
         (identifier))
       (enum_method_declaration
@@ -161,7 +167,8 @@ export enum Option<S> {
         (identifier)
         (type_expression
           (type_identifier
-            (primitive_keyword)))
+            (base_type
+              (primitive_keyword))))
         (block
           (return_statement
             (expression

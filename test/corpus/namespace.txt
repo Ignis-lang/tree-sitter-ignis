@@ -17,7 +17,8 @@ namespace Test {
         (identifier)
         (type_expression
           (type_identifier
-            (primitive_keyword)))
+            (base_type
+              (primitive_keyword))))
         (block)))))
 
 ================================================================================
@@ -42,7 +43,8 @@ namespace Foo {
         (identifier)
         (type_expression
           (type_identifier
-            (primitive_keyword)))
+            (base_type
+              (primitive_keyword))))
         (block)))
     (namespace_item
       (record_declaration
@@ -55,7 +57,8 @@ namespace Foo {
         (identifier)
         (type_expression
           (type_identifier
-            (primitive_keyword)))))))
+            (base_type
+              (primitive_keyword))))))))
 
 ================================================================================
 VALID - Access namespace members
@@ -80,13 +83,15 @@ function main(): void {
         (identifier)
         (type_expression
           (type_identifier
-            (primitive_keyword)))
+            (base_type
+              (primitive_keyword))))
         (block))))
   (function_declaration
     (identifier)
     (type_expression
       (type_identifier
-        (primitive_keyword)))
+        (base_type
+          (primitive_keyword))))
     (block
       (expression_statement
         (expression

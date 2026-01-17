@@ -15,13 +15,15 @@ function main(): void {
     (identifier)
     (type_expression
       (type_identifier
-        (primitive_keyword)))
+        (base_type
+          (primitive_keyword))))
     (block
       (variable_declaration
         (identifier)
         (type_expression
           (type_identifier
-            (identifier)))
+            (base_type
+              (identifier))))
         (expression
           (primary_expression
             (literal
@@ -54,20 +56,24 @@ sum<int>(1, 2)
     (generic_type_declaration
       (type_expression
         (type_identifier
-          (identifier))))
+          (base_type
+            (identifier)))))
     (parameter_declaration
       (identifier)
       (type_expression
         (type_identifier
-          (identifier))))
+          (base_type
+            (identifier)))))
     (parameter_declaration
       (identifier)
       (type_expression
         (type_identifier
-          (identifier))))
+          (base_type
+            (identifier)))))
     (type_expression
       (type_identifier
-        (identifier)))
+        (base_type
+          (identifier))))
     (block
       (return_statement
         (expression
@@ -85,7 +91,8 @@ sum<int>(1, 2)
       (generic_type_declaration
         (type_expression
           (type_identifier
-            (identifier))))
+            (base_type
+              (identifier)))))
       (expression
         (primary_expression
           (literal
@@ -119,10 +126,12 @@ function fibonacci(num: mut i64): i64 {
       (type_expression
         (type_identifier
           (mutable_specifier)
-          (primitive_keyword))))
+          (base_type
+            (primitive_keyword)))))
     (type_expression
       (type_identifier
-        (primitive_keyword)))
+        (base_type
+          (primitive_keyword))))
     (block
       (if_statement
         (expression
@@ -130,9 +139,11 @@ function fibonacci(num: mut i64): i64 {
             (expression
               (primary_expression
                 (identifier)))
-            (literal
-              (integer_literal
-                (decimal_literal)))))
+            (expression
+              (primary_expression
+                (literal
+                  (integer_literal
+                    (decimal_literal)))))))
         (block
           (return_statement
             (expression
@@ -150,9 +161,11 @@ function fibonacci(num: mut i64): i64 {
                     (expression
                       (primary_expression
                         (identifier)))
-                    (literal
-                      (integer_literal
-                        (decimal_literal)))))))
+                    (expression
+                      (primary_expression
+                        (literal
+                          (integer_literal
+                            (decimal_literal)))))))))
             (expression
               (call_expression
                 (primary_expression
@@ -162,9 +175,11 @@ function fibonacci(num: mut i64): i64 {
                     (expression
                       (primary_expression
                         (identifier)))
-                    (literal
-                      (integer_literal
-                        (decimal_literal)))))))))))))
+                    (expression
+                      (primary_expression
+                        (literal
+                          (integer_literal
+                            (decimal_literal)))))))))))))))
 
 ================================================================================
 VALID - Lambda
@@ -181,10 +196,12 @@ let value: (i64) -> i64 = (a: i64): i64 -> a;
       (type_function
         (type_expression
           (type_identifier
-            (primitive_keyword)))
+            (base_type
+              (primitive_keyword))))
         (type_expression
           (type_identifier
-            (primitive_keyword)))))
+            (base_type
+              (primitive_keyword))))))
     (expression
       (primary_expression
         (lambda_expression
@@ -192,10 +209,12 @@ let value: (i64) -> i64 = (a: i64): i64 -> a;
             (identifier)
             (type_expression
               (type_identifier
-                (primitive_keyword))))
+                (base_type
+                  (primitive_keyword)))))
           (type_expression
             (type_identifier
-              (primitive_keyword)))
+              (base_type
+                (primitive_keyword))))
           (expression
             (primary_expression
               (identifier))))))))
@@ -215,10 +234,12 @@ function main(...args: string[]): void {}
       (identifier)
       (type_expression
         (type_identifier
-          (primitive_keyword))))
+          (base_type
+            (primitive_keyword)))))
     (type_expression
       (type_identifier
-        (primitive_keyword)))
+        (base_type
+          (primitive_keyword))))
     (block)))
 
 ================================================================================
@@ -235,5 +256,6 @@ inline function main(): void {}
       (identifier)
       (type_expression
         (type_identifier
-          (primitive_keyword)))
+          (base_type
+            (primitive_keyword))))
       (block))))

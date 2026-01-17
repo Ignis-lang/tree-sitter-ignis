@@ -11,7 +11,8 @@ let result: i32 = x |> double |> addOne;
     name: (identifier)
     type: (type_expression
       (type_identifier
-        (primitive_keyword)))
+        (base_type
+          (primitive_keyword))))
     value: (expression
       (binary_expression
         left: (expression
@@ -39,7 +40,8 @@ let result: string = data |> process() |> format();
     name: (identifier)
     type: (type_expression
       (type_identifier
-        (primitive_keyword)))
+        (base_type
+          (primitive_keyword))))
     value: (expression
       (binary_expression
         left: (expression

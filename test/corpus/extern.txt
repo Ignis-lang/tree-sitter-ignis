@@ -19,10 +19,12 @@ extern io {
           (identifier)
           (type_expression
             (type_identifier
-              (primitive_keyword))))
+              (base_type
+                (primitive_keyword)))))
         (type_expression
           (type_identifier
-            (primitive_keyword)))))))
+            (base_type
+              (primitive_keyword))))))))
 
 ================================================================================
 VALID - Extern functions
@@ -44,12 +46,14 @@ extern function allocateZeroed(size: u32, count: u32): *mut u8;
           (identifier)
           (type_expression
             (type_identifier
-              (primitive_keyword))))
+              (base_type
+                (primitive_keyword)))))
         (type_expression
           (type_identifier
             (pointer_specifier)
             (mutable_specifier)
-            (primitive_keyword))))))
+            (base_type
+              (primitive_keyword)))))))
   (extern_declaration
     (extern_item
       (extern_function
@@ -60,10 +64,12 @@ extern function allocateZeroed(size: u32, count: u32): *mut u8;
             (type_identifier
               (pointer_specifier)
               (mutable_specifier)
-              (primitive_keyword))))
+              (base_type
+                (primitive_keyword)))))
         (type_expression
           (type_identifier
-            (primitive_keyword))))))
+            (base_type
+              (primitive_keyword)))))))
   (extern_declaration
     (extern_item
       (extern_function
@@ -74,17 +80,20 @@ extern function allocateZeroed(size: u32, count: u32): *mut u8;
             (type_identifier
               (pointer_specifier)
               (mutable_specifier)
-              (primitive_keyword))))
+              (base_type
+                (primitive_keyword)))))
         (parameter_declaration
           (identifier)
           (type_expression
             (type_identifier
-              (primitive_keyword))))
+              (base_type
+                (primitive_keyword)))))
         (type_expression
           (type_identifier
             (pointer_specifier)
             (mutable_specifier)
-            (primitive_keyword))))))
+            (base_type
+              (primitive_keyword)))))))
   (extern_declaration
     (extern_item
       (extern_function
@@ -93,14 +102,17 @@ extern function allocateZeroed(size: u32, count: u32): *mut u8;
           (identifier)
           (type_expression
             (type_identifier
-              (primitive_keyword))))
+              (base_type
+                (primitive_keyword)))))
         (parameter_declaration
           (identifier)
           (type_expression
             (type_identifier
-              (primitive_keyword))))
+              (base_type
+                (primitive_keyword)))))
         (type_expression
           (type_identifier
             (pointer_specifier)
             (mutable_specifier)
-            (primitive_keyword)))))))
+            (base_type
+              (primitive_keyword))))))))

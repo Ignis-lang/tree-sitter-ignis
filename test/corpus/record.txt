@@ -17,17 +17,20 @@ record User {
       (identifier)
       (type_expression
         (type_identifier
-          (primitive_keyword))))
+          (base_type
+            (primitive_keyword)))))
     (record_property_declaration
       (identifier)
       (type_expression
         (type_identifier
-          (primitive_keyword))))
+          (base_type
+            (primitive_keyword)))))
     (record_method_declaration
       (identifier)
       (type_expression
         (type_identifier
-          (primitive_keyword))))))
+          (base_type
+            (primitive_keyword)))))))
 
 ================================================================================
 VALID - Record declaration with generics
@@ -47,22 +50,26 @@ record User<T> {
     (generic_type_declaration
       (type_expression
         (type_identifier
-          (identifier))))
+          (base_type
+            (identifier)))))
     (record_property_declaration
       (identifier)
       (type_expression
         (type_identifier
-          (identifier))))
+          (base_type
+            (identifier)))))
     (record_property_declaration
       (identifier)
       (type_expression
         (type_identifier
-          (primitive_keyword))))
+          (base_type
+            (primitive_keyword)))))
     (record_method_declaration
       (identifier)
       (type_expression
         (type_identifier
-          (primitive_keyword))))))
+          (base_type
+            (primitive_keyword)))))))
 
 ================================================================================
 VALID - Record property with default value
@@ -82,7 +89,8 @@ record User {
       (identifier)
       (type_expression
         (type_identifier
-          (primitive_keyword)))
+          (base_type
+            (primitive_keyword))))
       (expression
         (primary_expression
           (literal
@@ -92,7 +100,8 @@ record User {
       (identifier)
       (type_expression
         (type_identifier
-          (primitive_keyword))))))
+          (base_type
+            (primitive_keyword)))))))
 
 ================================================================================
 VALID - Record with init and free
@@ -122,7 +131,8 @@ record User {
       (identifier)
       (type_expression
         (type_identifier
-          (primitive_keyword)))
+          (base_type
+            (primitive_keyword))))
       (expression
         (primary_expression
           (literal
@@ -132,7 +142,8 @@ record User {
       (identifier)
       (type_expression
         (type_identifier
-          (primitive_keyword))))
+          (base_type
+            (primitive_keyword)))))
     (record_method_declaration
       (method_modifier)
       (identifier)
@@ -140,15 +151,18 @@ record User {
         (identifier)
         (type_expression
           (type_identifier
-            (primitive_keyword))))
+            (base_type
+              (primitive_keyword)))))
       (parameter_declaration
         (identifier)
         (type_expression
           (type_identifier
-            (primitive_keyword))))
+            (base_type
+              (primitive_keyword)))))
       (type_expression
         (type_identifier
-          (identifier)))
+          (base_type
+            (identifier))))
       (block
         (expression_statement
           (expression
@@ -181,7 +195,8 @@ record User {
       (identifier)
       (type_expression
         (type_identifier
-          (primitive_keyword)))
+          (base_type
+            (primitive_keyword))))
       (block
         (expression_statement
           (expression
@@ -221,7 +236,8 @@ record User {
       (identifier)
       (type_expression
         (type_identifier
-          (primitive_keyword)))
+          (base_type
+            (primitive_keyword))))
       (expression
         (primary_expression
           (literal
@@ -231,13 +247,15 @@ record User {
       (identifier)
       (type_expression
         (type_identifier
-          (primitive_keyword))))
+          (base_type
+            (primitive_keyword)))))
     (record_method_declaration
       (method_modifier)
       (identifier)
       (type_expression
         (type_identifier
-          (primitive_keyword)))
+          (base_type
+            (primitive_keyword))))
       (block
         (return_statement
           (expression
@@ -272,37 +290,44 @@ export record FFIConfig {
         (identifier)
         (type_expression
           (type_identifier
-            (identifier))))
+            (base_type
+              (identifier)))))
       (record_property_declaration
         (identifier)
         (type_expression
           (type_identifier
-            (identifier))))
+            (base_type
+              (identifier)))))
       (record_property_declaration
         (identifier)
         (type_expression
           (type_identifier
-            (primitive_keyword))))
+            (base_type
+              (primitive_keyword)))))
       (record_property_declaration
         (identifier)
         (type_expression
           (type_identifier
-            (identifier))))
+            (base_type
+              (identifier)))))
       (record_property_declaration
         (identifier)
         (type_expression
           (type_identifier
-            (identifier))))
+            (base_type
+              (identifier)))))
       (record_property_declaration
         (identifier)
         (type_expression
           (type_identifier
-            (primitive_keyword))))
+            (base_type
+              (primitive_keyword)))))
       (record_property_declaration
         (identifier)
         (type_expression
           (type_identifier
-            (identifier)))))))
+            (base_type
+              (identifier))))))))
 
 ================================================================================
 VALID - Object literal
@@ -323,7 +348,8 @@ let user: User = User {
     (identifier)
     (type_expression
       (type_identifier
-        (identifier)))
+        (base_type
+          (identifier))))
     (expression
       (primary_expression
         (literal
@@ -341,7 +367,8 @@ let user: User = User {
                 (identifier)
                 (type_expression
                   (type_identifier
-                    (primitive_keyword)))
+                    (base_type
+                      (primitive_keyword))))
                 (block
                   (return_statement
                     (expression

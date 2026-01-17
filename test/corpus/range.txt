@@ -11,15 +11,20 @@ let r: i32 = 0..10;
     name: (identifier)
     type: (type_expression
       (type_identifier
-        (primitive_keyword)))
+        (base_type
+          (primitive_keyword))))
     value: (expression
       (binary_expression
-        left: (literal
-          (integer_literal
-            (decimal_literal)))
-        right: (literal
-          (integer_literal
-            (decimal_literal)))))))
+        left: (expression
+          (primary_expression
+            (literal
+              (integer_literal
+                (decimal_literal)))))
+        right: (expression
+          (primary_expression
+            (literal
+              (integer_literal
+                (decimal_literal)))))))))
 
 ================================================================================
 VALID - Inclusive range
@@ -34,12 +39,17 @@ let r: i32 = 0..=10;
     name: (identifier)
     type: (type_expression
       (type_identifier
-        (primitive_keyword)))
+        (base_type
+          (primitive_keyword))))
     value: (expression
       (binary_expression
-        left: (literal
-          (integer_literal
-            (decimal_literal)))
-        right: (literal
-          (integer_literal
-            (decimal_literal)))))))
+        left: (expression
+          (primary_expression
+            (literal
+              (integer_literal
+                (decimal_literal)))))
+        right: (expression
+          (primary_expression
+            (literal
+              (integer_literal
+                (decimal_literal)))))))))

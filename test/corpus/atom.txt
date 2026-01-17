@@ -13,7 +13,8 @@ let status: atom = :pending_approval;
     name: (identifier)
     type: (type_expression
       (type_identifier
-        (primitive_keyword)))
+        (base_type
+          (primitive_keyword))))
     value: (expression
       (primary_expression
         (literal
@@ -23,7 +24,8 @@ let status: atom = :pending_approval;
     name: (identifier)
     type: (type_expression
       (type_identifier
-        (primitive_keyword)))
+        (base_type
+          (primitive_keyword))))
     value: (expression
       (primary_expression
         (literal
@@ -33,7 +35,8 @@ let status: atom = :pending_approval;
     name: (identifier)
     type: (type_expression
       (type_identifier
-        (primitive_keyword)))
+        (base_type
+          (primitive_keyword))))
     value: (expression
       (primary_expression
         (literal

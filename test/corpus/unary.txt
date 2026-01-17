@@ -18,7 +18,8 @@ function main(): void {
     (identifier)
     (type_expression
       (type_identifier
-        (primitive_keyword)))
+        (base_type
+          (primitive_keyword))))
     (block
       (expression_statement
         (expression
@@ -26,12 +27,16 @@ function main(): void {
             (group_expression
               (expression
                 (binary_expression
-                  (literal
-                    (integer_literal
-                      (decimal_literal)))
-                  (literal
-                    (integer_literal
-                      (decimal_literal)))))))))
+                  (expression
+                    (primary_expression
+                      (literal
+                        (integer_literal
+                          (decimal_literal)))))
+                  (expression
+                    (primary_expression
+                      (literal
+                        (integer_literal
+                          (decimal_literal)))))))))))
       (expression_statement
         (expression
           (prefix_unary_expression

@@ -17,7 +17,8 @@ function test(): void {
     name: (identifier)
     (type_expression
       (type_identifier
-        (primitive_keyword)))
+        (base_type
+          (primitive_keyword))))
     (block
       (for_statement
         (for_variable_declaration
@@ -32,9 +33,11 @@ function test(): void {
             left: (expression
               (primary_expression
                 (identifier)))
-            right: (literal
-              (integer_literal
-                (decimal_literal)))))
+            right: (expression
+              (primary_expression
+                (literal
+                  (integer_literal
+                    (decimal_literal)))))))
         (expression
           (suffix_unary_expression
             (expression
@@ -47,9 +50,11 @@ function test(): void {
                 left: (expression
                   (primary_expression
                     (identifier)))
-                right: (literal
-                  (integer_literal
-                    (decimal_literal)))))
+                right: (expression
+                  (primary_expression
+                    (literal
+                      (integer_literal
+                        (decimal_literal)))))))
             (block
               (break_statement))))))))
 
@@ -72,7 +77,8 @@ function test(): void {
     name: (identifier)
     (type_expression
       (type_identifier
-        (primitive_keyword)))
+        (base_type
+          (primitive_keyword))))
     (block
       (for_statement
         (for_variable_declaration
@@ -87,9 +93,11 @@ function test(): void {
             left: (expression
               (primary_expression
                 (identifier)))
-            right: (literal
-              (integer_literal
-                (decimal_literal)))))
+            right: (expression
+              (primary_expression
+                (literal
+                  (integer_literal
+                    (decimal_literal)))))))
         (expression
           (suffix_unary_expression
             (expression
@@ -102,9 +110,11 @@ function test(): void {
                 left: (expression
                   (primary_expression
                     (identifier)))
-                right: (literal
-                  (integer_literal
-                    (decimal_literal)))))
+                right: (expression
+                  (primary_expression
+                    (literal
+                      (integer_literal
+                        (decimal_literal)))))))
             (block
               (continue_statement))))))))
 
@@ -133,10 +143,12 @@ function test(x: i32): i32 {
       name: (identifier)
       (type_expression
         (type_identifier
-          (primitive_keyword))))
+          (base_type
+            (primitive_keyword)))))
     (type_expression
       (type_identifier
-        (primitive_keyword)))
+        (base_type
+          (primitive_keyword))))
     (block
       (if_statement
         (expression
@@ -144,9 +156,11 @@ function test(x: i32): i32 {
             left: (expression
               (primary_expression
                 (identifier)))
-            right: (literal
-              (integer_literal
-                (decimal_literal)))))
+            right: (expression
+              (primary_expression
+                (literal
+                  (integer_literal
+                    (decimal_literal)))))))
         (block
           (return_statement
             (expression
@@ -160,9 +174,11 @@ function test(x: i32): i32 {
               left: (expression
                 (primary_expression
                   (identifier)))
-              right: (literal
-                (integer_literal
-                  (decimal_literal)))))
+              right: (expression
+                (primary_expression
+                  (literal
+                    (integer_literal
+                      (decimal_literal)))))))
           (block
             (return_statement
               (expression
@@ -176,9 +192,11 @@ function test(x: i32): i32 {
               left: (expression
                 (primary_expression
                   (identifier)))
-              right: (literal
-                (integer_literal
-                  (decimal_literal)))))
+              right: (expression
+                (primary_expression
+                  (literal
+                    (integer_literal
+                      (decimal_literal)))))))
           (block
             (return_statement
               (expression

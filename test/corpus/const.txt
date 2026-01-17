@@ -12,7 +12,8 @@ const HELLO_WORLD_LEN: i64 = 13;
     (identifier)
     (type_expression
       (type_identifier
-        (primitive_keyword)))
+        (base_type
+          (primitive_keyword))))
     (expression
       (primary_expression
         (literal
@@ -21,7 +22,8 @@ const HELLO_WORLD_LEN: i64 = 13;
     (identifier)
     (type_expression
       (type_identifier
-        (primitive_keyword)))
+        (base_type
+          (primitive_keyword))))
     (expression
       (primary_expression
         (literal
@@ -43,7 +45,8 @@ inline const HELLO_WORLD_LEN: i64 = 13;
       (identifier)
       (type_expression
         (type_identifier
-          (primitive_keyword)))
+          (base_type
+            (primitive_keyword))))
       (expression
         (primary_expression
           (literal
@@ -53,7 +56,8 @@ inline const HELLO_WORLD_LEN: i64 = 13;
       (identifier)
       (type_expression
         (type_identifier
-          (primitive_keyword)))
+          (base_type
+            (primitive_keyword))))
       (expression
         (primary_expression
           (literal

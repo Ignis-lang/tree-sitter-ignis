@@ -109,10 +109,12 @@
 
 ;; Type identifiers in type positions
 (type_identifier
-  (identifier) @type)
+  (base_type
+    (identifier) @type))
 
 (type_identifier
-  (primitive_keyword) @type.builtin)
+  (base_type
+    (primitive_keyword) @type.builtin))
 
 ;; Pointer and reference modifiers in types
 (type_identifier

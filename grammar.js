@@ -105,7 +105,6 @@ const ASSIGNMENT_OPERATORS = ['=', '+=', '-=', '*=', '/=', '%=', '&=', '|=', '^=
 const SYMBOLS = [
   ...SEPARATORS,
   ...DELIMITERS,
-  '.',
   '+',
   '-',
   '*',
@@ -177,6 +176,10 @@ module.exports = grammar({
       [$._statement, $._non_cast_expression],
       [$.vector_type, $.literal],
       [$.for_statement, $._non_cast_expression],
+      [$.primary_expression, $.base_type],
+      [$.intersection_type, $.type_expression],
+      [$.union_type, $.type_expression],
+      [$.base_type],
     ]),
 
   rules: {
@@ -299,7 +302,6 @@ module.exports = grammar({
       prec.left(
         choice(
           seq($.identifier, optional($.generic_type_declaration)),
-          $.identifier,
           $.this_expression,
           $.self_expression,
           $.method_call_expression,
@@ -507,7 +509,8 @@ module.exports = grammar({
 
     // #endregion
     // #region Function
-    generic_type_declaration: ($) => seq('<', commaSep1(choice($.type_expression, $.cast)), '>'),
+    generic_type_declaration: ($) => 
+      prec.dynamic(100, seq('<', commaSep1($.type_expression), '>')),
 
     // <function> ::= <directive-attrs>? "function" <identifier> (<generic-type>)?
     //                "(" <parameters>? ")" ":" <type> <block>
@@ -665,7 +668,7 @@ module.exports = grammar({
         $.block,
       ),
 
-    _expression: ($) => choice($.literal, $.expression),
+    _expression: ($) => $.expression,
 
     group_expression: ($) => seq('(', $._expression, ')'),
 
@@ -676,7 +679,6 @@ module.exports = grammar({
     // Non-cast expressions (used to avoid left-recursion in cast)
     _non_cast_expression: ($) =>
       choice(
-        alias(choice(...PRIMITIVE_TYPES), $.identifier),
         $.primary_expression,
         $.prefix_unary_expression,
         $.suffix_unary_expression,
@@ -740,7 +742,7 @@ module.exports = grammar({
         ...table.map(([precedence, operator]) =>
           prec.left(
             precedence,
-            seq(field('left', $._expression), field('operator', operator), field('right', $._expression)),
+            seq(field('left', $.expression), field('operator', operator), field('right', $.expression)),
           ),
         ),
       );
@@ -791,7 +793,7 @@ module.exports = grammar({
     comment: (_) => token(choice(seq('//', /.*/), seq('/*', /[^*]*\*+([^/*][^*]*\*+)*/, '/'))),
     doc_comment: (_) => token(prec(1, seq('/**', /[^*]*\*+([^/*][^*]*\*+)*/, '/'))),
 
-    identifier: (_) => /[_a-zA-Z_][a-zA-Z0-9_]*/,
+    identifier: (_) => /[_a-zA-Z][a-zA-Z0-9_]*/,
     // <qualified-identifier> ::= <identifier> ("::" <identifier>)*
     qualified_identifier: ($) =>
       prec.left(
@@ -801,19 +803,28 @@ module.exports = grammar({
         ),
       ),
 
+    // Base type without modifiers (for use in recursive contexts)
+    base_type: ($) =>
+      choice(
+        prec.dynamic(100, seq(
+          choice($.primitive_keyword, $.identifier),
+          $.generic_type_declaration,
+        )),
+        choice($.primitive_keyword, $.identifier),
+      ),
+
     type_identifier: ($) =>
       prec.left(
         seq(
           optional(repeat1(choice($.pointer_specifier, $.reference_operator, $.mutable_specifier))),
-          choice($.primitive_keyword, $.identifier),
-          optional($.generic_type_declaration),
+          $.base_type,
           optional('[]'),
         ),
       ),
 
-    union_type: ($) => prec.left(seq($.type_identifier, repeat(seq('|', $.type_identifier)))),
+    union_type: ($) => prec.left(seq($.type_identifier, repeat1(seq('|', $.type_identifier)))),
 
-    intersection_type: ($) => prec.left(seq($.type_identifier, repeat(seq('&', $.type_identifier)))),
+    intersection_type: ($) => prec.left(seq($.type_identifier, repeat1(seq('&', $.type_identifier)))),
 
     // <function-type> ::= "(" <type-list>? ")" "->" <type>
     type_function: ($) =>
@@ -839,8 +850,7 @@ module.exports = grammar({
     vector_type: ($) =>
       seq(
         optional(repeat1(choice($.pointer_specifier, $.reference_operator, $.mutable_specifier))),
-        choice($.primitive_keyword, $.identifier),
-        optional($.generic_type_declaration),
+        $.base_type,
         '[',
         optional($.integer_literal),
         ']',

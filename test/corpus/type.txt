@@ -11,7 +11,8 @@ type StringArray = string[];
     (identifier)
     (type_expression
       (type_identifier
-        (primitive_keyword)))))
+        (base_type
+          (primitive_keyword))))))
 
 ================================================================================
 VALID - Type definition with union type
@@ -27,9 +28,11 @@ type StringArray = string[] | string;
     (type_expression
       (union_type
         (type_identifier
-          (primitive_keyword))
+          (base_type
+            (primitive_keyword)))
         (type_identifier
-          (primitive_keyword))))))
+          (base_type
+            (primitive_keyword)))))))
 
 ================================================================================
 VALID - Type definition with i64ersaction type
@@ -45,9 +48,11 @@ type StringArray = string[] & string;
     (type_expression
       (intersection_type
         (type_identifier
-          (primitive_keyword))
+          (base_type
+            (primitive_keyword)))
         (type_identifier
-          (primitive_keyword))))))
+          (base_type
+            (primitive_keyword)))))))
 
 ================================================================================
 VALID - Type definition number
@@ -66,30 +71,36 @@ type Number = i64 | float;
     (identifier)
     (type_expression
       (type_identifier
-        (primitive_keyword))))
+        (base_type
+          (primitive_keyword)))))
   (type_definition
     (identifier)
     (type_expression
       (type_identifier
-        (primitive_keyword))))
+        (base_type
+          (primitive_keyword)))))
   (type_definition
     (identifier)
     (type_expression
       (type_identifier
-        (identifier))))
+        (base_type
+          (identifier)))))
   (type_definition
     (identifier)
     (type_expression
       (type_identifier
-        (identifier))))
+        (base_type
+          (identifier)))))
   (type_definition
     (identifier)
     (type_expression
       (union_type
         (type_identifier
-          (primitive_keyword))
+          (base_type
+            (primitive_keyword)))
         (type_identifier
-          (identifier))))))
+          (base_type
+            (identifier)))))))
 
 ================================================================================
 VALID - Type cast
@@ -110,18 +121,21 @@ function main(): void {
     (identifier)
     (type_expression
       (type_identifier
-        (primitive_keyword))))
+        (base_type
+          (primitive_keyword)))))
   (function_declaration
     (identifier)
     (type_expression
       (type_identifier
-        (primitive_keyword)))
+        (base_type
+          (primitive_keyword))))
     (block
       (variable_declaration
         (identifier)
         (type_expression
           (type_identifier
-            (identifier)))
+            (base_type
+              (identifier))))
         (expression
           (primary_expression
             (literal
@@ -130,10 +144,12 @@ function main(): void {
       (expression_statement
         (expression
           (cast
-            (identifier)
+            (primary_expression
+              (identifier))
             (type_expression
               (type_identifier
-                (primitive_keyword)))))))))
+                (base_type
+                  (primitive_keyword))))))))))
 
 ================================================================================
 VALID - Declare type function
@@ -150,10 +166,12 @@ type Fn = (i64) -> i64;
       (type_function
         (type_expression
           (type_identifier
-            (primitive_keyword)))
+            (base_type
+              (primitive_keyword))))
         (type_expression
           (type_identifier
-            (primitive_keyword)))))))
+            (base_type
+              (primitive_keyword))))))))
 
 ================================================================================
 VALID - Use type with hex and binary
@@ -169,7 +187,8 @@ let b: binary = 0b101;
     (identifier)
     (type_expression
       (type_identifier
-        (primitive_keyword)))
+        (base_type
+          (primitive_keyword))))
     (expression
       (primary_expression
         (literal
@@ -179,9 +198,139 @@ let b: binary = 0b101;
     (identifier)
     (type_expression
       (type_identifier
-        (primitive_keyword)))
+        (base_type
+          (primitive_keyword))))
     (expression
       (primary_expression
         (literal
           (integer_literal
             (binary_literal)))))))
+
+================================================================================
+VALID - Generic type with reference
+================================================================================
+
+type RefOption = Option<&T>;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (type_definition
+    (identifier)
+    (type_expression
+      (type_identifier
+        (base_type
+          (identifier)
+          (generic_type_declaration
+            (type_expression
+              (type_identifier
+                (reference_operator)
+                (base_type
+                  (identifier))))))))))
+
+================================================================================
+VALID - Generic type with mutable reference
+================================================================================
+
+type MutRefOption = Option<&mut T>;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (type_definition
+    (identifier)
+    (type_expression
+      (type_identifier
+        (base_type
+          (identifier)
+          (generic_type_declaration
+            (type_expression
+              (type_identifier
+                (reference_operator)
+                (mutable_specifier)
+                (base_type
+                  (identifier))))))))))
+
+================================================================================
+VALID - Generic type with pointer
+================================================================================
+
+type PtrOption = Option<*T>;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (type_definition
+    (identifier)
+    (type_expression
+      (type_identifier
+        (base_type
+          (identifier)
+          (generic_type_declaration
+            (type_expression
+              (type_identifier
+                (pointer_specifier)
+                (base_type
+                  (identifier))))))))))
+
+================================================================================
+VALID - Generic type with mutable pointer
+================================================================================
+
+type MutPtrOption = Option<*mut T>;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (type_definition
+    (identifier)
+    (type_expression
+      (type_identifier
+        (base_type
+          (identifier)
+          (generic_type_declaration
+            (type_expression
+              (type_identifier
+                (pointer_specifier)
+                (mutable_specifier)
+                (base_type
+                  (identifier))))))))))
+
+================================================================================
+VALID - Function with generic reference parameter
+================================================================================
+
+function getRef(index: u64): Option<&T> {
+  return Option::NONE;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameter_declaration
+      (identifier)
+      (type_expression
+        (type_identifier
+          (base_type
+            (primitive_keyword)))))
+    (type_expression
+      (type_identifier
+        (base_type
+          (identifier)
+          (generic_type_declaration
+            (type_expression
+              (type_identifier
+                (reference_operator)
+                (base_type
+                  (identifier))))))))
+    (block
+      (return_statement
+        (expression
+          (get_expression
+            (property_access
+              (expression
+                (primary_expression
+                  (identifier)))
+              (identifier))))))))

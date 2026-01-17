@@ -19,8 +19,10 @@ match (name) {
       (match_arm
         (match_pattern
           (pattern
-            (literal
-              (string_literal))))
+            (expression
+              (primary_expression
+                (literal
+                  (string_literal))))))
         (expression
           (primary_expression
             (literal
@@ -28,8 +30,10 @@ match (name) {
       (match_arm
         (match_pattern
           (pattern
-            (literal
-              (string_literal))))
+            (expression
+              (primary_expression
+                (literal
+                  (string_literal))))))
         (block
           (return_statement
             (expression
@@ -46,13 +50,17 @@ match (name) {
           (binary_expression
             (expression
               (binary_expression
-                (literal
-                  (string_literal))
+                (expression
+                  (primary_expression
+                    (literal
+                      (string_literal))))
                 (expression
                   (primary_expression
                     (identifier)))))
-            (literal
-              (string_literal))))))))
+            (expression
+              (primary_expression
+                (literal
+                  (string_literal))))))))))
 
 ================================================================================
 VALID - Match be expression
@@ -71,7 +79,8 @@ let message: string = match (name) {
     (identifier)
     (type_expression
       (type_identifier
-        (primitive_keyword)))
+        (base_type
+          (primitive_keyword))))
     (expression
       (match_expression
         (expression
@@ -80,8 +89,10 @@ let message: string = match (name) {
         (match_arm
           (match_pattern
             (pattern
-              (literal
-                (string_literal))))
+              (expression
+                (primary_expression
+                  (literal
+                    (string_literal))))))
           (expression
             (primary_expression
               (literal
@@ -89,8 +100,10 @@ let message: string = match (name) {
         (match_arm
           (match_pattern
             (pattern
-              (literal
-                (string_literal))))
+              (expression
+                (primary_expression
+                  (literal
+                    (string_literal))))))
           (block
             (return_statement
               (expression
@@ -107,13 +120,17 @@ let message: string = match (name) {
             (binary_expression
               (expression
                 (binary_expression
-                  (literal
-                    (string_literal))
+                  (expression
+                    (primary_expression
+                      (literal
+                        (string_literal))))
                   (expression
                     (primary_expression
                       (identifier)))))
-              (literal
-                (string_literal)))))))))
+              (expression
+                (primary_expression
+                  (literal
+                    (string_literal)))))))))))
 
 ================================================================================
 VALID - Match with when
@@ -145,9 +162,11 @@ match (age) {
                   (expression
                     (primary_expression
                       (identifier)))
-                  (literal
-                    (integer_literal
-                      (decimal_literal))))))))
+                  (expression
+                    (primary_expression
+                      (literal
+                        (integer_literal
+                          (decimal_literal))))))))))
         (expression
           (call_expression
             (primary_expression
@@ -168,9 +187,11 @@ match (age) {
                   (expression
                     (primary_expression
                       (identifier)))
-                  (literal
-                    (integer_literal
-                      (decimal_literal))))))))
+                  (expression
+                    (primary_expression
+                      (literal
+                        (integer_literal
+                          (decimal_literal))))))))))
         (expression
           (call_expression
             (primary_expression
@@ -211,8 +232,10 @@ match (c) {
       (match_arm
         (match_pattern
           (pattern
-            (literal
-              (char_literal))
+            (expression
+              (primary_expression
+                (literal
+                  (char_literal))))
             (guard_clause
               (expression
                 (get_expression
@@ -244,8 +267,10 @@ match (c) {
       (match_arm
         (match_pattern
           (pattern
-            (literal
-              (char_literal))
+            (expression
+              (primary_expression
+                (literal
+                  (char_literal))))
             (guard_clause
               (expression
                 (get_expression

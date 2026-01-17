@@ -15,7 +15,8 @@ let z: *Foo = Foo::init();
     (identifier)
     (type_expression
       (type_identifier
-        (primitive_keyword)))
+        (base_type
+          (primitive_keyword))))
     (expression
       (primary_expression
         (literal
@@ -25,7 +26,8 @@ let z: *Foo = Foo::init();
     (identifier)
     (type_expression
       (type_identifier
-        (primitive_keyword)))
+        (base_type
+          (primitive_keyword))))
     (expression
       (primary_expression
         (literal
@@ -34,7 +36,8 @@ let z: *Foo = Foo::init();
     (identifier)
     (type_expression
       (type_identifier
-        (primitive_keyword)))
+        (base_type
+          (primitive_keyword))))
     (expression
       (primary_expression
         (literal
@@ -43,7 +46,8 @@ let z: *Foo = Foo::init();
     (identifier)
     (type_expression
       (type_identifier
-        (primitive_keyword)))
+        (base_type
+          (primitive_keyword))))
     (expression
       (primary_expression
         (literal
@@ -53,7 +57,8 @@ let z: *Foo = Foo::init();
     (type_expression
       (type_identifier
         (pointer_specifier)
-        (identifier)))
+        (base_type
+          (identifier))))
     (expression
       (get_expression
         (method_call_expression
@@ -76,7 +81,8 @@ let result: i64 = math.sum(x, y);
     (identifier)
     (type_expression
       (type_identifier
-        (primitive_keyword)))
+        (base_type
+          (primitive_keyword))))
     (expression
       (get_expression
         (method_call_expression
