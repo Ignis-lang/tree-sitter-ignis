@@ -58,14 +58,13 @@ let z: *Foo = Foo::init();
       (type_identifier
         (pointer_specifier)
         (base_type
-          (identifier))))
+          (qualified_identifier
+            (identifier)))))
     (expression
-      (get_expression
-        (method_call_expression
-          (property_access
-            (expression
-              (primary_expression
-                (identifier)))
+      (call_expression
+        (primary_expression
+          (scoped_identifier
+            (identifier)
             (identifier)))))))
 
 ================================================================================
@@ -183,3 +182,39 @@ a >>= b;
       (expression
         (primary_expression
           (identifier))))))
+
+================================================================================
+VALID - variable and data type
+================================================================================
+
+let rawAddress: CType::CVoidPtr = LibC::sbrk(sizeForSbrk as CType::IntPtrT);
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (variable_declaration
+    (identifier)
+    (type_expression
+      (type_identifier
+        (base_type
+          (qualified_identifier
+            (scoped_identifier
+              (identifier)
+              (identifier))))))
+    (expression
+      (call_expression
+        (primary_expression
+          (scoped_identifier
+            (identifier)
+            (identifier)))
+        (expression
+          (cast
+            (primary_expression
+              (identifier))
+            (type_expression
+              (type_identifier
+                (base_type
+                  (qualified_identifier
+                    (scoped_identifier
+                      (identifier)
+                      (identifier))))))))))))

@@ -23,7 +23,8 @@ function main(): void {
         (type_expression
           (type_identifier
             (base_type
-              (identifier))))
+              (qualified_identifier
+                (identifier)))))
         (expression
           (primary_expression
             (literal
@@ -57,23 +58,27 @@ sum<int>(1, 2)
       (type_expression
         (type_identifier
           (base_type
-            (identifier)))))
+            (qualified_identifier
+              (identifier))))))
     (parameter_declaration
       (identifier)
       (type_expression
         (type_identifier
           (base_type
-            (identifier)))))
+            (qualified_identifier
+              (identifier))))))
     (parameter_declaration
       (identifier)
       (type_expression
         (type_identifier
           (base_type
-            (identifier)))))
+            (qualified_identifier
+              (identifier))))))
     (type_expression
       (type_identifier
         (base_type
-          (identifier))))
+          (qualified_identifier
+            (identifier)))))
     (block
       (return_statement
         (expression
@@ -87,12 +92,13 @@ sum<int>(1, 2)
   (expression
     (call_expression
       (primary_expression
-        (identifier))
-      (generic_type_declaration
-        (type_expression
-          (type_identifier
-            (base_type
-              (identifier)))))
+        (identifier)
+        (generic_type_declaration
+          (type_expression
+            (type_identifier
+              (base_type
+                (qualified_identifier
+                  (identifier)))))))
       (expression
         (primary_expression
           (literal

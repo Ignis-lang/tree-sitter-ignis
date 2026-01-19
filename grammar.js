@@ -180,6 +180,8 @@ module.exports = grammar({
       [$.intersection_type, $.type_expression],
       [$.union_type, $.type_expression],
       [$.base_type],
+      [$.qualified_identifier, $.scoped_identifier],
+      [$.directive_statement, $.directive_declaration],
     ]),
 
   rules: {
@@ -302,6 +304,7 @@ module.exports = grammar({
       prec.left(
         choice(
           seq($.identifier, optional($.generic_type_declaration)),
+          $.scoped_identifier,
           $.this_expression,
           $.self_expression,
           $.method_call_expression,
@@ -326,7 +329,7 @@ module.exports = grammar({
       ),
 
     property_access: ($) =>
-      prec.left(PREC.FIELD, seq($.expression, choice('.', '::'), field('name', $.identifier))),
+      prec.left(PREC.FIELD, seq($.expression, '.', field('name', $.identifier))),
 
     get_expression: ($) => prec.left(choice($.property_access, $.method_call_expression)),
 
@@ -466,12 +469,12 @@ module.exports = grammar({
 
     // <directive> ::= "directive" <identifier> ("(" <parameters>? ")")? ";"
     directive_declaration: ($) =>
-      seq(
+      prec(1, seq(
         'directive',
         $.identifier,
         optional(seq('(', commaSep($.parameter_declaration), ')')),
         ';',
-      ),
+      )),
 
     // <directive-expression> ::= "#" <qualified-identifier> ("(" <expression-list>? ")")?
     //                          | "#[" <expression-list>? "]"
@@ -794,23 +797,29 @@ module.exports = grammar({
     doc_comment: (_) => token(prec(1, seq('/**', /[^*]*\*+([^/*][^*]*\*+)*/, '/'))),
 
     identifier: (_) => /[_a-zA-Z][a-zA-Z0-9_]*/,
-    // <qualified-identifier> ::= <identifier> ("::" <identifier>)*
-    qualified_identifier: ($) =>
-      prec.left(
+    scoped_identifier: ($) =>
+      prec.left(PREC.FIELD,
         seq(
           field('identifier', $.identifier),
-          repeat(seq('::', field('identifier', $.identifier))),
+          repeat1(seq('::', field('identifier', $.identifier))),
         ),
+      ),
+
+    // <qualified-identifier> ::= <identifier> ("::" <identifier>)*
+    qualified_identifier: ($) =>
+      choice(
+        $.identifier,
+        $.scoped_identifier
       ),
 
     // Base type without modifiers (for use in recursive contexts)
     base_type: ($) =>
       choice(
         prec.dynamic(100, seq(
-          choice($.primitive_keyword, $.identifier),
+          choice($.primitive_keyword, $.qualified_identifier),
           $.generic_type_declaration,
         )),
-        choice($.primitive_keyword, $.identifier),
+        choice($.primitive_keyword, $.qualified_identifier),
       ),
 
     type_identifier: ($) =>

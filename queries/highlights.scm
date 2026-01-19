@@ -110,7 +110,7 @@
 ;; Type identifiers in type positions
 (type_identifier
   (base_type
-    (identifier) @type))
+    (qualified_identifier) @type))
 
 (type_identifier
   (base_type
@@ -215,6 +215,9 @@
 
 ;; First part of qualified identifier is module/namespace
 (qualified_identifier
+  . (identifier) @module)
+
+(scoped_identifier
   . (identifier) @module)
 
 ;; ============================================================================

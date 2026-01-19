@@ -51,13 +51,15 @@ record User<T> {
       (type_expression
         (type_identifier
           (base_type
-            (identifier)))))
+            (qualified_identifier
+              (identifier))))))
     (record_property_declaration
       (identifier)
       (type_expression
         (type_identifier
           (base_type
-            (identifier)))))
+            (qualified_identifier
+              (identifier))))))
     (record_property_declaration
       (identifier)
       (type_expression
@@ -162,7 +164,8 @@ record User {
       (type_expression
         (type_identifier
           (base_type
-            (identifier))))
+            (qualified_identifier
+              (identifier)))))
       (block
         (expression_statement
           (expression
@@ -291,31 +294,15 @@ export record FFIConfig {
         (type_expression
           (type_identifier
             (base_type
-              (identifier)))))
+              (qualified_identifier
+                (identifier))))))
       (record_property_declaration
         (identifier)
         (type_expression
           (type_identifier
             (base_type
-              (identifier)))))
-      (record_property_declaration
-        (identifier)
-        (type_expression
-          (type_identifier
-            (base_type
-              (primitive_keyword)))))
-      (record_property_declaration
-        (identifier)
-        (type_expression
-          (type_identifier
-            (base_type
-              (identifier)))))
-      (record_property_declaration
-        (identifier)
-        (type_expression
-          (type_identifier
-            (base_type
-              (identifier)))))
+              (qualified_identifier
+                (identifier))))))
       (record_property_declaration
         (identifier)
         (type_expression
@@ -327,7 +314,28 @@ export record FFIConfig {
         (type_expression
           (type_identifier
             (base_type
-              (identifier))))))))
+              (qualified_identifier
+                (identifier))))))
+      (record_property_declaration
+        (identifier)
+        (type_expression
+          (type_identifier
+            (base_type
+              (qualified_identifier
+                (identifier))))))
+      (record_property_declaration
+        (identifier)
+        (type_expression
+          (type_identifier
+            (base_type
+              (primitive_keyword)))))
+      (record_property_declaration
+        (identifier)
+        (type_expression
+          (type_identifier
+            (base_type
+              (qualified_identifier
+                (identifier)))))))))
 
 ================================================================================
 VALID - Object literal
@@ -349,7 +357,8 @@ let user: User = User {
     (type_expression
       (type_identifier
         (base_type
-          (identifier))))
+          (qualified_identifier
+            (identifier)))))
     (expression
       (primary_expression
         (literal

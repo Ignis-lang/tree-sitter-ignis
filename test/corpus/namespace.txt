@@ -95,10 +95,8 @@ function main(): void {
     (block
       (expression_statement
         (expression
-          (get_expression
-            (method_call_expression
-              (property_access
-                (expression
-                  (primary_expression
-                    (identifier)))
+          (call_expression
+            (primary_expression
+              (scoped_identifier
+                (identifier)
                 (identifier)))))))))

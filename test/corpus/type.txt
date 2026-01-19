@@ -84,13 +84,15 @@ type Number = i64 | float;
     (type_expression
       (type_identifier
         (base_type
-          (identifier)))))
+          (qualified_identifier
+            (identifier))))))
   (type_definition
     (identifier)
     (type_expression
       (type_identifier
         (base_type
-          (identifier)))))
+          (qualified_identifier
+            (identifier))))))
   (type_definition
     (identifier)
     (type_expression
@@ -100,7 +102,8 @@ type Number = i64 | float;
             (primitive_keyword)))
         (type_identifier
           (base_type
-            (identifier)))))))
+            (qualified_identifier
+              (identifier))))))))
 
 ================================================================================
 VALID - Type cast
@@ -135,7 +138,8 @@ function main(): void {
         (type_expression
           (type_identifier
             (base_type
-              (identifier))))
+              (qualified_identifier
+                (identifier)))))
         (expression
           (primary_expression
             (literal
@@ -220,13 +224,15 @@ type RefOption = Option<&T>;
     (type_expression
       (type_identifier
         (base_type
-          (identifier)
+          (qualified_identifier
+            (identifier))
           (generic_type_declaration
             (type_expression
               (type_identifier
                 (reference_operator)
                 (base_type
-                  (identifier))))))))))
+                  (qualified_identifier
+                    (identifier)))))))))))
 
 ================================================================================
 VALID - Generic type with mutable reference
@@ -242,14 +248,16 @@ type MutRefOption = Option<&mut T>;
     (type_expression
       (type_identifier
         (base_type
-          (identifier)
+          (qualified_identifier
+            (identifier))
           (generic_type_declaration
             (type_expression
               (type_identifier
                 (reference_operator)
                 (mutable_specifier)
                 (base_type
-                  (identifier))))))))))
+                  (qualified_identifier
+                    (identifier)))))))))))
 
 ================================================================================
 VALID - Generic type with pointer
@@ -265,13 +273,15 @@ type PtrOption = Option<*T>;
     (type_expression
       (type_identifier
         (base_type
-          (identifier)
+          (qualified_identifier
+            (identifier))
           (generic_type_declaration
             (type_expression
               (type_identifier
                 (pointer_specifier)
                 (base_type
-                  (identifier))))))))))
+                  (qualified_identifier
+                    (identifier)))))))))))
 
 ================================================================================
 VALID - Generic type with mutable pointer
@@ -287,14 +297,16 @@ type MutPtrOption = Option<*mut T>;
     (type_expression
       (type_identifier
         (base_type
-          (identifier)
+          (qualified_identifier
+            (identifier))
           (generic_type_declaration
             (type_expression
               (type_identifier
                 (pointer_specifier)
                 (mutable_specifier)
                 (base_type
-                  (identifier))))))))))
+                  (qualified_identifier
+                    (identifier)))))))))))
 
 ================================================================================
 VALID - Function with generic reference parameter
@@ -318,19 +330,19 @@ function getRef(index: u64): Option<&T> {
     (type_expression
       (type_identifier
         (base_type
-          (identifier)
+          (qualified_identifier
+            (identifier))
           (generic_type_declaration
             (type_expression
               (type_identifier
                 (reference_operator)
                 (base_type
-                  (identifier))))))))
+                  (qualified_identifier
+                    (identifier)))))))))
     (block
       (return_statement
         (expression
-          (get_expression
-            (property_access
-              (expression
-                (primary_expression
-                  (identifier)))
+          (primary_expression
+            (scoped_identifier
+              (identifier)
               (identifier))))))))

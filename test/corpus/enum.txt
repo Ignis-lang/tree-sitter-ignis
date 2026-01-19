@@ -109,23 +109,27 @@ enum Result<O, E> {
       (type_expression
         (type_identifier
           (base_type
-            (identifier))))
+            (qualified_identifier
+              (identifier)))))
       (type_expression
         (type_identifier
           (base_type
-            (identifier)))))
+            (qualified_identifier
+              (identifier))))))
     (enum_variant_declaration
       (identifier)
       (type_expression
         (type_identifier
           (base_type
-            (identifier)))))
+            (qualified_identifier
+              (identifier))))))
     (enum_variant_declaration
       (identifier)
       (type_expression
         (type_identifier
           (base_type
-            (identifier)))))))
+            (qualified_identifier
+              (identifier))))))))
 
 ================================================================================
 VALID - Enum declaration with methods
@@ -153,13 +157,15 @@ export enum Option<S> {
         (type_expression
           (type_identifier
             (base_type
-              (identifier)))))
+              (qualified_identifier
+                (identifier))))))
       (enum_variant_declaration
         (identifier)
         (type_expression
           (type_identifier
             (base_type
-              (identifier)))))
+              (qualified_identifier
+                (identifier))))))
       (enum_variant_declaration
         (identifier))
       (enum_method_declaration
