@@ -388,6 +388,29 @@
     "fields": {}
   },
   {
+    "type": "directive_argument",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "expression",
+          "named": true
+        },
+        {
+          "type": "mutable_specifier",
+          "named": true
+        },
+        {
+          "type": "type_expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "directive_attr",
     "named": true,
     "fields": {},
@@ -395,6 +418,10 @@
       "multiple": true,
       "required": false,
       "types": [
+        {
+          "type": "directive_argument",
+          "named": true
+        },
         {
           "type": "directive_attr_item",
           "named": true
@@ -443,6 +470,47 @@
         }
       ]
     }
+  },
+  {
+    "type": "directive_builtin_expression",
+    "named": true,
+    "fields": {
+      "arguments": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "expression",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "directive_builtin_name",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "generic_type_declaration",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "directive_builtin_name",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "directive_declaration",
@@ -679,6 +747,10 @@
         },
         {
           "type": "record_declaration",
+          "named": true
+        },
+        {
+          "type": "trait_declaration",
           "named": true
         },
         {
@@ -1458,6 +1530,10 @@
           "named": true
         },
         {
+          "type": "trait_declaration",
+          "named": true
+        },
+        {
           "type": "type_definition",
           "named": true
         }
@@ -1598,6 +1674,10 @@
       "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "directive_builtin_expression",
+          "named": true
+        },
         {
           "type": "generic_type_declaration",
           "named": true
@@ -1931,6 +2011,10 @@
           "named": true
         },
         {
+          "type": "trait_declaration",
+          "named": true
+        },
+        {
           "type": "type_definition",
           "named": true
         },
@@ -2014,6 +2098,93 @@
   },
   {
     "type": "this_expression",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "trait_declaration",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "directive_attrs",
+          "named": true
+        },
+        {
+          "type": "trait_method_declaration",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "trait_method_declaration",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "receiver": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "self_parameter",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "block",
+          "named": true
+        },
+        {
+          "type": "generic_type_declaration",
+          "named": true
+        },
+        {
+          "type": "parameter_declaration",
+          "named": true
+        },
+        {
+          "type": "trait_method_modifier",
+          "named": true
+        },
+        {
+          "type": "type_expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "trait_method_modifier",
     "named": true,
     "fields": {}
   },
@@ -2552,6 +2723,10 @@
     "named": false
   },
   {
+    "type": "@",
+    "named": false
+  },
+  {
     "type": "[",
     "named": false
   },
@@ -2580,6 +2755,10 @@
     "named": false
   },
   {
+    "type": "alignOf",
+    "named": false
+  },
+  {
     "type": "as",
     "named": false
   },
@@ -2604,6 +2783,10 @@
     "named": true
   },
   {
+    "type": "bitCast",
+    "named": false
+  },
+  {
     "type": "boolean",
     "named": false
   },
@@ -2618,6 +2801,14 @@
   {
     "type": "comment",
     "named": true
+  },
+  {
+    "type": "compileError",
+    "named": false
+  },
+  {
+    "type": "configFlag",
+    "named": false
   },
   {
     "type": "const",
@@ -2732,6 +2923,10 @@
     "named": false
   },
   {
+    "type": "integerFromPointer",
+    "named": false
+  },
+  {
     "type": "is",
     "named": false
   },
@@ -2764,6 +2959,18 @@
     "named": false
   },
   {
+    "type": "panic",
+    "named": false
+  },
+  {
+    "type": "pointerCast",
+    "named": false
+  },
+  {
+    "type": "pointerFromInteger",
+    "named": false
+  },
+  {
     "type": "private",
     "named": false
   },
@@ -2788,6 +2995,10 @@
     "named": false
   },
   {
+    "type": "sizeOf",
+    "named": false
+  },
+  {
     "type": "static",
     "named": false
   },
@@ -2804,11 +3015,23 @@
     "named": false
   },
   {
+    "type": "trait",
+    "named": false
+  },
+  {
+    "type": "trap",
+    "named": false
+  },
+  {
     "type": "true",
     "named": false
   },
   {
     "type": "type",
+    "named": false
+  },
+  {
+    "type": "typeName",
     "named": false
   },
   {
@@ -2833,6 +3056,10 @@
   },
   {
     "type": "unknown",
+    "named": false
+  },
+  {
+    "type": "unreachable",
     "named": false
   },
   {

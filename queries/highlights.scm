@@ -66,7 +66,7 @@
 "return" @keyword.return
 
 ;; Declaration keywords
-["function" "record" "enum" "type" "namespace" "directive"] @keyword
+["function" "record" "enum" "type" "namespace" "directive" "trait"] @keyword
 
 ;; Modifiers
 [
@@ -143,6 +143,8 @@
   name: (identifier) @function.method)
 (enum_method_declaration
   name: (identifier) @function.method)
+(trait_method_declaration
+  name: (identifier) @function.method)
 
 ;; Function calls
 (call_expression
@@ -184,6 +186,10 @@
 
 ;; Record declarations
 (record_declaration
+  name: (identifier) @type)
+
+;; Trait declarations
+(trait_declaration
   name: (identifier) @type)
 
 ;; Record properties/fields
@@ -250,11 +256,21 @@
 (directive_attr
   "#" @punctuation.special)
 
+(directive_attr
+  "@" @punctuation.special)
+
+(directive_attr
+  (qualified_identifier) @attribute)
+
 (directive_attr_item
   (qualified_identifier) @attribute)
 
 (directive_expression
   "#" @punctuation.special)
+
+(directive_builtin_expression
+  "@" @punctuation.special
+  name: (directive_builtin_name) @function.builtin)
 
 ;; ============================================================================
 ;; Extern Declarations

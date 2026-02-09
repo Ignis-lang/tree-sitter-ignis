@@ -88,6 +88,7 @@ const KEYWORDS = [
   'return',
   'self',
   'static',
+  'trait',
   'this',
   'true',
   'type',
@@ -182,6 +183,8 @@ module.exports = grammar({
       [$.base_type],
       [$.qualified_identifier, $.scoped_identifier],
       [$.directive_statement, $.directive_declaration],
+      [$.directive_attr, $.directive_builtin_expression],
+      [$.qualified_identifier, $.directive_builtin_expression],
     ]),
 
   rules: {
@@ -201,8 +204,9 @@ module.exports = grammar({
         $.directive_statement,
         $.directive_declaration,
         $.namespace_declaration,
+        $.trait_declaration,
         $.const_declaration,
-        $.expression,
+        prec(-1, $.expression),
       ),
 
     // <type-alias> ::= <directive-attrs>? "type" <identifier> <generic-type>? "=" <type> ";"
@@ -229,6 +233,7 @@ module.exports = grammar({
           $.type_definition,
           $.directive_statement,
           $.directive_declaration,
+          $.trait_declaration,
         ),
       ),
 
@@ -305,6 +310,7 @@ module.exports = grammar({
         choice(
           seq($.identifier, optional($.generic_type_declaration)),
           $.scoped_identifier,
+          $.directive_builtin_expression,
           $.this_expression,
           $.self_expression,
           $.method_call_expression,
@@ -446,15 +452,22 @@ module.exports = grammar({
 
     // <directive-attr> ::= "#[" <directive-attr-list>? "]"
     //                    | "#" <qualified-identifier> ("(" <expression-list>? ")")?
+    //                    | "@" <qualified-identifier> ("(" <directive-arg-list>? ")")?
     directive_attr: ($) =>
-      choice(
-        seq('#', '[', commaSep($.directive_attr_item), ']'),
-        seq('#', $.qualified_identifier, optional(seq('(', commaSep($.expression), ')'))),
+      prec(
+        1,
+        choice(
+          seq('#', '[', commaSep($.directive_attr_item), ']'),
+          seq('#', $.qualified_identifier, optional(seq('(', commaSep($.expression), ')'))),
+          seq('@', $.qualified_identifier, optional(seq('(', commaSep($.directive_argument), ')'))),
+        ),
       ),
 
     // <directive-attr-item> ::= <qualified-identifier> ("(" <expression-list>? ")")?
     directive_attr_item: ($) =>
       seq($.qualified_identifier, optional(seq('(', commaSep($.expression), ')'))),
+
+    directive_argument: ($) => choice($.expression, $.type_expression, $.mutable_specifier),
 
     // <directive-statement> ::= "directive" <qualified-identifier>
     //                           ("(" <expression-list>? ")")?
@@ -486,6 +499,32 @@ module.exports = grammar({
         ),
       ),
 
+    directive_builtin_expression: ($) =>
+      seq(
+        '@',
+        field('name', $.directive_builtin_name),
+        optional($.generic_type_declaration),
+        '(',
+        commaSep(field('arguments', $.expression)),
+        ')',
+      ),
+
+    directive_builtin_name: (_) =>
+      choice(
+        'configFlag',
+        'compileError',
+        'sizeOf',
+        'alignOf',
+        'typeName',
+        'bitCast',
+        'pointerCast',
+        'integerFromPointer',
+        'pointerFromInteger',
+        'panic',
+        'trap',
+        'unreachable',
+      ),
+
     // <namespace> ::= <directive-attrs>? "namespace" <qualified-identifier> "{" <namespace-item>* "}"
     namespace_declaration: ($) =>
       seq(
@@ -508,6 +547,40 @@ module.exports = grammar({
         $.extern_declaration,
         $.directive_statement,
         $.directive_declaration,
+        $.trait_declaration,
+      ),
+
+    // <trait> ::= "trait" <identifier> "{" <trait-method>* "}"
+    trait_declaration: ($) =>
+      seq(
+        'trait',
+        field('name', $.identifier),
+        '{',
+        repeat(
+          seq(
+            optional($.directive_attrs),
+            $.trait_method_declaration,
+          ),
+        ),
+        '}',
+      ),
+
+    // <trait-method> ::= <trait-method-modifier>* <identifier>
+    //                    "(" <self-parameter> ("," <parameter>)* ","? ")" ":" <type>
+    //                    (";" | <block>)
+    trait_method_declaration: ($) =>
+      seq(
+        optional(repeat($.trait_method_modifier)),
+        field('name', $.identifier),
+        optional($.generic_type_declaration),
+        '(',
+        field('receiver', $.self_parameter),
+        repeat(seq(',', $.parameter_declaration)),
+        optional(','),
+        ')',
+        ':',
+        $.type_expression,
+        choice(';', $.block),
       ),
 
     // #endregion
@@ -868,6 +941,8 @@ module.exports = grammar({
     property_modifier: (_) => choice('public', 'private', 'static', 'mut', 'abstract'),
 
     method_modifier: (_) => choice('public', 'private', 'static', 'final', 'abstract', 'inline'),
+
+    trait_method_modifier: (_) => choice('public', 'private', 'final', 'abstract', 'inline'),
 
     other_keyword: (_) => choice('in', 'as', 'readonly', 'export', 'super', 'namespace'),
 

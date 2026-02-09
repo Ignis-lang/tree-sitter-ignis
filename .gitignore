@@ -6,3 +6,4 @@ target/
 *.o
 build/
 .direnv/
+.logs

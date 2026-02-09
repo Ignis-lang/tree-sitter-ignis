@@ -1,0 +1,327 @@
+================================================================================
+VALID - Directive and function builtins
+================================================================================
+
+function main(): void {
+  let flag: boolean = @configFlag("os.linux");
+  let size: u64 = @sizeOf<i32>();
+  let align: u64 = @alignOf<i32>();
+  let name: string = @typeName<i32>();
+
+  let max: i32 = maxOf<i32>();
+  let min: i32 = minOf<i32>();
+  let kind: u32 = typeOf(max);
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_declaration
+    (identifier)
+    (type_expression
+      (type_identifier
+        (base_type
+          (primitive_keyword))))
+    (block
+      (variable_declaration
+        (identifier)
+        (type_expression
+          (type_identifier
+            (base_type
+              (primitive_keyword))))
+        (expression
+          (primary_expression
+            (directive_builtin_expression
+              (directive_builtin_name)
+              (expression
+                (primary_expression
+                  (literal
+                    (string_literal))))))))
+      (variable_declaration
+        (identifier)
+        (type_expression
+          (type_identifier
+            (base_type
+              (primitive_keyword))))
+        (expression
+          (primary_expression
+            (directive_builtin_expression
+              (directive_builtin_name)
+              (generic_type_declaration
+                (type_expression
+                  (type_identifier
+                    (base_type
+                      (primitive_keyword)))))))))
+      (variable_declaration
+        (identifier)
+        (type_expression
+          (type_identifier
+            (base_type
+              (primitive_keyword))))
+        (expression
+          (primary_expression
+            (directive_builtin_expression
+              (directive_builtin_name)
+              (generic_type_declaration
+                (type_expression
+                  (type_identifier
+                    (base_type
+                      (primitive_keyword)))))))))
+      (variable_declaration
+        (identifier)
+        (type_expression
+          (type_identifier
+            (base_type
+              (primitive_keyword))))
+        (expression
+          (primary_expression
+            (directive_builtin_expression
+              (directive_builtin_name)
+              (generic_type_declaration
+                (type_expression
+                  (type_identifier
+                    (base_type
+                      (primitive_keyword)))))))))
+      (variable_declaration
+        (identifier)
+        (type_expression
+          (type_identifier
+            (base_type
+              (primitive_keyword))))
+        (expression
+          (call_expression
+            (primary_expression
+              (identifier)
+              (generic_type_declaration
+                (type_expression
+                  (type_identifier
+                    (base_type
+                      (primitive_keyword)))))))))
+      (variable_declaration
+        (identifier)
+        (type_expression
+          (type_identifier
+            (base_type
+              (primitive_keyword))))
+        (expression
+          (call_expression
+            (primary_expression
+              (identifier)
+              (generic_type_declaration
+                (type_expression
+                  (type_identifier
+                    (base_type
+                      (primitive_keyword)))))))))
+      (variable_declaration
+        (identifier)
+        (type_expression
+          (type_identifier
+            (base_type
+              (primitive_keyword))))
+        (expression
+          (call_expression
+            (primary_expression
+              (identifier))
+            (expression
+              (primary_expression
+                (identifier)))))))))
+
+================================================================================
+VALID - Directive builtins with casts and pointers
+================================================================================
+
+function castOps(value: f32, ptr: *mut u8): void {
+  let bits: u32 = @bitCast<u32>(value);
+  let addr: u64 = @integerFromPointer(ptr);
+  let newPtr: *mut u8 = @pointerFromInteger<*mut u8>(addr);
+  let castPtr: *mut i32 = @pointerCast<*mut i32>(newPtr);
+
+  bits;
+  castPtr;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameter_declaration
+      (identifier)
+      (type_expression
+        (type_identifier
+          (base_type
+            (primitive_keyword)))))
+    (parameter_declaration
+      (identifier)
+      (variable_modifiers
+        (pointer_specifier))
+      (type_expression
+        (type_identifier
+          (mutable_specifier)
+          (base_type
+            (primitive_keyword)))))
+    (type_expression
+      (type_identifier
+        (base_type
+          (primitive_keyword))))
+    (block
+      (variable_declaration
+        (identifier)
+        (type_expression
+          (type_identifier
+            (base_type
+              (primitive_keyword))))
+        (expression
+          (primary_expression
+            (directive_builtin_expression
+              (directive_builtin_name)
+              (generic_type_declaration
+                (type_expression
+                  (type_identifier
+                    (base_type
+                      (primitive_keyword)))))
+              (expression
+                (primary_expression
+                  (identifier)))))))
+      (variable_declaration
+        (identifier)
+        (type_expression
+          (type_identifier
+            (base_type
+              (primitive_keyword))))
+        (expression
+          (primary_expression
+            (directive_builtin_expression
+              (directive_builtin_name)
+              (expression
+                (primary_expression
+                  (identifier)))))))
+      (variable_declaration
+        (identifier)
+        (type_expression
+          (type_identifier
+            (pointer_specifier)
+            (mutable_specifier)
+            (base_type
+              (primitive_keyword))))
+        (expression
+          (primary_expression
+            (directive_builtin_expression
+              (directive_builtin_name)
+              (generic_type_declaration
+                (type_expression
+                  (type_identifier
+                    (pointer_specifier)
+                    (mutable_specifier)
+                    (base_type
+                      (primitive_keyword)))))
+              (expression
+                (primary_expression
+                  (identifier)))))))
+      (variable_declaration
+        (identifier)
+        (type_expression
+          (type_identifier
+            (pointer_specifier)
+            (mutable_specifier)
+            (base_type
+              (primitive_keyword))))
+        (expression
+          (primary_expression
+            (directive_builtin_expression
+              (directive_builtin_name)
+              (generic_type_declaration
+                (type_expression
+                  (type_identifier
+                    (pointer_specifier)
+                    (mutable_specifier)
+                    (base_type
+                      (primitive_keyword)))))
+              (expression
+                (primary_expression
+                  (identifier)))))))
+      (expression_statement
+        (expression
+          (primary_expression
+            (identifier))))
+      (expression_statement
+        (expression
+          (primary_expression
+            (identifier)))))))
+
+================================================================================
+VALID - Never-returning directive builtins
+================================================================================
+
+function failFast(enabled: boolean): void {
+  if (enabled) {
+    @panic("boom");
+  } else {
+    @trap();
+  }
+
+  @unreachable();
+}
+
+function compileGuard(): void {
+  @compileError("this should fail in compiler checks");
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameter_declaration
+      (identifier)
+      (type_expression
+        (type_identifier
+          (base_type
+            (primitive_keyword)))))
+    (type_expression
+      (type_identifier
+        (base_type
+          (primitive_keyword))))
+    (block
+      (if_statement
+        (expression
+          (primary_expression
+            (identifier)))
+        (block
+          (expression_statement
+            (expression
+              (primary_expression
+                (directive_builtin_expression
+                  (directive_builtin_name)
+                  (expression
+                    (primary_expression
+                      (literal
+                        (string_literal)))))))))
+        (else_clause
+          (block
+            (expression_statement
+              (expression
+                (primary_expression
+                  (directive_builtin_expression
+                    (directive_builtin_name))))))))
+      (expression_statement
+        (expression
+          (primary_expression
+            (directive_builtin_expression
+              (directive_builtin_name)))))))
+  (function_declaration
+    (identifier)
+    (type_expression
+      (type_identifier
+        (base_type
+          (primitive_keyword))))
+    (block
+      (expression_statement
+        (expression
+          (primary_expression
+            (directive_builtin_expression
+              (directive_builtin_name)
+              (expression
+                (primary_expression
+                  (literal
+                    (string_literal)))))))))))

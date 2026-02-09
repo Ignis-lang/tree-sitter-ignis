@@ -2,6 +2,7 @@
   (block)
   (enum_declaration)
   (record_declaration)
+  (trait_declaration)
   (namespace_declaration)
   (extern_declaration)
   (match_expression)
