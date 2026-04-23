@@ -105,17 +105,19 @@ enum Result<O, E> {
 (source_file
   (enum_declaration
     (identifier)
-    (generic_type_declaration
-      (type_expression
-        (type_identifier
-          (base_type
-            (qualified_identifier
-              (identifier)))))
-      (type_expression
-        (type_identifier
-          (base_type
-            (qualified_identifier
-              (identifier))))))
+    (generic_parameter_declaration
+      (generic_parameter
+        (type_expression
+          (type_identifier
+            (base_type
+              (qualified_identifier
+                (identifier))))))
+      (generic_parameter
+        (type_expression
+          (type_identifier
+            (base_type
+              (qualified_identifier
+                (identifier)))))))
     (enum_variant_declaration
       (identifier)
       (type_expression
@@ -153,12 +155,13 @@ export enum Option<S> {
   (export_statement
     (enum_declaration
       (identifier)
-      (generic_type_declaration
-        (type_expression
-          (type_identifier
-            (base_type
-              (qualified_identifier
-                (identifier))))))
+      (generic_parameter_declaration
+        (generic_parameter
+          (type_expression
+            (type_identifier
+              (base_type
+                (qualified_identifier
+                  (identifier)))))))
       (enum_variant_declaration
         (identifier)
         (type_expression

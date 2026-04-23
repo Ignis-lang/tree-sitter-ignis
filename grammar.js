@@ -185,6 +185,7 @@ module.exports = grammar({
       [$.directive_statement, $.directive_declaration],
       [$.directive_attr, $.directive_builtin_expression],
       [$.qualified_identifier, $.directive_builtin_expression],
+      [$.generic_parameter, $.generic_type_declaration],
     ]),
 
   rules: {
@@ -215,7 +216,7 @@ module.exports = grammar({
         optional($.directive_attrs),
         'type',
         $.identifier,
-        optional($.generic_type_declaration),
+        optional($.generic_parameter_declaration),
         '=',
         $.type_expression,
         ';',
@@ -224,6 +225,7 @@ module.exports = grammar({
     // <export> ::= "export" (<function> | <const> | <record> | <enum> | <type-alias> | <directive-statement> | <directive>)
     export_statement: ($) =>
       seq(
+        optional($.directive_attrs),
         'export',
         choice(
           $.function_declaration,
@@ -254,7 +256,7 @@ module.exports = grammar({
         optional($.directive_attrs),
         'enum',
         field('name', $.identifier),
-        optional($.generic_type_declaration),
+        optional($.generic_parameter_declaration),
         '{',
         repeat(
           seq(
@@ -281,7 +283,7 @@ module.exports = grammar({
       seq(
         optional(repeat($.method_modifier)),
         field('name', $.identifier),
-        optional($.generic_type_declaration),
+        optional($.generic_parameter_declaration),
         '(',
         optional(commaSep1($.parameter_declaration)),
         ')',
@@ -324,7 +326,7 @@ module.exports = grammar({
     // <lambda> ::= (<generic-type>)? "(" <parameters>? ")" ":" <type> "->" (<expression> | <block>)
     lambda_expression: ($) =>
       seq(
-        optional($.generic_type_declaration),
+        optional($.generic_parameter_declaration),
         '(',
         commaSep($.parameter_declaration),
         ')',
@@ -380,7 +382,7 @@ module.exports = grammar({
       seq(
         optional(repeat($.method_modifier)),
         field('name', $.identifier),
-        optional($.generic_type_declaration),
+        optional($.generic_parameter_declaration),
         '(',
         optional(commaSep1($.parameter_declaration)),
         ')',
@@ -397,7 +399,7 @@ module.exports = grammar({
         optional($.directive_attrs),
         'record',
         field('name', $.identifier),
-        optional($.generic_type_declaration),
+        optional($.generic_parameter_declaration),
         '{',
         repeat(
           seq(
@@ -438,7 +440,7 @@ module.exports = grammar({
       seq(
         'function',
         field('name', $.identifier),
-        optional($.generic_type_declaration),
+        optional($.generic_parameter_declaration),
         '(',
         commaSep($.parameter_declaration),
         ')',
@@ -572,7 +574,7 @@ module.exports = grammar({
       seq(
         optional(repeat($.trait_method_modifier)),
         field('name', $.identifier),
-        optional($.generic_type_declaration),
+        optional($.generic_parameter_declaration),
         '(',
         field('receiver', $.self_parameter),
         repeat(seq(',', $.parameter_declaration)),
@@ -582,6 +584,15 @@ module.exports = grammar({
         $.type_expression,
         choice(';', $.block),
       ),
+
+    generic_parameter: ($) =>
+      choice(
+        $.type_expression,
+        seq(field('name', $.identifier), ':', field('constraint', $.type_expression)),
+      ),
+
+    generic_parameter_declaration: ($) =>
+      prec.dynamic(100, seq('<', commaSep1($.generic_parameter), '>')),
 
     // #endregion
     // #region Function
@@ -595,7 +606,7 @@ module.exports = grammar({
         optional($.directive_attrs),
         'function',
         field('name', $.identifier),
-        optional($.generic_type_declaration),
+        optional($.generic_parameter_declaration),
         '(',
         commaSep($.parameter_declaration),
         ')',

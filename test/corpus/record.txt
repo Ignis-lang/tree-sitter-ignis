@@ -47,12 +47,13 @@ record User<T> {
 (source_file
   (record_declaration
     (identifier)
-    (generic_type_declaration
-      (type_expression
-        (type_identifier
-          (base_type
-            (qualified_identifier
-              (identifier))))))
+    (generic_parameter_declaration
+      (generic_parameter
+        (type_expression
+          (type_identifier
+            (base_type
+              (qualified_identifier
+                (identifier)))))))
     (record_property_declaration
       (identifier)
       (type_expression
@@ -386,4 +387,96 @@ let user: User = User {
                           (expression
                             (primary_expression
                               (self_expression)))
+                          (identifier))))))))))))))
+
+================================================================================
+VALID - Exported record with constrained generics
+================================================================================
+
+@implements(Drop)
+export record HashMap<K: Hash & Eq, V> {
+  public static init(capacity: u64): HashMap<K, V> {
+    return HashMap::init<K, V>();
+  }
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (export_statement
+    (directive_attrs
+      (directive_attr
+        (qualified_identifier
+          (identifier))
+        (directive_argument
+          (type_expression
+            (type_identifier
+              (base_type
+                (qualified_identifier
+                  (identifier))))))))
+    (record_declaration
+      (identifier)
+      (generic_parameter_declaration
+        (generic_parameter
+          (identifier)
+          (type_expression
+            (intersection_type
+              (type_identifier
+                (base_type
+                  (qualified_identifier
+                    (identifier))))
+              (type_identifier
+                (base_type
+                  (qualified_identifier
+                    (identifier)))))))
+        (generic_parameter
+          (type_expression
+            (type_identifier
+              (base_type
+                (qualified_identifier
+                  (identifier)))))))
+      (record_method_declaration
+        (method_modifier)
+        (method_modifier)
+        (identifier)
+        (parameter_declaration
+          (identifier)
+          (type_expression
+            (type_identifier
+              (base_type
+                (primitive_keyword)))))
+        (type_expression
+          (type_identifier
+            (base_type
+              (qualified_identifier
+                (identifier))
+              (generic_type_declaration
+                (type_expression
+                  (type_identifier
+                    (base_type
+                      (qualified_identifier
+                        (identifier)))))
+                (type_expression
+                  (type_identifier
+                    (base_type
+                      (qualified_identifier
+                        (identifier)))))))))
+        (block
+          (return_statement
+            (expression
+              (call_expression
+                (primary_expression
+                  (scoped_identifier
+                    (identifier)
+                    (identifier)))
+                (generic_type_declaration
+                  (type_expression
+                    (type_identifier
+                      (base_type
+                        (qualified_identifier
+                          (identifier)))))
+                  (type_expression
+                    (type_identifier
+                      (base_type
+                        (qualified_identifier
                           (identifier))))))))))))))
