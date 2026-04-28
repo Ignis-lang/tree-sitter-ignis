@@ -1,0 +1,16 @@
+[
+  (function_declaration)
+  (extern_function)
+  (record_declaration)
+  (enum_declaration)
+  (trait_declaration)
+  (namespace_declaration)
+  (extern_declaration)
+  (match_expression)
+  (lambda_expression)
+  (object_literal)
+  (typed_object_literal)
+  (directive_statement)
+  (block)
+  (import_statement)
+] @fold

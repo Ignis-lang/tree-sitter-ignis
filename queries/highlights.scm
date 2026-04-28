@@ -2,7 +2,11 @@
 ;; Comments
 ;; ============================================================================
 
-(comment) @comment
+[
+  (comment)
+  (doc_comment)
+] @comment
+
 (doc_comment) @comment.documentation
 
 ;; ============================================================================
@@ -10,10 +14,12 @@
 ;; ============================================================================
 
 (string_literal) @string
-(char_literal) @character
+(char_literal) @string.special
+
 (integer_literal) @number
 (float_literal) @number.float
-(boolean_literal) @constant.builtin
+
+(boolean_literal) @boolean
 (null_literal) @constant.builtin
 (atom_literal) @string.special.symbol
 
@@ -21,205 +27,205 @@
 ;; Punctuation
 ;; ============================================================================
 
-["(" ")" "{" "}" "[" "]"] @punctuation.bracket
+[
+  "("
+  ")"
+  "["
+  "]"
+  "{"
+  "}"
+] @punctuation.bracket
 
 (generic_type_declaration
-  "<" @punctuation.bracket
-  ">" @punctuation.bracket)
+  [
+    "<"
+    ">"
+  ] @punctuation.bracket)
 
-[":" "," ";"] @punctuation.delimiter
-"." @punctuation.delimiter
-"::" @punctuation.delimiter
+(generic_parameter_declaration
+  [
+    "<"
+    ">"
+  ] @punctuation.bracket)
+
+[
+  ","
+  "."
+  ":"
+  "::"
+  ";"
+  "->"
+] @punctuation.delimiter
+
+[
+  "#"
+  "@"
+] @punctuation.special
 
 ;; ============================================================================
 ;; Operators
 ;; ============================================================================
 
 [
-  "+" "-" "*" "/" "%"
-  "&" "|" "^" "~"
-  "<<" ">>"
-  "!" "&&" "||"
-  "++" "--"
+  "+"
+  "-"
+  "*"
+  "/"
+  "%"
+  "&"
+  "|"
+  "^"
+  "~"
+  "<<"
+  ">>"
+  "!"
+  "&&"
+  "||"
+  "++"
+  "--"
+  ".."
+  "..="
+  "..."
+  "|>"
+  "?"
 ] @operator
 
 [
-  "=" "+=" "-=" "*=" "/=" "%="
-  "&=" "|=" "^=" "<<=" ">>="
+  "="
+  "+="
+  "-="
+  "*="
+  "/="
+  "%="
+  "&="
+  "|="
+  "^="
+  "<<="
+  ">>="
+  "=="
+  "!="
+  "<"
+  ">"
+  "<="
+  ">="
 ] @operator
-
-["==" "!=" "<" ">" "<=" ">="] @operator
-
-[".." "..=" "|>" "->" "..." "?"] @operator
-
-"#" @punctuation.special
 
 ;; ============================================================================
 ;; Keywords
 ;; ============================================================================
 
-;; Control flow
-["if" "else" "match" "when"] @keyword.conditional
+[
+  "import"
+  "from"
+  "as"
+] @keyword.import
 
-["for" "while" "of" "break" "continue"] @keyword.repeat
+"function" @keyword.function
+
+[
+  "record"
+  "enum"
+  "trait"
+  "type"
+  "namespace"
+  "directive"
+] @keyword.type
+
+[
+  "if"
+  "else"
+  "match"
+  "when"
+] @keyword.conditional
+
+[
+  "for"
+  "while"
+  "of"
+  "break"
+  "continue"
+  "in"
+] @keyword.repeat
 
 "return" @keyword.return
 
-;; Declaration keywords
-["function" "record" "enum" "type" "namespace" "directive" "trait"] @keyword
-
-;; Modifiers
 [
-  "const" "let" "mut" "static"
-  "public" "private" "final"
-  "inline" "extern" "export"
+  "const"
+  "let"
+  "mut"
+  "static"
+  "public"
+  "private"
+  "final"
+  "inline"
+  "extern"
+  "export"
+  "new"
+  "is"
+  "with"
+  "typeof"
+] @keyword
+
+[
+  "async"
+  "await"
+] @keyword.coroutine
+
+[
+  (mutable_specifier)
+  (pointer_specifier)
+  (reference_operator)
 ] @keyword.modifier
 
-;; Other keywords
-["import" "from" "as" "new"] @keyword
-
 ;; ============================================================================
-;; Special identifiers
+;; Special identifiers and naming conventions
 ;; ============================================================================
 
 (this_expression) @variable.builtin
 (self_expression) @variable.builtin
+(self_parameter) @variable.builtin
 
-;; Wildcard pattern
 (pattern "_" @variable.builtin)
 
-;; ============================================================================
-;; Identifier conventions (like Rust)
-;; ============================================================================
-
-;; Assume all-caps names are constants (e.g., MAX_SIZE, PI)
 ((identifier) @constant
   (#match? @constant "^[A-Z][A-Z0-9_]+$"))
 
-;; Assume PascalCase names are types/constructors (e.g., Ok, Err, Some, None)
-((identifier) @constructor
-  (#match? @constructor "^[A-Z][a-z]"))
+((identifier) @type
+  (#match? @type "^[A-Z][a-zA-Z0-9_]*$"))
 
 ;; ============================================================================
-;; Types
+;; Types and modules
 ;; ============================================================================
 
-;; Primitive types
 (primitive_keyword) @type.builtin
 
-;; Type identifiers in type positions
 (type_identifier
   (base_type
     (qualified_identifier) @type))
 
-(type_identifier
-  (base_type
-    (primitive_keyword) @type.builtin))
+(typed_object_literal
+  (qualified_identifier) @constructor)
 
-;; Pointer and reference modifiers in types
-(type_identifier
-  (pointer_specifier) @operator)
-(type_identifier
-  (reference_operator) @operator)
-(type_identifier
-  (mutable_specifier) @keyword.modifier)
-
-;; ============================================================================
-;; Functions and Methods
-;; ============================================================================
-
-;; Function declarations
-(function_declaration
-  name: (identifier) @function)
-
-;; Extern function declarations
-(extern_function
-  name: (identifier) @function)
-
-;; Method declarations
-(method_declaration
-  name: (identifier) @function.method)
-(record_method_declaration
-  name: (identifier) @function.method)
-(enum_method_declaration
-  name: (identifier) @function.method)
-(trait_method_declaration
-  name: (identifier) @function.method)
-
-;; Function calls
-(call_expression
-  function: (primary_expression
-    (identifier) @function.call))
-
-;; Method calls (including chained)
-(method_call_expression
-  function: (property_access
-    name: (identifier) @function.method.call))
-
-;; Lambda arrow
-(lambda_expression
-  "->" @operator)
-
-;; ============================================================================
-;; Variables, Constants, and Parameters
-;; ============================================================================
-
-;; Variable declarations
-(variable_declaration
-  name: (identifier) @variable)
-
-;; Constant declarations
-(const_declaration
-  name: (identifier) @constant)
-
-;; Parameter declarations
-(parameter_declaration
-  name: (identifier) @variable.parameter)
-
-;; For loop variable
-(for_variable_declaration
-  (identifier) @variable)
-
-;; ============================================================================
-;; Records and Enums
-;; ============================================================================
-
-;; Record declarations
 (record_declaration
   name: (identifier) @type)
 
-;; Trait declarations
-(trait_declaration
-  name: (identifier) @type)
-
-;; Record properties/fields
-(record_property_declaration
-  name: (identifier) @property)
-
-;; Enum declarations
 (enum_declaration
   name: (identifier) @type)
 
-;; Enum variants
-(enum_variant_declaration
-  name: (identifier) @constant)
-
-;; ============================================================================
-;; Type Definitions
-;; ============================================================================
+(trait_declaration
+  name: (identifier) @type)
 
 (type_definition
   (identifier) @type.definition)
-
-;; ============================================================================
-;; Namespaces and Modules
-;; ============================================================================
 
 (namespace_declaration
   (qualified_identifier
     (identifier) @module))
 
-;; First part of qualified identifier is module/namespace
+(extern_declaration
+  (qualified_identifier
+    (identifier) @module))
+
 (qualified_identifier
   . (identifier) @module)
 
@@ -227,37 +233,72 @@
   . (identifier) @module)
 
 ;; ============================================================================
-;; Imports
+;; Functions and methods
 ;; ============================================================================
 
-(import_statement
-  (identifier) @type)
+(function_declaration
+  name: (identifier) @function)
+
+(extern_function
+  name: (identifier) @function)
+
+(method_declaration
+  name: (identifier) @function.method)
+
+(record_method_declaration
+  name: (identifier) @function.method)
+
+(enum_method_declaration
+  name: (identifier) @function.method)
+
+(trait_method_declaration
+  name: (identifier) @function.method)
+
+(call_expression
+  function: (primary_expression
+    (identifier) @function.call))
+
+(method_call_expression
+  function: (property_access
+    name: (identifier) @function.method.call))
+
+(directive_builtin_expression
+  name: (directive_builtin_name) @function.builtin)
 
 ;; ============================================================================
-;; Properties and Field Access
+;; Variables, parameters, fields, and variants
 ;; ============================================================================
 
-;; Field/property access (not method calls - those are handled above)
-(property_access
-  name: (identifier) @property)
+(variable_declaration
+  name: (identifier) @variable)
 
-;; Vector/array access
-(vector_access_expression
+(const_declaration
+  name: (identifier) @constant)
+
+(parameter_declaration
+  name: (identifier) @variable.parameter)
+
+(for_variable_declaration
   (identifier) @variable)
 
-;; Object literal keys
+(for_of_statement
+  (identifier) @variable)
+
+(record_property_declaration
+  name: (identifier) @variable.member)
+
+(property_access
+  name: (identifier) @variable.member)
+
 (object_literal
-  (identifier) @property)
+  (identifier) @variable.member)
+
+(enum_variant_declaration
+  name: (identifier) @constant)
 
 ;; ============================================================================
-;; Directives and Attributes
+;; Directives and attributes
 ;; ============================================================================
-
-(directive_attr
-  "#" @punctuation.special)
-
-(directive_attr
-  "@" @punctuation.special)
 
 (directive_attr
   (qualified_identifier) @attribute)
@@ -266,36 +307,20 @@
   (qualified_identifier) @attribute)
 
 (directive_expression
-  "#" @punctuation.special)
-
-(directive_builtin_expression
-  "@" @punctuation.special
-  name: (directive_builtin_name) @function.builtin)
+  (qualified_identifier) @attribute)
 
 ;; ============================================================================
-;; Extern Declarations
-;; ============================================================================
-
-(extern_declaration
-  "extern" @keyword.modifier)
-
-;; Extern namespace name
-(extern_declaration
-  (qualified_identifier
-    (identifier) @module))
-
-;; ============================================================================
-;; Match Expressions
+;; Match expressions
 ;; ============================================================================
 
 (match_expression
   "match" @keyword.conditional)
 
 (match_arm
-  "->" @operator)
+  "->" @punctuation.delimiter)
 
 ;; ============================================================================
-;; Fallback - General identifiers (lowest priority)
+;; Fallback
 ;; ============================================================================
 
 (identifier) @variable
