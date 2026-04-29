@@ -12,7 +12,8 @@ type StringArray = string[];
     (type_expression
       (type_identifier
         (base_type
-          (primitive_keyword))))))
+          (qualified_identifier
+            (identifier)))))))
 
 ================================================================================
 VALID - Type definition with union type
@@ -29,10 +30,12 @@ type StringArray = string[] | string;
       (union_type
         (type_identifier
           (base_type
-            (primitive_keyword)))
+            (qualified_identifier
+              (identifier))))
         (type_identifier
           (base_type
-            (primitive_keyword)))))))
+            (qualified_identifier
+              (identifier))))))))
 
 ================================================================================
 VALID - Type definition with i64ersaction type
@@ -49,10 +52,12 @@ type StringArray = string[] & string;
       (intersection_type
         (type_identifier
           (base_type
-            (primitive_keyword)))
+            (qualified_identifier
+              (identifier))))
         (type_identifier
           (base_type
-            (primitive_keyword)))))))
+            (qualified_identifier
+              (identifier))))))))
 
 ================================================================================
 VALID - Type definition number

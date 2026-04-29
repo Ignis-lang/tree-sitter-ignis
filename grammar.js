@@ -49,7 +49,7 @@ const PRIMITIVE_TYPES = [
   'f64',
   'boolean',
   'char',
-  'string',
+  'str',
   'void',
   'unknown',
   'hex',

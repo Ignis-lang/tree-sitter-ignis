@@ -80,7 +80,8 @@ let message: string = match (name) {
     (type_expression
       (type_identifier
         (base_type
-          (primitive_keyword))))
+          (qualified_identifier
+            (identifier)))))
     (expression
       (match_expression
         (expression

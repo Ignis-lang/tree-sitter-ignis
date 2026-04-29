@@ -242,7 +242,8 @@ function main(...args: string[]): void {}
       (type_expression
         (type_identifier
           (base_type
-            (primitive_keyword)))))
+            (qualified_identifier
+              (identifier))))))
     (type_expression
       (type_identifier
         (base_type

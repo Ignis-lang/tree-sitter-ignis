@@ -41,7 +41,8 @@ let result: string = data |> process() |> format();
     type: (type_expression
       (type_identifier
         (base_type
-          (primitive_keyword))))
+          (qualified_identifier
+            (identifier)))))
     value: (expression
       (binary_expression
         left: (expression

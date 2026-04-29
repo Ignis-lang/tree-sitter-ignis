@@ -72,7 +72,8 @@ function main(): void {
         (type_expression
           (type_identifier
             (base_type
-              (primitive_keyword))))
+              (qualified_identifier
+                (identifier)))))
         (expression
           (primary_expression
             (directive_builtin_expression

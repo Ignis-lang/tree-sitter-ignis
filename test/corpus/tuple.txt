@@ -50,7 +50,8 @@ let triple: (string, i32, boolean) = ("hello", 42, true);
         (type_expression
           (type_identifier
             (base_type
-              (primitive_keyword))))
+              (qualified_identifier
+                (identifier)))))
         (type_expression
           (type_identifier
             (base_type

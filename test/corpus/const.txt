@@ -13,7 +13,8 @@ const HELLO_WORLD_LEN: i64 = 13;
     (type_expression
       (type_identifier
         (base_type
-          (primitive_keyword))))
+          (qualified_identifier
+            (identifier)))))
     (expression
       (primary_expression
         (literal
@@ -46,7 +47,8 @@ inline const HELLO_WORLD_LEN: i64 = 13;
       (type_expression
         (type_identifier
           (base_type
-            (primitive_keyword))))
+            (qualified_identifier
+              (identifier)))))
       (expression
         (primary_expression
           (literal

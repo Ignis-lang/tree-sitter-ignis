@@ -27,7 +27,8 @@ let z: *Foo = Foo::init();
     (type_expression
       (type_identifier
         (base_type
-          (primitive_keyword))))
+          (qualified_identifier
+            (identifier)))))
     (expression
       (primary_expression
         (literal

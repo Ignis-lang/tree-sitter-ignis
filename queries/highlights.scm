@@ -161,15 +161,7 @@
   "extern"
   "export"
   "new"
-  "is"
-  "with"
-  "typeof"
 ] @keyword
-
-[
-  "async"
-  "await"
-] @keyword.coroutine
 
 [
   (mutable_specifier)

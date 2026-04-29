@@ -21,12 +21,6 @@
 (block
   "}" @indent.end)
 
-(object_literal
-  "}" @indent.end)
-
-(typed_object_literal
-  "}" @indent.end)
-
 (else_clause) @indent.branch
 (else_if_clause) @indent.branch
 

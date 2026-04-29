@@ -79,7 +79,8 @@ record Pair {
       (type_expression
         (type_identifier
           (base_type
-            (primitive_keyword)))))
+            (qualified_identifier
+              (identifier))))))
     (record_method_declaration
       (identifier)
       (parameter_declaration

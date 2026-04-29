@@ -18,19 +18,22 @@ record User {
       (type_expression
         (type_identifier
           (base_type
-            (primitive_keyword)))))
+            (qualified_identifier
+              (identifier))))))
     (record_property_declaration
       (identifier)
       (type_expression
         (type_identifier
           (base_type
-            (primitive_keyword)))))
+            (qualified_identifier
+              (identifier))))))
     (record_method_declaration
       (identifier)
       (type_expression
         (type_identifier
           (base_type
-            (primitive_keyword)))))))
+            (qualified_identifier
+              (identifier))))))))
 
 ================================================================================
 VALID - Record declaration with generics
@@ -66,13 +69,15 @@ record User<T> {
       (type_expression
         (type_identifier
           (base_type
-            (primitive_keyword)))))
+            (qualified_identifier
+              (identifier))))))
     (record_method_declaration
       (identifier)
       (type_expression
         (type_identifier
           (base_type
-            (primitive_keyword)))))))
+            (qualified_identifier
+              (identifier))))))))
 
 ================================================================================
 VALID - Record property with default value
@@ -104,7 +109,8 @@ record User {
       (type_expression
         (type_identifier
           (base_type
-            (primitive_keyword)))))))
+            (qualified_identifier
+              (identifier))))))))
 
 ================================================================================
 VALID - Record with init and free
@@ -146,7 +152,8 @@ record User {
       (type_expression
         (type_identifier
           (base_type
-            (primitive_keyword)))))
+            (qualified_identifier
+              (identifier))))))
     (record_method_declaration
       (method_modifier)
       (identifier)
@@ -161,7 +168,8 @@ record User {
         (type_expression
           (type_identifier
             (base_type
-              (primitive_keyword)))))
+              (qualified_identifier
+                (identifier))))))
       (type_expression
         (type_identifier
           (base_type
@@ -252,14 +260,16 @@ record User {
       (type_expression
         (type_identifier
           (base_type
-            (primitive_keyword)))))
+            (qualified_identifier
+              (identifier))))))
     (record_method_declaration
       (method_modifier)
       (identifier)
       (type_expression
         (type_identifier
           (base_type
-            (primitive_keyword))))
+            (qualified_identifier
+              (identifier)))))
       (block
         (return_statement
           (expression
@@ -309,7 +319,8 @@ export record FFIConfig {
         (type_expression
           (type_identifier
             (base_type
-              (primitive_keyword)))))
+              (qualified_identifier
+                (identifier))))))
       (record_property_declaration
         (identifier)
         (type_expression
@@ -378,7 +389,8 @@ let user: User = User {
                 (type_expression
                   (type_identifier
                     (base_type
-                      (primitive_keyword))))
+                      (qualified_identifier
+                        (identifier)))))
                 (block
                   (return_statement
                     (expression

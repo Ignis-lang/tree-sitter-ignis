@@ -10,6 +10,7 @@
       gcc
       nodejs
       yarn
+      python3
     ];
   };
 }
