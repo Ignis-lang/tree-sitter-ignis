@@ -504,27 +504,11 @@ module.exports = grammar({
     directive_builtin_expression: ($) =>
       seq(
         '@',
-        field('name', $.directive_builtin_name),
+        field('name', $.identifier),
         optional($.generic_type_declaration),
         '(',
         commaSep(field('arguments', $.expression)),
         ')',
-      ),
-
-    directive_builtin_name: (_) =>
-      choice(
-        'configFlag',
-        'compileError',
-        'sizeOf',
-        'alignOf',
-        'typeName',
-        'bitCast',
-        'pointerCast',
-        'integerFromPointer',
-        'pointerFromInteger',
-        'panic',
-        'trap',
-        'unreachable',
       ),
 
     // <namespace> ::= <directive-attrs>? "namespace" <qualified-identifier> "{" <namespace-item>* "}"

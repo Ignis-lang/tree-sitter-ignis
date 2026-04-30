@@ -494,7 +494,7 @@
         "required": true,
         "types": [
           {
-            "type": "directive_builtin_name",
+            "type": "identifier",
             "named": true
           }
         ]
@@ -510,11 +510,6 @@
         }
       ]
     }
-  },
-  {
-    "type": "directive_builtin_name",
-    "named": true,
-    "fields": {}
   },
   {
     "type": "directive_declaration",
@@ -2932,10 +2927,6 @@
     "named": false
   },
   {
-    "type": "alignOf",
-    "named": false
-  },
-  {
     "type": "as",
     "named": false
   },
@@ -2960,10 +2951,6 @@
     "named": true
   },
   {
-    "type": "bitCast",
-    "named": false
-  },
-  {
     "type": "boolean",
     "named": false
   },
@@ -2978,14 +2965,6 @@
   {
     "type": "comment",
     "named": true
-  },
-  {
-    "type": "compileError",
-    "named": false
-  },
-  {
-    "type": "configFlag",
-    "named": false
   },
   {
     "type": "const",
@@ -3100,10 +3079,6 @@
     "named": false
   },
   {
-    "type": "integerFromPointer",
-    "named": false
-  },
-  {
     "type": "is",
     "named": false
   },
@@ -3136,18 +3111,6 @@
     "named": false
   },
   {
-    "type": "panic",
-    "named": false
-  },
-  {
-    "type": "pointerCast",
-    "named": false
-  },
-  {
-    "type": "pointerFromInteger",
-    "named": false
-  },
-  {
     "type": "private",
     "named": false
   },
@@ -3172,10 +3135,6 @@
     "named": false
   },
   {
-    "type": "sizeOf",
-    "named": false
-  },
-  {
     "type": "static",
     "named": false
   },
@@ -3196,19 +3155,11 @@
     "named": false
   },
   {
-    "type": "trap",
-    "named": false
-  },
-  {
     "type": "true",
     "named": false
   },
   {
     "type": "type",
-    "named": false
-  },
-  {
-    "type": "typeName",
     "named": false
   },
   {
@@ -3233,10 +3184,6 @@
   },
   {
     "type": "unknown",
-    "named": false
-  },
-  {
-    "type": "unreachable",
     "named": false
   },
   {

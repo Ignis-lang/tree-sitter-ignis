@@ -255,7 +255,7 @@
     name: (identifier) @function.method.call))
 
 (directive_builtin_expression
-  name: (directive_builtin_name) @function.builtin)
+  name: (identifier) @function.builtin)
 
 ;; ============================================================================
 ;; Variables, parameters, fields, and variants

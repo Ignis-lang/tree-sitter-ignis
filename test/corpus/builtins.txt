@@ -32,7 +32,7 @@ function main(): void {
         (expression
           (primary_expression
             (directive_builtin_expression
-              (directive_builtin_name)
+              (identifier)
               (expression
                 (primary_expression
                   (literal
@@ -46,7 +46,7 @@ function main(): void {
         (expression
           (primary_expression
             (directive_builtin_expression
-              (directive_builtin_name)
+              (identifier)
               (generic_type_declaration
                 (type_expression
                   (type_identifier
@@ -61,7 +61,7 @@ function main(): void {
         (expression
           (primary_expression
             (directive_builtin_expression
-              (directive_builtin_name)
+              (identifier)
               (generic_type_declaration
                 (type_expression
                   (type_identifier
@@ -77,7 +77,7 @@ function main(): void {
         (expression
           (primary_expression
             (directive_builtin_expression
-              (directive_builtin_name)
+              (identifier)
               (generic_type_declaration
                 (type_expression
                   (type_identifier
@@ -175,7 +175,7 @@ function castOps(value: f32, ptr: *mut u8): void {
         (expression
           (primary_expression
             (directive_builtin_expression
-              (directive_builtin_name)
+              (identifier)
               (generic_type_declaration
                 (type_expression
                   (type_identifier
@@ -193,7 +193,7 @@ function castOps(value: f32, ptr: *mut u8): void {
         (expression
           (primary_expression
             (directive_builtin_expression
-              (directive_builtin_name)
+              (identifier)
               (expression
                 (primary_expression
                   (identifier)))))))
@@ -208,7 +208,7 @@ function castOps(value: f32, ptr: *mut u8): void {
         (expression
           (primary_expression
             (directive_builtin_expression
-              (directive_builtin_name)
+              (identifier)
               (generic_type_declaration
                 (type_expression
                   (type_identifier
@@ -230,7 +230,7 @@ function castOps(value: f32, ptr: *mut u8): void {
         (expression
           (primary_expression
             (directive_builtin_expression
-              (directive_builtin_name)
+              (identifier)
               (generic_type_declaration
                 (type_expression
                   (type_identifier
@@ -293,7 +293,7 @@ function compileGuard(): void {
             (expression
               (primary_expression
                 (directive_builtin_expression
-                  (directive_builtin_name)
+                  (identifier)
                   (expression
                     (primary_expression
                       (literal
@@ -304,12 +304,12 @@ function compileGuard(): void {
               (expression
                 (primary_expression
                   (directive_builtin_expression
-                    (directive_builtin_name))))))))
+                    (identifier))))))))
       (expression_statement
         (expression
           (primary_expression
             (directive_builtin_expression
-              (directive_builtin_name)))))))
+              (identifier)))))))
   (function_declaration
     (identifier)
     (type_expression
@@ -321,7 +321,7 @@ function compileGuard(): void {
         (expression
           (primary_expression
             (directive_builtin_expression
-              (directive_builtin_name)
+              (identifier)
               (expression
                 (primary_expression
                   (literal

@@ -2162,7 +2162,7 @@
           "name": "name",
           "content": {
             "type": "SYMBOL",
-            "name": "directive_builtin_name"
+            "name": "identifier"
           }
         },
         {
@@ -2237,59 +2237,6 @@
         {
           "type": "STRING",
           "value": ")"
-        }
-      ]
-    },
-    "directive_builtin_name": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "configFlag"
-        },
-        {
-          "type": "STRING",
-          "value": "compileError"
-        },
-        {
-          "type": "STRING",
-          "value": "sizeOf"
-        },
-        {
-          "type": "STRING",
-          "value": "alignOf"
-        },
-        {
-          "type": "STRING",
-          "value": "typeName"
-        },
-        {
-          "type": "STRING",
-          "value": "bitCast"
-        },
-        {
-          "type": "STRING",
-          "value": "pointerCast"
-        },
-        {
-          "type": "STRING",
-          "value": "integerFromPointer"
-        },
-        {
-          "type": "STRING",
-          "value": "pointerFromInteger"
-        },
-        {
-          "type": "STRING",
-          "value": "panic"
-        },
-        {
-          "type": "STRING",
-          "value": "trap"
-        },
-        {
-          "type": "STRING",
-          "value": "unreachable"
         }
       ]
     },

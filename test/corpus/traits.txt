@@ -61,17 +61,14 @@ record Pair {
             (primitive_keyword))))
       (block
         (return_statement))))
+  (expression
+    (primary_expression
+      (directive_builtin_expression
+        (identifier)
+        (expression
+          (primary_expression
+            (identifier))))))
   (record_declaration
-    (directive_attrs
-      (directive_attr
-        (qualified_identifier
-          (identifier))
-        (directive_argument
-          (type_expression
-            (type_identifier
-              (base_type
-                (qualified_identifier
-                  (identifier))))))))
     (identifier)
     (record_property_declaration
       (property_modifier)
@@ -304,18 +301,17 @@ function main(): i32 {
                 (literal
                   (integer_literal
                     (decimal_literal))))))))))
+  (expression
+    (primary_expression
+      (directive_builtin_expression
+        (identifier)
+        (expression
+          (primary_expression
+            (identifier)))
+        (expression
+          (primary_expression
+            (identifier))))))
   (function_declaration
-    (directive_attrs
-      (directive_attr
-        (qualified_identifier
-          (identifier))
-        (directive_argument
-          (type_expression
-            (type_identifier
-              (base_type
-                (primitive_keyword)))))
-        (directive_argument
-          (mutable_specifier))))
     (identifier)
     (parameter_declaration
       (identifier)
