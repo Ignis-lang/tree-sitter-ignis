@@ -12,7 +12,7 @@ function main(): void {
 
 (source_file
   (function_declaration
-    (identifier)
+    name: (identifier)
     (type_expression
       (type_identifier
         (base_type
@@ -21,17 +21,17 @@ function main(): void {
       (for_statement
         (for_variable_declaration
           (identifier)
-          (expression
+          value: (expression
             (primary_expression
               (literal
                 (integer_literal
                   (decimal_literal))))))
         (expression
           (binary_expression
-            (expression
+            left: (expression
               (primary_expression
                 (identifier)))
-            (expression
+            right: (expression
               (primary_expression
                 (literal
                   (integer_literal
@@ -45,9 +45,9 @@ function main(): void {
           (expression_statement
             (expression
               (call_expression
-                (primary_expression
+                function: (primary_expression
                   (identifier))
-                (expression
+                arguments: (expression
                   (primary_expression
                     (vector_access_expression
                       (identifier)
@@ -148,3 +148,50 @@ function main(): void {
                               (primary_expression
                                 (identifier)))
                             (identifier)))))))))))))))
+
+================================================================================
+VALID - While let
+================================================================================
+
+function main(): void {
+  while (let Option::SOME(value) = nextValue()) {
+    println(value);
+  }
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_declaration
+    name: (identifier)
+    (type_expression
+      (type_identifier
+        (base_type
+          (primitive_keyword))))
+    (block
+      (while_statement
+        (let_condition
+          pattern: (let_pattern
+            (let_pattern_item
+              (expression
+                (call_expression
+                  function: (primary_expression
+                    (scoped_identifier
+                      identifier: (identifier)
+                      identifier: (identifier)))
+                  arguments: (expression
+                    (primary_expression
+                      (identifier)))))))
+          value: (expression
+            (call_expression
+              function: (primary_expression
+                (identifier)))))
+        (block
+          (expression_statement
+            (expression
+              (call_expression
+                function: (primary_expression
+                  (identifier))
+                arguments: (expression
+                  (primary_expression
+                    (identifier)))))))))))

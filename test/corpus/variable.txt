@@ -219,3 +219,59 @@ let rawAddress: CType::CVoidPtr = LibC::sbrk(sizeForSbrk as CType::IntPtrT);
                     (scoped_identifier
                       (identifier)
                       (identifier))))))))))))
+
+================================================================================
+VALID - Let else
+================================================================================
+
+function test(maybeValue: Option): i32 {
+  let Option::SOME(value) = maybeValue else {
+    return -1;
+  };
+
+  return value;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_declaration
+    name: (identifier)
+    (parameter_declaration
+      name: (identifier)
+      (type_expression
+        (type_identifier
+          (base_type
+            (qualified_identifier
+              (identifier))))))
+    (type_expression
+      (type_identifier
+        (base_type
+          (primitive_keyword))))
+    (block
+      (let_else_statement
+        pattern: (let_pattern
+          (let_pattern_item
+            (expression
+              (call_expression
+                function: (primary_expression
+                  (scoped_identifier
+                    identifier: (identifier)
+                    identifier: (identifier)))
+                arguments: (expression
+                  (primary_expression
+                    (identifier)))))))
+        value: (expression
+          (primary_expression
+            (identifier)))
+        alternative: (block
+          (return_statement
+            (expression
+              (primary_expression
+                (literal
+                  (integer_literal
+                    (decimal_literal))))))))
+      (return_statement
+        (expression
+          (primary_expression
+            (identifier)))))))

@@ -662,6 +662,29 @@ module.exports = grammar({
         ';',
       ),
 
+    // <let-condition> ::= "let" <pattern> "=" <expression>
+    let_condition: ($) =>
+      seq(
+        'let',
+        field('pattern', $.let_pattern),
+        '=',
+        field('value', $.expression),
+      ),
+
+    // <let-else> ::= "let" "mut"? <pattern> "=" <expression> "else" <block> ";"
+    let_else_statement: ($) =>
+      seq(
+        optional($.directive_attrs),
+        'let',
+        optional($.mutable_specifier),
+        field('pattern', $.let_pattern),
+        '=',
+        field('value', $.expression),
+        'else',
+        field('alternative', $.block),
+        ';',
+      ),
+
     // Special case for self parameter without type annotation
     self_parameter: ($) =>
       seq(
@@ -689,6 +712,7 @@ module.exports = grammar({
 
     _statement: ($) =>
       choice(
+        $.let_else_statement,
         $.variable_declaration,
         $.return_statement,
         $.break_statement,
@@ -716,18 +740,25 @@ module.exports = grammar({
       seq(
         'if',
         '(',
-        $.expression,
+        $._condition_expression,
         ')',
         $.block,
         repeat($.else_if_clause),
         optional($.else_clause),
       ),
 
-    else_if_clause: ($) => seq('else', 'if', '(', $.expression, ')', $.block),
+    else_if_clause: ($) => seq('else', 'if', '(', $._condition_expression, ')', $.block),
 
     else_clause: ($) => seq('else', $.block),
 
-    while_statement: ($) => seq('while', '(', $.expression, ')', $.block),
+    while_statement: ($) => seq('while', '(', $._condition_expression, ')', $.block),
+
+    _condition_expression: ($) =>
+      choice(
+        $.expression,
+        $.let_condition,
+        prec.left(seq($.let_condition, repeat1(seq('&&', $.expression)))),
+      ),
 
     for_of_statement: ($) =>
       seq(
@@ -862,6 +893,18 @@ module.exports = grammar({
       seq(
         $.pattern,
         repeat(seq('|', $.pattern)),
+      ),
+
+    let_pattern: ($) =>
+      seq(
+        $.let_pattern_item,
+        repeat(seq('|', $.let_pattern_item)),
+      ),
+
+    let_pattern_item: ($) =>
+      choice(
+        $._expression,
+        '_',
       ),
 
     pattern: ($) =>
