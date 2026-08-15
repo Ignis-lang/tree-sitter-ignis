@@ -1,0 +1,213 @@
+==================
+let declarations
+==================
+
+function main(): void {
+  let a: i32 = 1;
+  let mut b: i32 = 2;
+  let inferred = 3;
+  let mut uninitialized: i32;
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (variable_declaration
+        (identifier)
+        (primitive_type)
+        (integer_literal))
+      (variable_declaration
+        (mutable_specifier)
+        (identifier)
+        (primitive_type)
+        (integer_literal))
+      (variable_declaration
+        (identifier)
+        (integer_literal))
+      (variable_declaration
+        (mutable_specifier)
+        (identifier)
+        (primitive_type)))))
+
+==================
+assignment operators
+==================
+
+function main(): void {
+  x = 1;
+  x += 1;
+  x -= 1;
+  x *= 2;
+  x /= 2;
+  x %= 2;
+  x &= 1;
+  x |= 1;
+  x ^= 1;
+  x <<= 1;
+  x >>= 1;
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (expression_statement
+        (assignment_expression
+          (identifier)
+          (integer_literal)))
+      (expression_statement
+        (assignment_expression
+          (identifier)
+          (integer_literal)))
+      (expression_statement
+        (assignment_expression
+          (identifier)
+          (integer_literal)))
+      (expression_statement
+        (assignment_expression
+          (identifier)
+          (integer_literal)))
+      (expression_statement
+        (assignment_expression
+          (identifier)
+          (integer_literal)))
+      (expression_statement
+        (assignment_expression
+          (identifier)
+          (integer_literal)))
+      (expression_statement
+        (assignment_expression
+          (identifier)
+          (integer_literal)))
+      (expression_statement
+        (assignment_expression
+          (identifier)
+          (integer_literal)))
+      (expression_statement
+        (assignment_expression
+          (identifier)
+          (integer_literal)))
+      (expression_statement
+        (assignment_expression
+          (identifier)
+          (integer_literal)))
+      (expression_statement
+        (assignment_expression
+          (identifier)
+          (integer_literal))))))
+
+==================
+chained assignment is right associative
+==================
+
+function main(): void {
+  a = b = c;
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (expression_statement
+        (assignment_expression
+          (identifier)
+          (assignment_expression
+            (identifier)
+            (identifier)))))))
+
+==================
+member and index assignment
+==================
+
+function main(): void {
+  point.x = 1;
+  items[0] = 2;
+  a.b.c += 3;
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (expression_statement
+        (assignment_expression
+          (member_expression
+            (identifier)
+            (identifier))
+          (integer_literal)))
+      (expression_statement
+        (assignment_expression
+          (index_expression
+            (identifier)
+            (integer_literal))
+          (integer_literal)))
+      (expression_statement
+        (assignment_expression
+          (member_expression
+            (member_expression
+              (identifier)
+              (identifier))
+            (identifier))
+          (integer_literal))))))
+
+==================
+let else
+==================
+
+function main(): void {
+  let Some(x) = maybe() else {
+    return;
+  };
+  let mut Point(a, b) = origin() else {
+    return;
+  };
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (let_else_statement
+        (path_pattern
+          (identifier)
+          (path_pattern
+            (identifier)))
+        (call_expression
+          (identifier)
+          (arguments))
+        (block
+          (return_statement)))
+      (let_else_statement
+        (mutable_specifier)
+        (path_pattern
+          (identifier)
+          (path_pattern
+            (identifier))
+          (path_pattern
+            (identifier)))
+        (call_expression
+          (identifier)
+          (arguments))
+        (block
+          (return_statement))))))

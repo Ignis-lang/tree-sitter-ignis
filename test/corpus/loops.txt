@@ -1,0 +1,158 @@
+==================
+while loop
+==================
+
+function main(): void {
+  while (i < 10) {
+    i += 1;
+  }
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (while_statement
+        (binary_expression
+          (identifier)
+          (integer_literal))
+        (block
+          (expression_statement
+            (assignment_expression
+              (identifier)
+              (integer_literal))))))))
+
+==================
+while let loop
+==================
+
+function main(): void {
+  while (let Some(item) = queue.pop()) {
+    process(item);
+  }
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (while_statement
+        (let_condition
+          (path_pattern
+            (identifier)
+            (path_pattern
+              (identifier)))
+          (call_expression
+            (member_expression
+              (identifier)
+              (identifier))
+            (arguments)))
+        (block
+          (expression_statement
+            (call_expression
+              (identifier)
+              (arguments
+                (identifier)))))))))
+
+==================
+c style for
+==================
+
+function main(): void {
+  for (let i = 0; i < 10; i += 1) {
+    body(i);
+  }
+  for (let j: u32 = 0; j < len; j++) {
+    body(j);
+  }
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (for_statement
+        (for_initializer
+          (identifier)
+          (integer_literal))
+        (binary_expression
+          (identifier)
+          (integer_literal))
+        (assignment_expression
+          (identifier)
+          (integer_literal))
+        (block
+          (expression_statement
+            (call_expression
+              (identifier)
+              (arguments
+                (identifier))))))
+      (for_statement
+        (for_initializer
+          (identifier)
+          (primitive_type)
+          (integer_literal))
+        (binary_expression
+          (identifier)
+          (identifier))
+        (postfix_expression
+          (identifier))
+        (block
+          (expression_statement
+            (call_expression
+              (identifier)
+              (arguments
+                (identifier)))))))))
+
+==================
+for of
+==================
+
+function main(): void {
+  for (let item of items) {
+    process(item);
+  }
+  for (let value: i32 of numbers) {
+    process(value);
+  }
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (for_of_statement
+        (identifier)
+        (identifier)
+        (block
+          (expression_statement
+            (call_expression
+              (identifier)
+              (arguments
+                (identifier))))))
+      (for_of_statement
+        (identifier)
+        (primitive_type)
+        (identifier)
+        (block
+          (expression_statement
+            (call_expression
+              (identifier)
+              (arguments
+                (identifier)))))))))

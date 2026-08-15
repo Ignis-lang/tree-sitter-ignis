@@ -1,40 +1,49 @@
-; Imports
-(import_statement
-  (identifier) @local.definition.import)
+; Scopes
 
-; Functions and methods
+[
+  (source_file)
+  (block)
+  (function_declaration)
+  (method_declaration)
+  (lambda_expression)
+  (namespace_declaration)
+  (record_declaration)
+  (enum_declaration)
+  (trait_declaration)
+  (match_arm)
+  (for_statement)
+  (for_of_statement)
+] @local.scope
+
+; Definitions
+
 (function_declaration
   name: (identifier) @local.definition.function)
 
+(method_declaration
+  name: (identifier) @local.definition.method)
+
 (extern_function
   name: (identifier) @local.definition.function)
-
-(record_method_declaration
-  name: (identifier) @local.definition.method)
-
-(enum_method_declaration
-  name: (identifier) @local.definition.method)
-
-(trait_method_declaration
-  name: (identifier) @local.definition.method)
-
-; Variables
-(parameter_declaration
-  name: (identifier) @local.definition.var)
 
 (variable_declaration
   name: (identifier) @local.definition.var)
 
 (const_declaration
+  name: (identifier) @local.definition.constant)
+
+(parameter
+  name: (identifier) @local.definition.parameter)
+
+(for_initializer
   name: (identifier) @local.definition.var)
 
-(for_variable_declaration
-  (identifier) @local.definition.var)
-
 (for_of_statement
-  (identifier) @local.definition.var)
+  name: (identifier) @local.definition.var)
 
-; Types and namespaces
+(type_definition
+  name: (identifier) @local.definition.type)
+
 (record_declaration
   name: (identifier) @local.definition.type)
 
@@ -44,40 +53,21 @@
 (trait_declaration
   name: (identifier) @local.definition.type)
 
-(type_definition
-  (identifier) @local.definition.type)
+(type_parameter
+  name: (identifier) @local.definition.type)
+
+(import_name
+  name: (identifier) @local.definition.import)
+
+(import_name
+  alias: (identifier) @local.definition.import)
 
 (namespace_declaration
-  (qualified_identifier
-    (identifier) @local.definition.namespace))
+  name: (identifier) @local.definition.namespace)
 
-; Fields and variants
-(record_property_declaration
-  name: (identifier) @local.definition.field)
-
-(enum_variant_declaration
+(field_declaration
   name: (identifier) @local.definition.field)
 
 ; References
-(identifier) @local.reference
 
-; Scopes
-[
-  (source_file)
-  (block)
-  (function_declaration)
-  (lambda_expression)
-  (namespace_declaration)
-  (extern_declaration)
-  (record_declaration)
-  (enum_declaration)
-  (trait_declaration)
-  (for_statement)
-  (for_of_statement)
-  (while_statement)
-  (if_statement)
-  (else_clause)
-  (else_if_clause)
-  (match_expression)
-  (match_arm)
-] @local.scope
+(identifier) @local.reference

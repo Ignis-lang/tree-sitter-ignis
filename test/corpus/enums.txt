@@ -1,0 +1,109 @@
+==================
+plain enum
+==================
+
+enum Direction {
+  NORTH,
+  SOUTH,
+  EAST,
+  WEST,
+}
+
+---
+
+(source_file
+  (enum_declaration
+    (identifier)
+    (enum_body
+      (enum_variant
+        (identifier))
+      (enum_variant
+        (identifier))
+      (enum_variant
+        (identifier))
+      (enum_variant
+        (identifier)))))
+
+==================
+enum with payloads
+==================
+
+enum Shape {
+  Circle(f64),
+  Rectangle(f64, f64),
+  Empty,
+}
+
+---
+
+(source_file
+  (enum_declaration
+    (identifier)
+    (enum_body
+      (enum_variant
+        (identifier)
+        (primitive_type))
+      (enum_variant
+        (identifier)
+        (primitive_type)
+        (primitive_type))
+      (enum_variant
+        (identifier)))))
+
+==================
+generic enum with method and field
+==================
+
+enum Option<T> {
+  Some(T),
+  None,
+
+  cached: boolean;
+
+  isSome(&self): boolean {
+    return match (self) {
+      Option::Some(_) -> true,
+      Option::None -> false,
+    };
+  }
+}
+
+---
+
+(source_file
+  (enum_declaration
+    (identifier)
+    (type_parameters
+      (type_parameter
+        (identifier)))
+    (enum_body
+      (enum_variant
+        (identifier)
+        (identifier))
+      (enum_variant
+        (identifier))
+      (field_declaration
+        (identifier)
+        (primitive_type))
+      (method_declaration
+        (identifier)
+        (parameters
+          (self_parameter))
+        (primitive_type)
+        (block
+          (return_statement
+            (match_expression
+              (self_expression)
+              (match_arm
+                (path_pattern
+                  (scoped_identifier
+                    (identifier)
+                    (identifier))
+                  (wildcard_pattern))
+                (boolean_literal))
+              (match_arm
+                (path_pattern
+                  (scoped_identifier
+                    (identifier)
+                    (identifier)))
+                (boolean_literal)))))))))

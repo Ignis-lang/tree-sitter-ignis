@@ -1,327 +1,270 @@
-================================================================================
-VALID - numeric literals
-================================================================================
-1
+==================
+numeric literals
+==================
 
-20
-1.0
-3.34
-1_000_000
--1
--1_000
--3.5
+function main(): void {
+  let a: i32 = 42;
+  let b: i32 = 1_000_000;
+  let c: u32 = 0xFF2a;
+  let d: u8 = 0b1010;
+  let e: f64 = 3.14;
+  let f: f64 = 1_000.500_1;
+  let g: i32 = -5;
+}
 
---------------------------------------------------------------------------------
-
-(source_file
-  (expression
-    (primary_expression
-      (literal
-        (integer_literal
-          (decimal_literal)))))
-  (expression
-    (primary_expression
-      (literal
-        (integer_literal
-          (decimal_literal)))))
-  (expression
-    (primary_expression
-      (literal
-        (float_literal))))
-  (expression
-    (primary_expression
-      (literal
-        (float_literal))))
-  (expression
-    (primary_expression
-      (literal
-        (integer_literal
-          (decimal_literal)))))
-  (expression
-    (primary_expression
-      (literal
-        (integer_literal
-          (decimal_literal)))))
-  (expression
-    (primary_expression
-      (literal
-        (integer_literal
-          (decimal_literal)))))
-  (expression
-    (primary_expression
-      (literal
-        (float_literal)))))
-
-================================================================================
-VALID - string literals
-================================================================================
-
-"hello"
-"world"
-"hello world"
-"hello\nworld"
-"hello\tworld"
-"hello\rworld"
-"hello\"world"
-"hello\\world"
-
---------------------------------------------------------------------------------
+---
 
 (source_file
-  (expression
-    (primary_expression
-      (literal
-        (string_literal))))
-  (expression
-    (primary_expression
-      (literal
-        (string_literal))))
-  (expression
-    (primary_expression
-      (literal
-        (string_literal))))
-  (expression
-    (primary_expression
-      (literal
-        (string_literal))))
-  (expression
-    (primary_expression
-      (literal
-        (string_literal))))
-  (expression
-    (primary_expression
-      (literal
-        (string_literal))))
-  (expression
-    (primary_expression
-      (literal
-        (string_literal))))
-  (expression
-    (primary_expression
-      (literal
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (variable_declaration
+        (identifier)
+        (primitive_type)
+        (integer_literal))
+      (variable_declaration
+        (identifier)
+        (primitive_type)
+        (integer_literal))
+      (variable_declaration
+        (identifier)
+        (primitive_type)
+        (hex_literal))
+      (variable_declaration
+        (identifier)
+        (primitive_type)
+        (binary_literal))
+      (variable_declaration
+        (identifier)
+        (primitive_type)
+        (float_literal))
+      (variable_declaration
+        (identifier)
+        (primitive_type)
+        (float_literal))
+      (variable_declaration
+        (identifier)
+        (primitive_type)
+        (unary_expression
+          (integer_literal))))))
+
+==================
+string literals and escapes
+==================
+
+function main(): void {
+  let s: str = "hello";
+  let e: str = "line\nbreak \"quoted\" \\ \0";
+  let empty: str = "";
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (variable_declaration
+        (identifier)
+        (primitive_type)
+        (string_literal))
+      (variable_declaration
+        (identifier)
+        (primitive_type)
+        (string_literal
+          (escape_sequence)
+          (escape_sequence)
+          (escape_sequence)
+          (escape_sequence)
+          (escape_sequence)))
+      (variable_declaration
+        (identifier)
+        (primitive_type)
         (string_literal)))))
 
-================================================================================
-VALID - boolean literals
-================================================================================
+==================
+char literals
+==================
 
-true
-false
+function main(): void {
+  let a: char = 'a';
+  let n: char = '\n';
+  let q: char = '\'';
+  let u: char = '\u{1F600}';
+  let z: char = 'ñ';
+}
 
---------------------------------------------------------------------------------
-
-(source_file
-  (expression
-    (primary_expression
-      (literal
-        (boolean_literal))))
-  (expression
-    (primary_expression
-      (literal
-        (boolean_literal)))))
-
-================================================================================
-VALID - null literal
-================================================================================
-
-null
-
---------------------------------------------------------------------------------
+---
 
 (source_file
-  (expression
-    (primary_expression
-      (literal
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (variable_declaration
+        (identifier)
+        (primitive_type)
+        (char_literal))
+      (variable_declaration
+        (identifier)
+        (primitive_type)
+        (char_literal))
+      (variable_declaration
+        (identifier)
+        (primitive_type)
+        (char_literal))
+      (variable_declaration
+        (identifier)
+        (primitive_type)
+        (char_literal))
+      (variable_declaration
+        (identifier)
+        (primitive_type)
+        (char_literal)))))
+
+==================
+boolean and null
+==================
+
+function main(): void {
+  let t: boolean = true;
+  let f: boolean = false;
+  let n: *i32 = null;
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (variable_declaration
+        (identifier)
+        (primitive_type)
+        (boolean_literal))
+      (variable_declaration
+        (identifier)
+        (primitive_type)
+        (boolean_literal))
+      (variable_declaration
+        (identifier)
+        (pointer_type
+          (primitive_type))
         (null_literal)))))
 
-================================================================================
-VALID - array literal
-================================================================================
+==================
+atom literals
+==================
 
-[]
-[1, 2, 3]
-[1, 2, 3, 4, 5]
-[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
-["hello", "world"]
+function main(): void {
+  let status: atom = :ok;
+  let err: atom = :not_found;
+}
 
---------------------------------------------------------------------------------
+---
 
 (source_file
-  (expression
-    (primary_expression
-      (literal
-        (vector_literal))))
-  (expression
-    (primary_expression
-      (literal
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (variable_declaration
+        (identifier)
+        (primitive_type)
+        (atom_literal
+          (identifier)))
+      (variable_declaration
+        (identifier)
+        (primitive_type)
+        (atom_literal
+          (identifier))))))
+
+==================
+vector literals
+==================
+
+function main(): void {
+  let v: i32[] = [1, 2, 3];
+  let empty: i32[] = [];
+  let trailing: i32[] = [1, 2, 3,];
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (variable_declaration
+        (identifier)
+        (array_type
+          (primitive_type))
         (vector_literal
-          (expression
-            (primary_expression
-              (literal
-                (integer_literal
-                  (decimal_literal)))))
-          (expression
-            (primary_expression
-              (literal
-                (integer_literal
-                  (decimal_literal)))))
-          (expression
-            (primary_expression
-              (literal
-                (integer_literal
-                  (decimal_literal)))))))))
-  (expression
-    (primary_expression
-      (literal
+          (integer_literal)
+          (integer_literal)
+          (integer_literal)))
+      (variable_declaration
+        (identifier)
+        (array_type
+          (primitive_type))
+        (vector_literal))
+      (variable_declaration
+        (identifier)
+        (array_type
+          (primitive_type))
         (vector_literal
-          (expression
-            (primary_expression
-              (literal
-                (integer_literal
-                  (decimal_literal)))))
-          (expression
-            (primary_expression
-              (literal
-                (integer_literal
-                  (decimal_literal)))))
-          (expression
-            (primary_expression
-              (literal
-                (integer_literal
-                  (decimal_literal)))))
-          (expression
-            (primary_expression
-              (literal
-                (integer_literal
-                  (decimal_literal)))))
-          (expression
-            (primary_expression
-              (literal
-                (integer_literal
-                  (decimal_literal)))))))))
-  (expression
-    (primary_expression
-      (literal
-        (vector_literal
-          (expression
-            (primary_expression
-              (literal
-                (integer_literal
-                  (decimal_literal)))))
-          (expression
-            (primary_expression
-              (literal
-                (integer_literal
-                  (decimal_literal)))))
-          (expression
-            (primary_expression
-              (literal
-                (integer_literal
-                  (decimal_literal)))))
-          (expression
-            (primary_expression
-              (literal
-                (integer_literal
-                  (decimal_literal)))))
-          (expression
-            (primary_expression
-              (literal
-                (integer_literal
-                  (decimal_literal)))))
-          (expression
-            (primary_expression
-              (literal
-                (integer_literal
-                  (decimal_literal)))))
-          (expression
-            (primary_expression
-              (literal
-                (integer_literal
-                  (decimal_literal)))))
-          (expression
-            (primary_expression
-              (literal
-                (integer_literal
-                  (decimal_literal)))))
-          (expression
-            (primary_expression
-              (literal
-                (integer_literal
-                  (decimal_literal)))))
-          (expression
-            (primary_expression
-              (literal
-                (integer_literal
-                  (decimal_literal)))))))))
-  (expression
-    (primary_expression
-      (literal
-        (vector_literal
-          (expression
-            (primary_expression
-              (literal
-                (integer_literal
-                  (decimal_literal)))))
-          (expression
-            (primary_expression
-              (literal
-                (integer_literal
-                  (decimal_literal)))))
-          (expression
-            (primary_expression
-              (literal
-                (integer_literal
-                  (decimal_literal)))))
-          (expression
-            (primary_expression
-              (literal
-                (integer_literal
-                  (decimal_literal)))))
-          (expression
-            (primary_expression
-              (literal
-                (integer_literal
-                  (decimal_literal)))))
-          (expression
-            (primary_expression
-              (literal
-                (integer_literal
-                  (decimal_literal)))))
-          (expression
-            (primary_expression
-              (literal
-                (integer_literal
-                  (decimal_literal)))))
-          (expression
-            (primary_expression
-              (literal
-                (integer_literal
-                  (decimal_literal)))))
-          (expression
-            (primary_expression
-              (literal
-                (integer_literal
-                  (decimal_literal)))))
-          (expression
-            (primary_expression
-              (literal
-                (integer_literal
-                  (decimal_literal)))))
-          (expression
-            (primary_expression
-              (literal
-                (integer_literal
-                  (decimal_literal)))))))))
-  (expression
-    (primary_expression
-      (literal
-        (vector_literal
-          (expression
-            (primary_expression
-              (literal
-                (string_literal))))
-          (expression
-            (primary_expression
-              (literal
-                (string_literal)))))))))
+          (integer_literal)
+          (integer_literal)
+          (integer_literal))))))
+
+==================
+tuple and unit expressions
+==================
+
+function main(): void {
+  let pair = (1, "two");
+  let triple = (1, 2, 3);
+  let unit = ();
+  let grouped = (1 + 2) * 3;
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (variable_declaration
+        (identifier)
+        (tuple_expression
+          (integer_literal)
+          (string_literal)))
+      (variable_declaration
+        (identifier)
+        (tuple_expression
+          (integer_literal)
+          (integer_literal)
+          (integer_literal)))
+      (variable_declaration
+        (identifier)
+        (unit_expression))
+      (variable_declaration
+        (identifier)
+        (binary_expression
+          (group_expression
+            (binary_expression
+              (integer_literal)
+              (integer_literal)))
+          (integer_literal))))))

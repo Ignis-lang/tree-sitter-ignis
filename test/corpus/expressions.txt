@@ -1,0 +1,399 @@
+==================
+unary and postfix operators
+==================
+
+function main(): void {
+  let a = -x;
+  let b = !flag;
+  let c = ~bits;
+  let d = ++counter;
+  let e = --counter;
+  counter++;
+  counter--;
+  let f = risky()!;
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (variable_declaration
+        (identifier)
+        (unary_expression
+          (identifier)))
+      (variable_declaration
+        (identifier)
+        (unary_expression
+          (identifier)))
+      (variable_declaration
+        (identifier)
+        (unary_expression
+          (identifier)))
+      (variable_declaration
+        (identifier)
+        (unary_expression
+          (identifier)))
+      (variable_declaration
+        (identifier)
+        (unary_expression
+          (identifier)))
+      (expression_statement
+        (postfix_expression
+          (identifier)))
+      (expression_statement
+        (postfix_expression
+          (identifier)))
+      (variable_declaration
+        (identifier)
+        (postfix_expression
+          (call_expression
+            (identifier)
+            (arguments)))))))
+
+==================
+reference and dereference
+==================
+
+function main(): void {
+  let r = &value;
+  let m = &mut value;
+  let d = *pointer;
+  let dd = **indirect;
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (variable_declaration
+        (identifier)
+        (reference_expression
+          (identifier)))
+      (variable_declaration
+        (identifier)
+        (reference_expression
+          (mutable_specifier)
+          (identifier)))
+      (variable_declaration
+        (identifier)
+        (dereference_expression
+          (identifier)))
+      (variable_declaration
+        (identifier)
+        (dereference_expression
+          (dereference_expression
+            (identifier)))))))
+
+==================
+binary operator precedence
+==================
+
+function main(): void {
+  let a = 1 + 2 * 3;
+  let b = 1 << 2 | 3 & 4;
+  let c = x < y == y < z;
+  let d = a && b || c;
+  let e = 10 % 3 - 2 / 1;
+  let f = n ^ m | k;
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (variable_declaration
+        (identifier)
+        (binary_expression
+          (integer_literal)
+          (binary_expression
+            (integer_literal)
+            (integer_literal))))
+      (variable_declaration
+        (identifier)
+        (binary_expression
+          (binary_expression
+            (integer_literal)
+            (integer_literal))
+          (binary_expression
+            (integer_literal)
+            (integer_literal))))
+      (variable_declaration
+        (identifier)
+        (binary_expression
+          (binary_expression
+            (identifier)
+            (identifier))
+          (binary_expression
+            (identifier)
+            (identifier))))
+      (variable_declaration
+        (identifier)
+        (binary_expression
+          (binary_expression
+            (identifier)
+            (identifier))
+          (identifier)))
+      (variable_declaration
+        (identifier)
+        (binary_expression
+          (binary_expression
+            (integer_literal)
+            (integer_literal))
+          (binary_expression
+            (integer_literal)
+            (integer_literal))))
+      (variable_declaration
+        (identifier)
+        (binary_expression
+          (binary_expression
+            (identifier)
+            (identifier))
+          (identifier))))))
+
+==================
+ternary expressions
+==================
+
+function main(): void {
+  let a = cond ? 1 : 2;
+  let b = x > 0 ? "pos" : x < 0 ? "neg" : "zero";
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (variable_declaration
+        (identifier)
+        (ternary_expression
+          (identifier)
+          (integer_literal)
+          (integer_literal)))
+      (variable_declaration
+        (identifier)
+        (ternary_expression
+          (binary_expression
+            (identifier)
+            (integer_literal))
+          (string_literal)
+          (ternary_expression
+            (binary_expression
+              (identifier)
+              (integer_literal))
+            (string_literal)
+            (string_literal)))))))
+
+==================
+pipe operator
+==================
+
+function main(): void {
+  let result = value |> validate |> transform |> save;
+  let mixed = raw |> parse(_) |> handle;
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (variable_declaration
+        (identifier)
+        (binary_expression
+          (binary_expression
+            (binary_expression
+              (identifier)
+              (identifier))
+            (identifier))
+          (identifier)))
+      (variable_declaration
+        (identifier)
+        (binary_expression
+          (binary_expression
+            (identifier)
+            (call_expression
+              (identifier)
+              (arguments
+                (identifier))))
+          (identifier))))))
+
+==================
+member access and calls
+==================
+
+function main(): void {
+  let a = point.x;
+  let b = deep.nested.field;
+  let c = list.length();
+  let d = builder.with(1).with(2).build();
+  let e = matrix[0][1];
+  let f = items[i].name;
+  let g = std::mem::size();
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (variable_declaration
+        (identifier)
+        (member_expression
+          (identifier)
+          (identifier)))
+      (variable_declaration
+        (identifier)
+        (member_expression
+          (member_expression
+            (identifier)
+            (identifier))
+          (identifier)))
+      (variable_declaration
+        (identifier)
+        (call_expression
+          (member_expression
+            (identifier)
+            (identifier))
+          (arguments)))
+      (variable_declaration
+        (identifier)
+        (call_expression
+          (member_expression
+            (call_expression
+              (member_expression
+                (call_expression
+                  (member_expression
+                    (identifier)
+                    (identifier))
+                  (arguments
+                    (integer_literal)))
+                (identifier))
+              (arguments
+                (integer_literal)))
+            (identifier))
+          (arguments)))
+      (variable_declaration
+        (identifier)
+        (index_expression
+          (index_expression
+            (identifier)
+            (integer_literal))
+          (integer_literal)))
+      (variable_declaration
+        (identifier)
+        (member_expression
+          (index_expression
+            (identifier)
+            (identifier))
+          (identifier)))
+      (variable_declaration
+        (identifier)
+        (call_expression
+          (scoped_identifier
+            (identifier)
+            (identifier)
+            (identifier))
+          (arguments))))))
+
+==================
+builtin expressions
+==================
+
+function main(): void {
+  let size = @sizeOf<i32>();
+  let p = @cast<*mut u8>(ptr);
+  @assert(x > 0);
+  let flag = @configFlag(fastMath);
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (variable_declaration
+        (identifier)
+        (builtin_expression
+          (identifier)
+          (type_arguments
+            (primitive_type))
+          (arguments)))
+      (variable_declaration
+        (identifier)
+        (builtin_expression
+          (identifier)
+          (type_arguments
+            (pointer_type
+              (mutable_type
+                (primitive_type))))
+          (arguments
+            (identifier))))
+      (expression_statement
+        (builtin_expression
+          (identifier)
+          (arguments
+            (binary_expression
+              (identifier)
+              (integer_literal)))))
+      (variable_declaration
+        (identifier)
+        (builtin_expression
+          (identifier)
+          (arguments
+            (identifier)))))))
+
+==================
+capture expressions
+==================
+
+function main(): void {
+  let a = @move handler;
+  let b = @ref shared;
+  let c = @refMut state;
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (variable_declaration
+        (identifier)
+        (capture_expression
+          (identifier)))
+      (variable_declaration
+        (identifier)
+        (capture_expression
+          (identifier)))
+      (variable_declaration
+        (identifier)
+        (capture_expression
+          (identifier))))))

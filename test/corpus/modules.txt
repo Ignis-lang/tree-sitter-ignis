@@ -1,0 +1,164 @@
+==================
+imports
+==================
+
+import Option from "std::option";
+import Vec, HashMap as Map from "std::collections";
+import _ from "std::prelude";
+
+---
+
+(source_file
+  (import_statement
+    (import_name
+      (identifier))
+    (string_literal))
+  (import_statement
+    (import_name
+      (identifier))
+    (import_name
+      (identifier)
+      (identifier))
+    (string_literal))
+  (import_statement
+    (import_name
+      (identifier))
+    (string_literal)))
+
+==================
+exports
+==================
+
+export function api(): void {
+}
+
+export const LIMIT: i32 = 100;
+
+export record Config {
+  debug: boolean;
+}
+
+export helper;
+export first, second;
+export Reader, Writer from "std::io";
+
+---
+
+(source_file
+  (export_declaration
+    (function_declaration
+      (identifier)
+      (parameters)
+      (primitive_type)
+      (block)))
+  (export_declaration
+    (const_declaration
+      (identifier)
+      (primitive_type)
+      (integer_literal)))
+  (export_declaration
+    (record_declaration
+      (identifier)
+      (declaration_body
+        (field_declaration
+          (identifier)
+          (primitive_type)))))
+  (export_declaration
+    (identifier))
+  (export_declaration
+    (identifier)
+    (identifier))
+  (export_declaration
+    (identifier)
+    (identifier)
+    (string_literal)))
+
+==================
+namespaces
+==================
+
+namespace Math {
+  const PI: f64 = 3.14159;
+
+  function square(x: f64): f64 {
+    return x * x;
+  }
+}
+
+namespace App::Core::Internal {
+  namespace Nested {
+    type Id = u64;
+  }
+}
+
+---
+
+(source_file
+  (namespace_declaration
+    (identifier)
+    (namespace_body
+      (const_declaration
+        (identifier)
+        (primitive_type)
+        (float_literal))
+      (function_declaration
+        (identifier)
+        (parameters
+          (parameter
+            (identifier)
+            (primitive_type)))
+        (primitive_type)
+        (block
+          (return_statement
+            (binary_expression
+              (identifier)
+              (identifier)))))))
+  (namespace_declaration
+    (scoped_identifier
+      (identifier)
+      (identifier)
+      (identifier))
+    (namespace_body
+      (namespace_declaration
+        (identifier)
+        (namespace_body
+          (type_definition
+            (identifier)
+            (primitive_type)))))))
+
+==================
+extern blocks
+==================
+
+extern std::io {
+  function printf(fmt: str): i32;
+  function malloc(size: u64): *void;
+  const EOF: i32;
+}
+
+---
+
+(source_file
+  (extern_declaration
+    (scoped_identifier
+      (identifier)
+      (identifier))
+    (extern_body
+      (extern_function
+        (identifier)
+        (parameters
+          (parameter
+            (identifier)
+            (primitive_type)))
+        (primitive_type))
+      (extern_function
+        (identifier)
+        (parameters
+          (parameter
+            (identifier)
+            (primitive_type)))
+        (pointer_type
+          (primitive_type)))
+      (extern_const
+        (identifier)
+        (primitive_type)))))

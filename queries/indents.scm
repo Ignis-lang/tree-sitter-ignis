@@ -1,34 +1,25 @@
 [
   (block)
-  (function_declaration)
-  (record_declaration)
-  (enum_declaration)
-  (trait_declaration)
-  (namespace_declaration)
-  (extern_declaration)
+  (declaration_body)
+  (enum_body)
+  (extern_body)
+  (namespace_body)
+  (conditional_body)
+  (record_init_body)
+  (arguments)
+  (parameters)
+  (vector_literal)
   (match_expression)
-  (if_statement)
-  (else_clause)
-  (else_if_clause)
-  (for_statement)
-  (for_of_statement)
-  (while_statement)
-  (lambda_expression)
-  (object_literal)
-  (typed_object_literal)
 ] @indent.begin
 
-(block
-  "}" @indent.end)
-
-(else_clause) @indent.branch
-(else_if_clause) @indent.branch
-
-(_ "[" "]" @indent.end) @indent
-(_ "{" "}" @indent.end) @indent
-(_ "(" ")" @indent.end) @indent
+[
+  "}"
+  ")"
+  "]"
+] @indent.branch
 
 [
+  (string_literal)
   (comment)
   (doc_comment)
-] @indent.ignore
+] @indent.auto

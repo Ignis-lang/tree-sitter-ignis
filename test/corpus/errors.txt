@@ -1,0 +1,43 @@
+==================
+top level bare expression is rejected
+:error
+==================
+
+1 + 2;
+
+---
+
+==================
+missing semicolon after expression statement
+:error
+==================
+
+function main(): void {
+  call()
+}
+
+---
+
+==================
+if without parentheses is rejected
+:error
+==================
+
+function main(): void {
+  if x > 0 {
+    body();
+  }
+}
+
+---
+
+==================
+range operators are not part of the language
+:error
+==================
+
+function main(): void {
+  let r = 0..10;
+}
+
+---

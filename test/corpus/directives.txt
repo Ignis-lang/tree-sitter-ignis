@@ -1,0 +1,264 @@
+==================
+attributes on declarations
+==================
+
+@test
+function checkSum(): void {
+}
+
+@deprecated("use newApi instead")
+function oldApi(): void {
+}
+
+@extension(Vec, mut)
+function push(item: i32): void {
+}
+
+@lang(try)
+enum Result<T, E> {
+  Ok(T),
+  Err(E),
+}
+
+---
+
+(source_file
+  (attribute
+    (identifier))
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block))
+  (attribute
+    (identifier)
+    (attribute_arguments
+      (string_literal)))
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block))
+  (attribute
+    (identifier)
+    (attribute_arguments
+      (identifier)
+      (mutable_specifier)))
+  (function_declaration
+    (identifier)
+    (parameters
+      (parameter
+        (identifier)
+        (primitive_type)))
+    (primitive_type)
+    (block))
+  (attribute
+    (identifier)
+    (attribute_arguments
+      (identifier)))
+  (enum_declaration
+    (identifier)
+    (type_parameters
+      (type_parameter
+        (identifier))
+      (type_parameter
+        (identifier)))
+    (enum_body
+      (enum_variant
+        (identifier)
+        (identifier))
+      (enum_variant
+        (identifier)
+        (identifier)))))
+
+==================
+attribute paths and named arguments
+==================
+
+@std::lint::allow(unusedVariable)
+function quiet(): void {
+}
+
+@externName("c_main")
+function main(): void {
+}
+
+---
+
+(source_file
+  (attribute
+    (scoped_identifier
+      (identifier)
+      (identifier)
+      (identifier))
+    (attribute_arguments
+      (identifier)))
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block))
+  (attribute
+    (identifier)
+    (attribute_arguments
+      (string_literal)))
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block)))
+
+==================
+conditional compilation blocks
+==================
+
+@if(@platform("linux") && @debug()) {
+  const BACKEND: str = "epoll-debug";
+} @else {
+  const BACKEND: str = "generic";
+}
+
+@ifelse(@release()) {
+  function log(msg: str): void {
+  }
+} @else {
+  function log(msg: str): void {
+    print(msg);
+  }
+}
+
+---
+
+(source_file
+  (conditional_block
+    (binary_expression
+      (builtin_expression
+        (identifier)
+        (arguments
+          (string_literal)))
+      (builtin_expression
+        (identifier)
+        (arguments)))
+    (conditional_body
+      (const_declaration
+        (identifier)
+        (primitive_type)
+        (string_literal)))
+    (conditional_body
+      (const_declaration
+        (identifier)
+        (primitive_type)
+        (string_literal))))
+  (conditional_block
+    (builtin_expression
+      (identifier)
+      (arguments))
+    (conditional_body
+      (function_declaration
+        (identifier)
+        (parameters
+          (parameter
+            (identifier)
+            (primitive_type)))
+        (primitive_type)
+        (block)))
+    (conditional_body
+      (function_declaration
+        (identifier)
+        (parameters
+          (parameter
+            (identifier)
+            (primitive_type)))
+        (primitive_type)
+        (block
+          (expression_statement
+            (call_expression
+              (identifier)
+              (arguments
+                (identifier)))))))))
+
+==================
+conditional statements inside blocks
+==================
+
+function main(): void {
+  @if(@debug()) {
+    trace("enter");
+  }
+
+  @configFlag(fastMath)
+  let precision: i32 = 2;
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (conditional_block
+        (builtin_expression
+          (identifier)
+          (arguments))
+        (conditional_body
+          (expression_statement
+            (call_expression
+              (identifier)
+              (arguments
+                (string_literal))))))
+      (attribute
+        (identifier)
+        (attribute_arguments
+          (identifier)))
+      (variable_declaration
+        (identifier)
+        (primitive_type)
+        (integer_literal)))))
+
+==================
+doc comments
+==================
+
+/// Outer line doc.
+/// Second line.
+function documented(): void {
+}
+
+/** Block doc. */
+record Described {
+  //! Inner doc.
+  field: i32;
+}
+
+// Plain comment.
+/* Plain block. */
+function plain(): void {
+}
+
+---
+
+(source_file
+  (doc_comment)
+  (doc_comment)
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block))
+  (doc_comment)
+  (record_declaration
+    (identifier)
+    (declaration_body
+      (doc_comment)
+      (field_declaration
+        (identifier)
+        (primitive_type))))
+  (comment)
+  (comment)
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block)))

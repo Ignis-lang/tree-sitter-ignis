@@ -1,377 +1,109 @@
-================================================================================
-VALID - Lang trait attributes on records
-================================================================================
+==================
+trait with required and default methods
+==================
 
-@implements(Drop)
-record FileHandle {
-  public fd: i32;
+trait Printable {
+  print(&self): void;
 
-  drop(&mut self): void {
-    return;
+  debug(&self): str {
+    return "debug";
   }
 }
 
-@implements(Clone)
-record Buffer {
-  public data: string;
-
-  clone(&self): Buffer {
-    return Buffer { data: self.data };
-  }
-}
-
-@implements(Copy)
-record Pair {
-  public x: i32;
-  public y: i32;
-}
-
---------------------------------------------------------------------------------
-
-(source_file
-  (record_declaration
-    (directive_attrs
-      (directive_attr
-        (qualified_identifier
-          (identifier))
-        (directive_argument
-          (type_expression
-            (type_identifier
-              (base_type
-                (qualified_identifier
-                  (identifier))))))))
-    (identifier)
-    (record_property_declaration
-      (property_modifier)
-      (identifier)
-      (type_expression
-        (type_identifier
-          (base_type
-            (primitive_keyword)))))
-    (record_method_declaration
-      (identifier)
-      (parameter_declaration
-        (self_parameter
-          (variable_modifiers
-            (reference_operator)
-            (mutable_specifier))))
-      (type_expression
-        (type_identifier
-          (base_type
-            (primitive_keyword))))
-      (block
-        (return_statement))))
-  (expression
-    (primary_expression
-      (directive_builtin_expression
-        (identifier)
-        (expression
-          (primary_expression
-            (identifier))))))
-  (record_declaration
-    (identifier)
-    (record_property_declaration
-      (property_modifier)
-      (identifier)
-      (type_expression
-        (type_identifier
-          (base_type
-            (qualified_identifier
-              (identifier))))))
-    (record_method_declaration
-      (identifier)
-      (parameter_declaration
-        (self_parameter
-          (variable_modifiers
-            (reference_operator))))
-      (type_expression
-        (type_identifier
-          (base_type
-            (qualified_identifier
-              (identifier)))))
-      (block
-        (return_statement
-          (expression
-            (primary_expression
-              (literal
-                (typed_object_literal
-                  (qualified_identifier
-                    (identifier))
-                  (object_literal
-                    (identifier)
-                    (expression
-                      (get_expression
-                        (property_access
-                          (expression
-                            (primary_expression
-                              (self_expression)))
-                          (identifier)))))))))))))
-  (record_declaration
-    (directive_attrs
-      (directive_attr
-        (qualified_identifier
-          (identifier))
-        (directive_argument
-          (type_expression
-            (type_identifier
-              (base_type
-                (qualified_identifier
-                  (identifier))))))))
-    (identifier)
-    (record_property_declaration
-      (property_modifier)
-      (identifier)
-      (type_expression
-        (type_identifier
-          (base_type
-            (primitive_keyword)))))
-    (record_property_declaration
-      (property_modifier)
-      (identifier)
-      (type_expression
-        (type_identifier
-          (base_type
-            (primitive_keyword)))))))
-
-================================================================================
-VALID - User-defined trait declarations
-================================================================================
-
-trait Describable {
-  describe(&self): i32;
-
-  code(&self): i32 {
-    return 0;
-  }
-}
-
-namespace Demo {
-  trait Incrementable {
-    increment(&mut self): void;
-  }
-}
-
-@implements(Describable)
-record Person {
-  public age: i32;
-
-  describe(&self): i32 {
-    return self.age;
-  }
-}
-
---------------------------------------------------------------------------------
+---
 
 (source_file
   (trait_declaration
     (identifier)
-    (trait_method_declaration
-      (identifier)
-      (self_parameter
-        (variable_modifiers
-          (reference_operator)))
-      (type_expression
-        (type_identifier
-          (base_type
-            (primitive_keyword)))))
-    (trait_method_declaration
-      (identifier)
-      (self_parameter
-        (variable_modifiers
-          (reference_operator)))
-      (type_expression
-        (type_identifier
-          (base_type
-            (primitive_keyword))))
-      (block
-        (return_statement
-          (expression
-            (primary_expression
-              (literal
-                (integer_literal
-                  (decimal_literal)))))))))
-  (namespace_declaration
-    (qualified_identifier
-      (identifier))
-    (namespace_item
-      (trait_declaration
+    (declaration_body
+      (method_declaration
         (identifier)
-        (trait_method_declaration
-          (identifier)
-          (self_parameter
-            (variable_modifiers
-              (reference_operator)
-              (mutable_specifier)))
-          (type_expression
-            (type_identifier
-              (base_type
-                (primitive_keyword))))))))
-  (record_declaration
-    (directive_attrs
-      (directive_attr
-        (qualified_identifier
-          (identifier))
-        (directive_argument
-          (type_expression
-            (type_identifier
-              (base_type
-                (qualified_identifier
-                  (identifier))))))))
-    (identifier)
-    (record_property_declaration
-      (property_modifier)
-      (identifier)
-      (type_expression
-        (type_identifier
-          (base_type
-            (primitive_keyword)))))
-    (record_method_declaration
-      (identifier)
-      (parameter_declaration
-        (self_parameter
-          (variable_modifiers
-            (reference_operator))))
-      (type_expression
-        (type_identifier
-          (base_type
-            (primitive_keyword))))
-      (block
-        (return_statement
-          (expression
-            (get_expression
-              (property_access
-                (expression
-                  (primary_expression
-                    (self_expression)))
-                (identifier)))))))))
+        (parameters
+          (self_parameter))
+        (primitive_type))
+      (method_declaration
+        (identifier)
+        (parameters
+          (self_parameter))
+        (primitive_type)
+        (block
+          (return_statement
+            (string_literal)))))))
 
-================================================================================
-VALID - Extension methods
-================================================================================
+==================
+trait with function keyword and generics
+==================
 
-@extension(i32)
-function doubled(value: i32): i32 {
-  return value * 2;
+trait Serializer<T> {
+  function serialize(&self, value: T): str;
+  function deserialize<U>(&self, raw: str): U;
 }
 
-@extension(i32, mut)
-function addSelf(value: i32): i32 {
-  return value + value;
-}
-
-function main(): i32 {
-  let mut x: i32 = 21;
-  let y: i32 = x.doubled();
-  return y.addSelf();
-}
-
---------------------------------------------------------------------------------
+---
 
 (source_file
-  (function_declaration
-    (directive_attrs
-      (directive_attr
-        (qualified_identifier
-          (identifier))
-        (directive_argument
-          (type_expression
-            (type_identifier
-              (base_type
-                (primitive_keyword)))))))
+  (trait_declaration
     (identifier)
-    (parameter_declaration
-      (identifier)
-      (type_expression
-        (type_identifier
-          (base_type
-            (primitive_keyword)))))
-    (type_expression
-      (type_identifier
-        (base_type
-          (primitive_keyword))))
-    (block
-      (return_statement
-        (expression
-          (binary_expression
-            (expression
-              (primary_expression
-                (identifier)))
-            (expression
-              (primary_expression
-                (literal
-                  (integer_literal
-                    (decimal_literal))))))))))
-  (expression
-    (primary_expression
-      (directive_builtin_expression
+    (type_parameters
+      (type_parameter
+        (identifier)))
+    (declaration_body
+      (method_declaration
         (identifier)
-        (expression
-          (primary_expression
+        (parameters
+          (self_parameter)
+          (parameter
+            (identifier)
             (identifier)))
-        (expression
-          (primary_expression
-            (identifier))))))
-  (function_declaration
-    (identifier)
-    (parameter_declaration
-      (identifier)
-      (type_expression
-        (type_identifier
-          (base_type
-            (primitive_keyword)))))
-    (type_expression
-      (type_identifier
-        (base_type
-          (primitive_keyword))))
-    (block
-      (return_statement
-        (expression
-          (binary_expression
-            (expression
-              (primary_expression
-                (identifier)))
-            (expression
-              (primary_expression
-                (identifier))))))))
-  (function_declaration
-    (identifier)
-    (type_expression
-      (type_identifier
-        (base_type
-          (primitive_keyword))))
-    (block
-      (variable_declaration
-        (mutable_specifier)
+        (primitive_type))
+      (method_declaration
         (identifier)
-        (type_expression
-          (type_identifier
-            (base_type
-              (primitive_keyword))))
-        (expression
-          (primary_expression
-            (literal
-              (integer_literal
-                (decimal_literal))))))
-      (variable_declaration
+        (type_parameters
+          (type_parameter
+            (identifier)))
+        (parameters
+          (self_parameter)
+          (parameter
+            (identifier)
+            (primitive_type)))
+        (identifier)))))
+
+==================
+trait implementation via attribute
+==================
+
+@implements(Printable)
+record Document {
+  title: str;
+
+  print(&self): void {
+    show(self.title);
+  }
+}
+
+---
+
+(source_file
+  (attribute
+    (identifier)
+    (attribute_arguments
+      (identifier)))
+  (record_declaration
+    (identifier)
+    (declaration_body
+      (field_declaration
         (identifier)
-        (type_expression
-          (type_identifier
-            (base_type
-              (primitive_keyword))))
-        (expression
-          (get_expression
-            (method_call_expression
-              (property_access
-                (expression
-                  (primary_expression
-                    (identifier)))
-                (identifier))))))
-      (return_statement
-        (expression
-          (get_expression
-            (method_call_expression
-              (property_access
-                (expression
-                  (primary_expression
-                    (identifier)))
-                (identifier)))))))))
+        (primitive_type))
+      (method_declaration
+        (identifier)
+        (parameters
+          (self_parameter))
+        (primitive_type)
+        (block
+          (expression_statement
+            (call_expression
+              (identifier)
+              (arguments
+                (member_expression
+                  (self_expression)
+                  (identifier))))))))))

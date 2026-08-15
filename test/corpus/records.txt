@@ -1,0 +1,201 @@
+==================
+record declaration
+==================
+
+record Point {
+  x: f64;
+  y: f64 = 0.0;
+}
+
+---
+
+(source_file
+  (record_declaration
+    (identifier)
+    (declaration_body
+      (field_declaration
+        (identifier)
+        (primitive_type))
+      (field_declaration
+        (identifier)
+        (primitive_type)
+        (float_literal)))))
+
+==================
+generic record with methods
+==================
+
+record Container<T: Clone> {
+  value: T;
+  private count: i32;
+
+  static empty(): Container<T> {
+    return Container<T> { count: 0 };
+  }
+
+  get(&self): T {
+    return self.value;
+  }
+
+  set(&mut self, value: T): void {
+    self.value = value;
+  }
+}
+
+---
+
+(source_file
+  (record_declaration
+    (identifier)
+    (type_parameters
+      (type_parameter
+        (identifier)
+        (constraint_list
+          (identifier))))
+    (declaration_body
+      (field_declaration
+        (identifier)
+        (identifier))
+      (field_declaration
+        (member_modifier)
+        (identifier)
+        (primitive_type))
+      (method_declaration
+        (member_modifier)
+        (identifier)
+        (parameters)
+        (generic_type
+          (identifier)
+          (type_arguments
+            (identifier)))
+        (block
+          (return_statement
+            (record_init
+              (identifier)
+              (type_arguments
+                (identifier))
+              (record_init_body
+                (record_init_field
+                  (identifier)
+                  (integer_literal)))))))
+      (method_declaration
+        (identifier)
+        (parameters
+          (self_parameter))
+        (identifier)
+        (block
+          (return_statement
+            (member_expression
+              (self_expression)
+              (identifier)))))
+      (method_declaration
+        (identifier)
+        (parameters
+          (self_parameter
+            (mutable_specifier))
+          (parameter
+            (identifier)
+            (identifier)))
+        (primitive_type)
+        (block
+          (expression_statement
+            (assignment_expression
+              (member_expression
+                (self_expression)
+                (identifier))
+              (identifier))))))))
+
+==================
+record init expression
+==================
+
+function main(): void {
+  let p = Point { x: 1.0, y: 2.0 };
+  let empty = Empty {};
+  let generic = Container<i32> { value: 1, count: 0 };
+  let scoped = Geometry::Point { x: 0.0, y: 0.0 };
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (variable_declaration
+        (identifier)
+        (record_init
+          (identifier)
+          (record_init_body
+            (record_init_field
+              (identifier)
+              (float_literal))
+            (record_init_field
+              (identifier)
+              (float_literal)))))
+      (variable_declaration
+        (identifier)
+        (record_init
+          (identifier)
+          (record_init_body)))
+      (variable_declaration
+        (identifier)
+        (record_init
+          (identifier)
+          (type_arguments
+            (primitive_type))
+          (record_init_body
+            (record_init_field
+              (identifier)
+              (integer_literal))
+            (record_init_field
+              (identifier)
+              (integer_literal)))))
+      (variable_declaration
+        (identifier)
+        (record_init
+          (scoped_identifier
+            (identifier)
+            (identifier))
+          (record_init_body
+            (record_init_field
+              (identifier)
+              (float_literal))
+            (record_init_field
+              (identifier)
+              (float_literal))))))))
+
+==================
+record with attributes
+==================
+
+@packed
+@aligned(8)
+record Header {
+  @deprecated
+  magic: u32;
+  version: u16;
+}
+
+---
+
+(source_file
+  (attribute
+    (identifier))
+  (attribute
+    (identifier)
+    (attribute_arguments
+      (integer_literal)))
+  (record_declaration
+    (identifier)
+    (declaration_body
+      (attribute
+        (identifier))
+      (field_declaration
+        (identifier)
+        (primitive_type))
+      (field_declaration
+        (identifier)
+        (primitive_type)))))

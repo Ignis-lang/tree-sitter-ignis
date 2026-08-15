@@ -1,281 +1,192 @@
-================================================================================
-VALID - Break statement
-================================================================================
+==================
+if else chains
+==================
 
-function test(): void {
-  for (let i = 0; i < 10; i++) {
-    if (i == 5) {
-      break;
-    }
-  }
-}
-
---------------------------------------------------------------------------------
-
-(source_file
-  (function_declaration
-    name: (identifier)
-    (type_expression
-      (type_identifier
-        (base_type
-          (primitive_keyword))))
-    (block
-      (for_statement
-        (for_variable_declaration
-          (identifier)
-          value: (expression
-            (primary_expression
-              (literal
-                (integer_literal
-                  (decimal_literal))))))
-        (expression
-          (binary_expression
-            left: (expression
-              (primary_expression
-                (identifier)))
-            right: (expression
-              (primary_expression
-                (literal
-                  (integer_literal
-                    (decimal_literal)))))))
-        (expression
-          (suffix_unary_expression
-            (expression
-              (primary_expression
-                (identifier)))))
-        (block
-          (if_statement
-            (expression
-              (binary_expression
-                left: (expression
-                  (primary_expression
-                    (identifier)))
-                right: (expression
-                  (primary_expression
-                    (literal
-                      (integer_literal
-                        (decimal_literal)))))))
-            (block
-              (break_statement))))))))
-
-================================================================================
-VALID - Continue statement
-================================================================================
-
-function test(): void {
-  for (let i = 0; i < 10; i++) {
-    if (i == 5) {
-      continue;
-    }
-  }
-}
-
---------------------------------------------------------------------------------
-
-(source_file
-  (function_declaration
-    name: (identifier)
-    (type_expression
-      (type_identifier
-        (base_type
-          (primitive_keyword))))
-    (block
-      (for_statement
-        (for_variable_declaration
-          (identifier)
-          value: (expression
-            (primary_expression
-              (literal
-                (integer_literal
-                  (decimal_literal))))))
-        (expression
-          (binary_expression
-            left: (expression
-              (primary_expression
-                (identifier)))
-            right: (expression
-              (primary_expression
-                (literal
-                  (integer_literal
-                    (decimal_literal)))))))
-        (expression
-          (suffix_unary_expression
-            (expression
-              (primary_expression
-                (identifier)))))
-        (block
-          (if_statement
-            (expression
-              (binary_expression
-                left: (expression
-                  (primary_expression
-                    (identifier)))
-                right: (expression
-                  (primary_expression
-                    (literal
-                      (integer_literal
-                        (decimal_literal)))))))
-            (block
-              (continue_statement))))))))
-
-================================================================================
-VALID - Else if clause
-================================================================================
-
-function test(x: i32): i32 {
-  if (x < 0) {
-    return -1;
-  } else if (x == 0) {
-    return 0;
-  } else if (x > 100) {
-    return 100;
+function main(): void {
+  if (a > 0) {
+    positive();
+  } else if (a < 0) {
+    negative();
   } else {
-    return x;
+    zero();
   }
 }
 
---------------------------------------------------------------------------------
+---
 
 (source_file
   (function_declaration
-    name: (identifier)
-    (parameter_declaration
-      name: (identifier)
-      (type_expression
-        (type_identifier
-          (base_type
-            (primitive_keyword)))))
-    (type_expression
-      (type_identifier
-        (base_type
-          (primitive_keyword))))
+    (identifier)
+    (parameters)
+    (primitive_type)
     (block
       (if_statement
-        (expression
-          (binary_expression
-            left: (expression
-              (primary_expression
-                (identifier)))
-            right: (expression
-              (primary_expression
-                (literal
-                  (integer_literal
-                    (decimal_literal)))))))
+        (binary_expression
+          (identifier)
+          (integer_literal))
         (block
-          (return_statement
-            (expression
-              (primary_expression
-                (literal
-                  (integer_literal
-                    (decimal_literal)))))))
-        (else_if_clause
-          (expression
-            (binary_expression
-              left: (expression
-                (primary_expression
-                  (identifier)))
-              right: (expression
-                (primary_expression
-                  (literal
-                    (integer_literal
-                      (decimal_literal)))))))
-          (block
-            (return_statement
-              (expression
-                (primary_expression
-                  (literal
-                    (integer_literal
-                      (decimal_literal))))))))
-        (else_if_clause
-          (expression
-            (binary_expression
-              left: (expression
-                (primary_expression
-                  (identifier)))
-              right: (expression
-                (primary_expression
-                  (literal
-                    (integer_literal
-                      (decimal_literal)))))))
-          (block
-            (return_statement
-              (expression
-                (primary_expression
-                  (literal
-                    (integer_literal
-                      (decimal_literal))))))))
+          (expression_statement
+            (call_expression
+              (identifier)
+              (arguments))))
         (else_clause
-          (block
-            (return_statement
-              (expression
-                (primary_expression
-                  (identifier))))))))))
+          (if_statement
+            (binary_expression
+              (identifier)
+              (integer_literal))
+            (block
+              (expression_statement
+                (call_expression
+                  (identifier)
+                  (arguments))))
+            (else_clause
+              (block
+                (expression_statement
+                  (call_expression
+                    (identifier)
+                    (arguments)))))))))))
 
-================================================================================
-VALID - If let with condition chain
-================================================================================
+==================
+if let condition
+==================
 
-function test(maybeValue: Option): i32 {
-  if (let Option::SOME(value) = maybeValue && value > 10) {
-    return value;
+function main(): void {
+  if (let Some(x) = maybe()) {
+    use(x);
   }
-
-  return 0;
 }
 
---------------------------------------------------------------------------------
+---
 
 (source_file
   (function_declaration
-    name: (identifier)
-    (parameter_declaration
-      name: (identifier)
-      (type_expression
-        (type_identifier
-          (base_type
-            (qualified_identifier
-              (identifier))))))
-    (type_expression
-      (type_identifier
-        (base_type
-          (primitive_keyword))))
+    (identifier)
+    (parameters)
+    (primitive_type)
     (block
       (if_statement
         (let_condition
-          pattern: (let_pattern
-            (let_pattern_item
-              (expression
-                (call_expression
-                  function: (primary_expression
-                    (scoped_identifier
-                      identifier: (identifier)
-                      identifier: (identifier)))
-                  arguments: (expression
-                    (primary_expression
-                      (identifier)))))))
-          value: (expression
-            (binary_expression
-              left: (expression
-                (primary_expression
-                  (identifier)))
-              right: (expression
-                (binary_expression
-                  left: (expression
-                    (primary_expression
-                      (identifier)))
-                  right: (expression
-                    (primary_expression
-                      (literal
-                        (integer_literal
-                          (decimal_literal))))))))))
+          (path_pattern
+            (identifier)
+            (path_pattern
+              (identifier)))
+          (call_expression
+            (identifier)
+            (arguments)))
         (block
-          (return_statement
-            (expression
-              (primary_expression
-                (identifier))))))
+          (expression_statement
+            (call_expression
+              (identifier)
+              (arguments
+                (identifier)))))))))
+
+==================
+break and continue
+==================
+
+function main(): void {
+  while (true) {
+    if (done) {
+      break;
+    }
+    continue;
+  }
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (while_statement
+        (boolean_literal)
+        (block
+          (if_statement
+            (identifier)
+            (block
+              (break_statement)))
+          (continue_statement))))))
+
+==================
+defer statement
+==================
+
+function main(): void {
+  defer close(file);
+  defer @free(ptr);
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (defer_statement
+        (call_expression
+          (identifier)
+          (arguments
+            (identifier))))
+      (defer_statement
+        (builtin_expression
+          (identifier)
+          (arguments
+            (identifier)))))))
+
+==================
+bare block statement
+==================
+
+function main(): void {
+  {
+    let scoped: i32 = 1;
+  }
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (block
+        (variable_declaration
+          (identifier)
+          (primitive_type)
+          (integer_literal))))))
+
+==================
+return forms
+==================
+
+function value(): i32 {
+  return 42;
+}
+
+function nothing(): void {
+  return;
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
       (return_statement
-        (expression
-          (primary_expression
-            (literal
-              (integer_literal
-                (decimal_literal)))))))))
+        (integer_literal))))
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (return_statement))))

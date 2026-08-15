@@ -1,0 +1,245 @@
+==================
+basic function
+==================
+
+function add(a: i32, b: i32): i32 {
+  return a + b;
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters
+      (parameter
+        (identifier)
+        (primitive_type))
+      (parameter
+        (identifier)
+        (primitive_type)))
+    (primitive_type)
+    (block
+      (return_statement
+        (binary_expression
+          (identifier)
+          (identifier))))))
+
+==================
+generic function with constraints
+==================
+
+function max<T: Comparable>(a: T, b: T): T {
+  return a > b ? a : b;
+}
+
+function combine<T, U: Clone & Debug>(a: T, b: U): T {
+  return a;
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (type_parameters
+      (type_parameter
+        (identifier)
+        (constraint_list
+          (identifier))))
+    (parameters
+      (parameter
+        (identifier)
+        (identifier))
+      (parameter
+        (identifier)
+        (identifier)))
+    (identifier)
+    (block
+      (return_statement
+        (ternary_expression
+          (binary_expression
+            (identifier)
+            (identifier))
+          (identifier)
+          (identifier)))))
+  (function_declaration
+    (identifier)
+    (type_parameters
+      (type_parameter
+        (identifier))
+      (type_parameter
+        (identifier)
+        (constraint_list
+          (identifier)
+          (identifier))))
+    (parameters
+      (parameter
+        (identifier)
+        (identifier))
+      (parameter
+        (identifier)
+        (identifier)))
+    (identifier)
+    (block
+      (return_statement
+        (identifier)))))
+
+==================
+inline functions
+==================
+
+inline function fast(): void {
+}
+
+inline(always) function always(): void {
+}
+
+inline(never) function never(): void {
+}
+
+---
+
+(source_file
+  (function_declaration
+    (inline_specifier)
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block))
+  (function_declaration
+    (inline_specifier)
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block))
+  (function_declaration
+    (inline_specifier)
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block)))
+
+==================
+lambda expressions
+==================
+
+function main(): void {
+  let add = (a: i32, b: i32): i32 -> a + b;
+  let block = (x: i32): void -> {
+    process(x);
+  };
+  let thunk = (): i32 -> 42;
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (variable_declaration
+        (identifier)
+        (lambda_expression
+          (parameters
+            (parameter
+              (identifier)
+              (primitive_type))
+            (parameter
+              (identifier)
+              (primitive_type)))
+          (primitive_type)
+          (binary_expression
+            (identifier)
+            (identifier))))
+      (variable_declaration
+        (identifier)
+        (lambda_expression
+          (parameters
+            (parameter
+              (identifier)
+              (primitive_type)))
+          (primitive_type)
+          (block
+            (expression_statement
+              (call_expression
+                (identifier)
+                (arguments
+                  (identifier)))))))
+      (variable_declaration
+        (identifier)
+        (lambda_expression
+          (parameters)
+          (primitive_type)
+          (integer_literal))))))
+
+==================
+generic calls
+==================
+
+function main(): void {
+  let a = identity<i32>(1);
+  let b = pair<i32, str>(1, "two");
+  let nested = wrap<Vec<i32>>(v);
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (variable_declaration
+        (identifier)
+        (call_expression
+          (identifier)
+          (type_arguments
+            (primitive_type))
+          (arguments
+            (integer_literal))))
+      (variable_declaration
+        (identifier)
+        (call_expression
+          (identifier)
+          (type_arguments
+            (primitive_type)
+            (primitive_type))
+          (arguments
+            (integer_literal)
+            (string_literal))))
+      (variable_declaration
+        (identifier)
+        (call_expression
+          (identifier)
+          (type_arguments
+            (generic_type
+              (identifier)
+              (type_arguments
+                (primitive_type))))
+          (arguments
+            (identifier)))))))
+
+==================
+parameter attributes
+==================
+
+function log(@takes message: str): void {
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters
+      (parameter
+        (attribute
+          (identifier))
+        (identifier)
+        (primitive_type)))
+    (primitive_type)
+    (block)))

@@ -1,0 +1,296 @@
+==================
+type aliases
+==================
+
+type Id = u64;
+type Callback = (i32, str) -> void;
+type Pair<T, U> = Map<T, U>;
+
+---
+
+(source_file
+  (type_definition
+    (identifier)
+    (primitive_type))
+  (type_definition
+    (identifier)
+    (function_type
+      (primitive_type)
+      (primitive_type)
+      (primitive_type)))
+  (type_definition
+    (identifier)
+    (type_parameters
+      (type_parameter
+        (identifier))
+      (type_parameter
+        (identifier)))
+    (generic_type
+      (identifier)
+      (type_arguments
+        (identifier)
+        (identifier)))))
+
+==================
+type modifiers
+==================
+
+function main(): void {
+  let r: &i32 = &x;
+  let m: &mut i32 = &mut x;
+  let p: *i32 = null;
+  let pm: *mut i32 = null;
+  let mt: mut i32 = 0;
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (variable_declaration
+        (identifier)
+        (reference_type
+          (primitive_type))
+        (reference_expression
+          (identifier)))
+      (variable_declaration
+        (identifier)
+        (reference_type
+          (mutable_type
+            (primitive_type)))
+        (reference_expression
+          (mutable_specifier)
+          (identifier)))
+      (variable_declaration
+        (identifier)
+        (pointer_type
+          (primitive_type))
+        (null_literal))
+      (variable_declaration
+        (identifier)
+        (pointer_type
+          (mutable_type
+            (primitive_type)))
+        (null_literal))
+      (variable_declaration
+        (identifier)
+        (mutable_type
+          (primitive_type))
+        (integer_literal)))))
+
+==================
+array types
+==================
+
+function main(): void {
+  let slice: i32[] = [];
+  let fixed: i32[4] = [0, 0, 0, 0];
+  let matrix: f64[4][4] = zeros();
+  let refslice: &str[] = names;
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (variable_declaration
+        (identifier)
+        (array_type
+          (primitive_type))
+        (vector_literal))
+      (variable_declaration
+        (identifier)
+        (array_type
+          (primitive_type)
+          (integer_literal))
+        (vector_literal
+          (integer_literal)
+          (integer_literal)
+          (integer_literal)
+          (integer_literal)))
+      (variable_declaration
+        (identifier)
+        (array_type
+          (array_type
+            (primitive_type)
+            (integer_literal))
+          (integer_literal))
+        (call_expression
+          (identifier)
+          (arguments)))
+      (variable_declaration
+        (identifier)
+        (reference_type
+          (array_type
+            (primitive_type)))
+        (identifier)))))
+
+==================
+generic types
+==================
+
+function main(): void {
+  let v: Vec<i32> = empty();
+  let nested: Vec<Vec<str>> = empty();
+  let deep: Map<str, Vec<Option<i32>>> = empty();
+  let scoped: std::Vec<i32> = empty();
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (variable_declaration
+        (identifier)
+        (generic_type
+          (identifier)
+          (type_arguments
+            (primitive_type)))
+        (call_expression
+          (identifier)
+          (arguments)))
+      (variable_declaration
+        (identifier)
+        (generic_type
+          (identifier)
+          (type_arguments
+            (generic_type
+              (identifier)
+              (type_arguments
+                (primitive_type)))))
+        (call_expression
+          (identifier)
+          (arguments)))
+      (variable_declaration
+        (identifier)
+        (generic_type
+          (identifier)
+          (type_arguments
+            (primitive_type)
+            (generic_type
+              (identifier)
+              (type_arguments
+                (generic_type
+                  (identifier)
+                  (type_arguments
+                    (primitive_type)))))))
+        (call_expression
+          (identifier)
+          (arguments)))
+      (variable_declaration
+        (identifier)
+        (generic_type
+          (scoped_identifier
+            (identifier)
+            (identifier))
+          (type_arguments
+            (primitive_type)))
+        (call_expression
+          (identifier)
+          (arguments))))))
+
+==================
+function types
+==================
+
+function main(): void {
+  let f: (i32) -> i32 = double;
+  let g: (i32, str) -> void = log;
+  let h: () -> i32[] = list;
+  let higher: ((i32) -> i32) -> i32 = apply;
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (variable_declaration
+        (identifier)
+        (function_type
+          (primitive_type)
+          (primitive_type))
+        (identifier))
+      (variable_declaration
+        (identifier)
+        (function_type
+          (primitive_type)
+          (primitive_type)
+          (primitive_type))
+        (identifier))
+      (variable_declaration
+        (identifier)
+        (function_type
+          (array_type
+            (primitive_type)))
+        (identifier))
+      (variable_declaration
+        (identifier)
+        (function_type
+          (function_type
+            (primitive_type)
+            (primitive_type))
+          (primitive_type))
+        (identifier)))))
+
+==================
+cast expressions
+==================
+
+function main(): void {
+  let a = x as i32;
+  let b = ptr as *mut u8;
+  let c = value as f64 as i64;
+  let d = (a + b) as u32;
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (variable_declaration
+        (identifier)
+        (cast_expression
+          (identifier)
+          (primitive_type)))
+      (variable_declaration
+        (identifier)
+        (cast_expression
+          (identifier)
+          (pointer_type
+            (mutable_type
+              (primitive_type)))))
+      (variable_declaration
+        (identifier)
+        (cast_expression
+          (cast_expression
+            (identifier)
+            (primitive_type))
+          (primitive_type)))
+      (variable_declaration
+        (identifier)
+        (cast_expression
+          (group_expression
+            (binary_expression
+              (identifier)
+              (identifier)))
+          (primitive_type))))))

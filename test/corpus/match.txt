@@ -1,302 +1,292 @@
-================================================================================
-VALID - Match be statement
-================================================================================
+==================
+match with literal patterns
+==================
 
-match (name) {
-  "John" -> "Hi John!",
-  "Mary" -> { return "Hi Mary!"; },
-  n -> "Hi " + n + "!",
+function main(): void {
+  let label: str = match (code) {
+    0 -> "zero",
+    1 | 2 -> "small",
+    -1 -> "negative",
+    _ -> "other",
+  };
 }
 
---------------------------------------------------------------------------------
+---
 
 (source_file
-  (expression
-    (match_expression
-      (expression
-        (primary_expression
-          (identifier)))
-      (match_arm
-        (match_pattern
-          (pattern
-            (expression
-              (primary_expression
-                (literal
-                  (string_literal))))))
-        (expression
-          (primary_expression
-            (literal
-              (string_literal)))))
-      (match_arm
-        (match_pattern
-          (pattern
-            (expression
-              (primary_expression
-                (literal
-                  (string_literal))))))
-        (block
-          (return_statement
-            (expression
-              (primary_expression
-                (literal
-                  (string_literal)))))))
-      (match_arm
-        (match_pattern
-          (pattern
-            (expression
-              (primary_expression
-                (identifier)))))
-        (expression
-          (binary_expression
-            (expression
-              (binary_expression
-                (expression
-                  (primary_expression
-                    (literal
-                      (string_literal))))
-                (expression
-                  (primary_expression
-                    (identifier)))))
-            (expression
-              (primary_expression
-                (literal
-                  (string_literal))))))))))
-
-================================================================================
-VALID - Match be expression
-================================================================================
-
-let message: string = match (name) {
-  "John" -> "Hi John!",
-  "Mary" -> { return "Hi Mary!"; },
-  n -> "Hi " + n + "!",
-};
-
---------------------------------------------------------------------------------
-
-(source_file
-  (variable_declaration
+  (function_declaration
     (identifier)
-    (type_expression
-      (type_identifier
-        (base_type
-          (qualified_identifier
-            (identifier)))))
-    (expression
-      (match_expression
-        (expression
-          (primary_expression
-            (identifier)))
-        (match_arm
-          (match_pattern
-            (pattern
-              (expression
-                (primary_expression
-                  (literal
-                    (string_literal))))))
-          (expression
-            (primary_expression
-              (literal
-                (string_literal)))))
-        (match_arm
-          (match_pattern
-            (pattern
-              (expression
-                (primary_expression
-                  (literal
-                    (string_literal))))))
-          (block
-            (return_statement
-              (expression
-                (primary_expression
-                  (literal
-                    (string_literal)))))))
-        (match_arm
-          (match_pattern
-            (pattern
-              (expression
-                (primary_expression
-                  (identifier)))))
-          (expression
+    (parameters)
+    (primitive_type)
+    (block
+      (variable_declaration
+        (identifier)
+        (primitive_type)
+        (match_expression
+          (identifier)
+          (match_arm
+            (literal_pattern
+              (integer_literal))
+            (string_literal))
+          (match_arm
+            (or_pattern
+              (literal_pattern
+                (integer_literal))
+              (literal_pattern
+                (integer_literal)))
+            (string_literal))
+          (match_arm
+            (literal_pattern
+              (integer_literal))
+            (string_literal))
+          (match_arm
+            (wildcard_pattern)
+            (string_literal)))))))
+
+==================
+match with variant patterns
+==================
+
+function main(): void {
+  let area: f64 = match (shape) {
+    Shape::Circle(r) -> 3.14 * r * r,
+    Shape::Square(a, b) -> a * b,
+    Shape::Empty -> 0.0,
+  };
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (variable_declaration
+        (identifier)
+        (primitive_type)
+        (match_expression
+          (identifier)
+          (match_arm
+            (path_pattern
+              (scoped_identifier
+                (identifier)
+                (identifier))
+              (path_pattern
+                (identifier)))
             (binary_expression
-              (expression
-                (binary_expression
-                  (expression
-                    (primary_expression
-                      (literal
-                        (string_literal))))
-                  (expression
-                    (primary_expression
-                      (identifier)))))
-              (expression
-                (primary_expression
-                  (literal
-                    (string_literal)))))))))))
+              (binary_expression
+                (float_literal)
+                (identifier))
+              (identifier)))
+          (match_arm
+            (path_pattern
+              (scoped_identifier
+                (identifier)
+                (identifier))
+              (path_pattern
+                (identifier))
+              (path_pattern
+                (identifier)))
+            (binary_expression
+              (identifier)
+              (identifier)))
+          (match_arm
+            (path_pattern
+              (scoped_identifier
+                (identifier)
+                (identifier)))
+            (float_literal)))))))
 
-================================================================================
-VALID - Match with when
-================================================================================
+==================
+match with guard
+==================
 
-match (age) {
-  n when age == 20 -> println("You are 20 years old!"),
-  n when age < 20 -> println("You are younger than 20!"),
-  _ -> println("You are older than 20!"),
+function main(): void {
+  let sign: i32 = match (n) {
+    x if x > 0 -> 1,
+    x if x < 0 -> -1,
+    _ -> 0,
+  };
 }
 
---------------------------------------------------------------------------------
+---
 
 (source_file
-  (expression
-    (match_expression
-      (expression
-        (primary_expression
-          (identifier)))
-      (match_arm
-        (match_pattern
-          (pattern
-            (when_clause
-              (expression
-                (primary_expression
-                  (identifier)))
-              (expression
-                (binary_expression
-                  (expression
-                    (primary_expression
-                      (identifier)))
-                  (expression
-                    (primary_expression
-                      (literal
-                        (integer_literal
-                          (decimal_literal))))))))))
-        (expression
-          (call_expression
-            (primary_expression
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (variable_declaration
+        (identifier)
+        (primitive_type)
+        (match_expression
+          (identifier)
+          (match_arm
+            (path_pattern
               (identifier))
-            (expression
-              (primary_expression
-                (literal
-                  (string_literal)))))))
-      (match_arm
-        (match_pattern
-          (pattern
-            (when_clause
-              (expression
-                (primary_expression
-                  (identifier)))
-              (expression
-                (binary_expression
-                  (expression
-                    (primary_expression
-                      (identifier)))
-                  (expression
-                    (primary_expression
-                      (literal
-                        (integer_literal
-                          (decimal_literal))))))))))
-        (expression
-          (call_expression
-            (primary_expression
+            (match_guard
+              (binary_expression
+                (identifier)
+                (integer_literal)))
+            (integer_literal))
+          (match_arm
+            (path_pattern
               (identifier))
-            (expression
-              (primary_expression
-                (literal
-                  (string_literal)))))))
-      (match_arm
-        (match_pattern
-          (pattern))
-        (expression
-          (call_expression
-            (primary_expression
-              (identifier))
-            (expression
-              (primary_expression
-                (literal
-                  (string_literal))))))))))
+            (match_guard
+              (binary_expression
+                (identifier)
+                (integer_literal)))
+            (unary_expression
+              (integer_literal)))
+          (match_arm
+            (wildcard_pattern)
+            (integer_literal)))))))
 
-================================================================================
-VALID - Match with guard if
-================================================================================
+==================
+match with tuple patterns
+==================
 
-match (c) {
-  '+' if self.matchChar('=') -> self.makeToken(TokenType.ADD_ASSIGN),
-  '+' if self.matchChar('+') -> self.makeToken(TokenType.INCREMENT),
+function main(): void {
+  let quadrant: i32 = match (point) {
+    (0, 0) -> 0,
+    (x, 0) -> 1,
+    (_, y) -> 2,
+  };
 }
 
---------------------------------------------------------------------------------
+---
 
 (source_file
-  (expression
-    (match_expression
-      (expression
-        (primary_expression
-          (identifier)))
-      (match_arm
-        (match_pattern
-          (pattern
-            (expression
-              (primary_expression
-                (literal
-                  (char_literal))))
-            (guard_clause
-              (expression
-                (get_expression
-                  (method_call_expression
-                    (property_access
-                      (expression
-                        (primary_expression
-                          (self_expression)))
-                      (identifier))
-                    (expression
-                      (primary_expression
-                        (literal
-                          (char_literal))))))))))
-        (expression
-          (get_expression
-            (method_call_expression
-              (property_access
-                (expression
-                  (primary_expression
-                    (self_expression)))
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (variable_declaration
+        (identifier)
+        (primitive_type)
+        (match_expression
+          (identifier)
+          (match_arm
+            (tuple_pattern
+              (literal_pattern
+                (integer_literal))
+              (literal_pattern
+                (integer_literal)))
+            (integer_literal))
+          (match_arm
+            (tuple_pattern
+              (path_pattern
                 (identifier))
-              (expression
-                (get_expression
-                  (property_access
-                    (expression
-                      (primary_expression
-                        (identifier)))
-                    (identifier))))))))
-      (match_arm
-        (match_pattern
-          (pattern
-            (expression
-              (primary_expression
-                (literal
-                  (char_literal))))
-            (guard_clause
-              (expression
-                (get_expression
-                  (method_call_expression
-                    (property_access
-                      (expression
-                        (primary_expression
-                          (self_expression)))
-                      (identifier))
-                    (expression
-                      (primary_expression
-                        (literal
-                          (char_literal))))))))))
-        (expression
-          (get_expression
-            (method_call_expression
-              (property_access
-                (expression
-                  (primary_expression
-                    (self_expression)))
-                (identifier))
-              (expression
-                (get_expression
-                  (property_access
-                    (expression
-                      (primary_expression
-                        (identifier)))
-                    (identifier)))))))))))
+              (literal_pattern
+                (integer_literal)))
+            (integer_literal))
+          (match_arm
+            (tuple_pattern
+              (wildcard_pattern)
+              (path_pattern
+                (identifier)))
+            (integer_literal)))))))
+
+==================
+match with block bodies
+==================
+
+function main(): void {
+  match (event) {
+    Event::Start -> {
+      begin();
+    },
+    Event::Stop -> {
+      finish();
+    },
+  };
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (expression_statement
+        (match_expression
+          (identifier)
+          (match_arm
+            (path_pattern
+              (scoped_identifier
+                (identifier)
+                (identifier)))
+            (block
+              (expression_statement
+                (call_expression
+                  (identifier)
+                  (arguments)))))
+          (match_arm
+            (path_pattern
+              (scoped_identifier
+                (identifier)
+                (identifier)))
+            (block
+              (expression_statement
+                (call_expression
+                  (identifier)
+                  (arguments))))))))))
+
+==================
+match on atoms and strings
+==================
+
+function main(): void {
+  let ok: boolean = match (status) {
+    :ok -> true,
+    :error | :timeout -> false,
+    "unknown" -> false,
+    'x' -> false,
+    _ -> false,
+  };
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (variable_declaration
+        (identifier)
+        (primitive_type)
+        (match_expression
+          (identifier)
+          (match_arm
+            (literal_pattern
+              (atom_literal
+                (identifier)))
+            (boolean_literal))
+          (match_arm
+            (or_pattern
+              (literal_pattern
+                (atom_literal
+                  (identifier)))
+              (literal_pattern
+                (atom_literal
+                  (identifier))))
+            (boolean_literal))
+          (match_arm
+            (literal_pattern
+              (string_literal))
+            (boolean_literal))
+          (match_arm
+            (literal_pattern
+              (char_literal))
+            (boolean_literal))
+          (match_arm
+            (wildcard_pattern)
+            (boolean_literal)))))))
