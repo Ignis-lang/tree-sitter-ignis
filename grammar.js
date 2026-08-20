@@ -834,6 +834,7 @@ module.exports = grammar({
         $.hex_literal,
         $.binary_literal,
         $.string_literal,
+        $.template_literal,
         $.char_literal,
         $.boolean_literal,
         $.null_literal,
@@ -863,6 +864,31 @@ module.exports = grammar({
       ),
 
     escape_sequence: (_) => token.immediate(/\\./),
+
+    // Everything between the delimiters is content, whitespace included, so each
+    // piece is an immediate token: a non-immediate one would let `extras` swallow
+    // the spaces and newlines the literal is supposed to keep.
+    template_literal: ($) =>
+      seq(
+        '`',
+        repeat(
+          choice(
+            $.template_substitution,
+            $.escape_sequence,
+            $._template_chars,
+            $._template_dollar,
+          ),
+        ),
+        token.immediate('`'),
+      ),
+
+    _template_chars: (_) => token.immediate(prec(1, /[^`\\$]+/)),
+
+    // A `$` that does not open a slot is ordinary text. `${` is the longer match,
+    // so the lexer prefers the substitution wherever one actually starts.
+    _template_dollar: (_) => token.immediate('$'),
+
+    template_substitution: ($) => seq(token.immediate('${'), field('expression', $._expression), '}'),
 
     char_literal: (_) =>
       token(

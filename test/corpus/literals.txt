@@ -268,3 +268,113 @@ function main(): void {
               (integer_literal)
               (integer_literal)))
           (integer_literal))))))
+
+==================
+template literals
+==================
+
+function main(): void {
+  let plain: String = `no interpolation`;
+  let empty: String = ``;
+  let greeting: String = `hello ${name} v${version}`;
+  let block: String = `first
+second ${name}`;
+  let escaped: String = `a \` b \${notASlot}`;
+  let dollar: String = `cost: 100$ ok`;
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (variable_declaration
+        (identifier)
+        (identifier)
+        (template_literal))
+      (variable_declaration
+        (identifier)
+        (identifier)
+        (template_literal))
+      (variable_declaration
+        (identifier)
+        (identifier)
+        (template_literal
+          (template_substitution
+            (identifier))
+          (template_substitution
+            (identifier))))
+      (variable_declaration
+        (identifier)
+        (identifier)
+        (template_literal
+          (template_substitution
+            (identifier))))
+      (variable_declaration
+        (identifier)
+        (identifier)
+        (template_literal
+          (escape_sequence)
+          (escape_sequence)))
+      (variable_declaration
+        (identifier)
+        (identifier)
+        (template_literal)))))
+
+==================
+nested template literals and slots
+==================
+
+function main(): void {
+  let nested: String = `outer ${`inner ${value}`}`;
+  let record: String = `${Point { x: 1, y: 2 }}`;
+  let call: String = `${render(a, b)} and ${a + b}`;
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (variable_declaration
+        (identifier)
+        (identifier)
+        (template_literal
+          (template_substitution
+            (template_literal
+              (template_substitution
+                (identifier))))))
+      (variable_declaration
+        (identifier)
+        (identifier)
+        (template_literal
+          (template_substitution
+            (record_init
+              (identifier)
+              (record_init_body
+                (record_init_field
+                  (identifier)
+                  (integer_literal))
+                (record_init_field
+                  (identifier)
+                  (integer_literal)))))))
+      (variable_declaration
+        (identifier)
+        (identifier)
+        (template_literal
+          (template_substitution
+            (call_expression
+              (identifier)
+              (arguments
+                (identifier)
+                (identifier))))
+          (template_substitution
+            (binary_expression
+              (identifier)
+              (identifier))))))))

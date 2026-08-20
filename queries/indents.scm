@@ -20,6 +20,7 @@
 
 [
   (string_literal)
+  (template_literal)
   (comment)
   (doc_comment)
 ] @indent.auto

@@ -184,6 +184,10 @@
         "named": true
       },
       {
+        "type": "template_literal",
+        "named": true
+      },
+      {
         "type": "vector_literal",
         "named": true
       }
@@ -1859,6 +1863,10 @@
         {
           "type": "string_literal",
           "named": true
+        },
+        {
+          "type": "template_literal",
+          "named": true
         }
       ]
     }
@@ -2550,6 +2558,41 @@
     }
   },
   {
+    "type": "template_literal",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "escape_sequence",
+          "named": true
+        },
+        {
+          "type": "template_substitution",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "template_substitution",
+    "named": true,
+    "fields": {
+      "expression": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "_expression",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "ternary_expression",
     "named": true,
     "fields": {
@@ -2898,6 +2941,14 @@
     "named": false
   },
   {
+    "type": "$",
+    "named": false
+  },
+  {
+    "type": "${",
+    "named": false
+  },
+  {
     "type": "%",
     "named": false
   },
@@ -3051,6 +3102,10 @@
   },
   {
     "type": "^=",
+    "named": false
+  },
+  {
+    "type": "`",
     "named": false
   },
   {

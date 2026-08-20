@@ -10,7 +10,15 @@
 (binary_literal) @number
 (float_literal) @number.float
 (string_literal) @string
+(template_literal) @string
 (escape_sequence) @string.escape
+
+(template_substitution
+  [
+    "${"
+    "}"
+  ] @punctuation.special)
+
 (char_literal) @character
 (boolean_literal) @boolean
 (null_literal) @constant.builtin

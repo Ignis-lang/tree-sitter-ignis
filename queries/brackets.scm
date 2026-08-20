@@ -1,4 +1,5 @@
 ("(" @open ")" @close)
 ("[" @open "]" @close)
 ("{" @open "}" @close)
+(template_substitution "${" @open "}" @close)
 ("<" @open ">" @close)
