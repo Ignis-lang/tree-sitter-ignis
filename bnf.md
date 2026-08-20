@@ -220,6 +220,8 @@ those variants but the parser never produces them.
 <hex>            ::= "0" [xX] [0-9a-fA-F]+            ; no separators
 <binary>         ::= "0" [bB] [01]+                   ; no separators
 <string>         ::= '"' (escape | char)* '"'         ; \" \\ \b \f \n \r \t \0
+<template>       ::= "`" (escape | "${" <expression> "}" | char)* "`"
+                                                      ; also \` and \$
 <char>           ::= "'" (char | escape | "\u{" hex+ "}") "'"
 <atom>           ::= ":" <identifier>
 <boolean>        ::= "true" | "false"
