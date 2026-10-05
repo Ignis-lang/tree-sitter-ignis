@@ -8,4 +8,5 @@
   (record_init_body)
   (match_expression)
   (import_statement)
+  (asm_body)
 ] @fold

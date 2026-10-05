@@ -37,6 +37,13 @@ And then run `:TSUpdate` or `:TSInstall ignis` in Neovim.
 After installing the grammar in your editor, Ignis files should automatically start benefiting from
 syntax highlighting and other features provided by Tree-sitter.
 
+### Inline assembly
+
+The body of an `asm` block is injected as the `asm` language, so its
+instructions are highlighted only when a Tree-sitter `asm` parser is installed
+(for Neovim, `:TSInstall asm`). Holes such as `{value}`, escaped braces and
+comments inside the body are excluded from the injection and stay Ignis.
+
 ## Contribute
 
 Contributions are welcome! If you encounter any problems or have suggestions for improvement,

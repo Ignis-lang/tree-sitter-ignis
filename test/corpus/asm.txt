@@ -1,0 +1,302 @@
+==================
+asm expression with one output
+==================
+
+function readPort(port: u16): u8 {
+  return asm (port in dx) -> (value: u8 in al) {
+    in {value}, {port}
+  };
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters
+      (parameter
+        (identifier)
+        (primitive_type)))
+    (primitive_type)
+    (block
+      (return_statement
+        (asm_expression
+          (asm_inputs
+            (asm_input
+              (identifier)
+              (identifier)))
+          (asm_outputs
+            (asm_output
+              (identifier)
+              (primitive_type)
+              (identifier)))
+          (asm_body
+            (asm_hole
+              (identifier))
+            (asm_hole
+              (identifier))))))))
+
+==================
+asm statement without a trailing semicolon
+==================
+
+function cycles(): u64 {
+  asm () -> (low: u32 in eax, high: u32 in edx) {
+    rdtsc
+  }
+
+  return low as u64;
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (asm_statement
+        (asm_inputs)
+        (asm_outputs
+          (asm_output
+            (identifier)
+            (primitive_type)
+            (identifier))
+          (asm_output
+            (identifier)
+            (primitive_type)
+            (identifier)))
+        (asm_body))
+      (return_statement
+        (cast_expression
+          (identifier)
+          (primitive_type))))))
+
+==================
+pure asm with clobbers and trailing commas
+==================
+
+function f(): void {
+  asm pure (21 in rax,) -> (half: u64 in rax,) clobber(memory, flags,) { nop }
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (asm_statement
+        (asm_inputs
+          (asm_input
+            (integer_literal)
+            (identifier)))
+        (asm_outputs
+          (asm_output
+            (identifier)
+            (primitive_type)
+            (identifier)))
+        (asm_clobbers
+          (identifier)
+          (identifier))
+        (asm_body)))))
+
+==================
+inout input
+==================
+
+function bump(counter: u64): u64 {
+  let mut value: u64 = counter;
+  asm (value inout rax) clobber(flags) { inc {value} }
+  return value;
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters
+      (parameter
+        (identifier)
+        (primitive_type)))
+    (primitive_type)
+    (block
+      (variable_declaration
+        (mutable_specifier)
+        (identifier)
+        (primitive_type)
+        (identifier))
+      (asm_statement
+        (asm_inputs
+          (asm_input
+            (identifier)
+            (identifier)))
+        (asm_clobbers
+          (identifier))
+        (asm_body
+          (asm_hole
+            (identifier))))
+      (return_statement
+        (identifier)))))
+
+==================
+asm holes with spaces inside the braces
+==================
+
+function f(value: u64): u64 {
+  return asm pure (value in reg) -> (result: u64 in reg) { lea {result}, [{ value } + {value}] };
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters
+      (parameter
+        (identifier)
+        (primitive_type)))
+    (primitive_type)
+    (block
+      (return_statement
+        (asm_expression
+          (asm_inputs
+            (asm_input
+              (identifier)
+              (identifier)))
+          (asm_outputs
+            (asm_output
+              (identifier)
+              (primitive_type)
+              (identifier)))
+          (asm_body
+            (asm_hole
+              (identifier))
+            (asm_hole
+              (identifier))
+            (asm_hole
+              (identifier))))))))
+
+==================
+asm escaped braces
+==================
+
+function f(): void {
+  asm () {
+    vaddps zmm0 {{k1}}, zmm1, zmm2
+  }
+  asm () { mov rax, {{}}}
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (asm_statement
+        (asm_inputs)
+        (asm_body
+          (asm_escape)
+          (asm_escape)))
+      (asm_statement
+        (asm_inputs)
+        (asm_body
+          (asm_escape)
+          (asm_escape))))))
+
+==================
+asm comments with braces
+==================
+
+function f(): void {
+  asm () {
+    nop /* } { */
+    rdtsc // fills {low} and }
+    shr rax/2 /}
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (asm_statement
+        (asm_inputs)
+        (asm_body
+          (comment)
+          (comment))))))
+
+==================
+asm in expression position
+==================
+
+function f(): u64 {
+  let x: u64 = asm () -> (r: u64 in rax) { xor {r}, {r} } + 1;
+  return x;
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (variable_declaration
+        (identifier)
+        (primitive_type)
+        (binary_expression
+          (asm_expression
+            (asm_inputs)
+            (asm_outputs
+              (asm_output
+                (identifier)
+                (primitive_type)
+                (identifier)))
+            (asm_body
+              (asm_hole
+                (identifier))
+              (asm_hole
+                (identifier))))
+          (integer_literal)))
+      (return_statement
+        (identifier)))))
+
+==================
+asm in conditional block
+==================
+
+function f(): void {
+  @if(@arch("x86_64")) {
+    asm () { hlt }
+  }
+}
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (primitive_type)
+    (block
+      (conditional_block
+        (builtin_expression
+          (identifier)
+          (arguments
+            (string_literal)))
+        (conditional_body
+          (asm_statement
+            (asm_inputs)
+            (asm_body)))))))

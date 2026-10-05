@@ -5,8 +5,9 @@
  * ignisc.rs (crates/ignis_parser). Precedence levels mirror its
  * Pratt binding-power table (parser/mod.rs), and every construct
  * here is one the reference parser actually produces. Tokens the
- * compiler lexes but never parses (ranges, `#`, `is`, `in`, `when`,
- * `this`, variadics) are intentionally absent.
+ * compiler lexes but never parses (ranges, `#`, `is`, `when`, `this`,
+ * variadics) are intentionally absent; `in` appears only in `asm`
+ * operands.
  */
 
 const PREC = {
@@ -69,6 +70,21 @@ function commaSep1(rule) {
 
 function commaSep(rule) {
   return optional(commaSep1(rule));
+}
+
+/**
+ * The shape shared by `asm_expression` and `asm_statement`:
+ * `asm pure? (inputs) (-> (outputs))? clobber(names)? { body }`.
+ */
+function asmParts($) {
+  return [
+    'asm',
+    optional(field('pure', 'pure')),
+    field('inputs', $.asm_inputs),
+    optional(seq('->', field('outputs', $.asm_outputs))),
+    optional(field('clobbers', $.asm_clobbers)),
+    field('body', $.asm_body),
+  ];
 }
 
 module.exports = grammar({
@@ -290,7 +306,14 @@ module.exports = grammar({
     extern_body: ($) =>
       seq(
         '{',
-        repeat(choice($.attribute, $.extern_function, $.extern_const)),
+        repeat(
+          choice(
+            $.attribute,
+            $.extern_function,
+            $.extern_const,
+            $.record_declaration,
+          ),
+        ),
         '}',
       ),
 
@@ -397,6 +420,7 @@ module.exports = grammar({
         $.while_statement,
         $.for_statement,
         $.for_of_statement,
+        $.asm_statement,
         $.block,
         $.conditional_block,
         $.attribute,
@@ -433,6 +457,11 @@ module.exports = grammar({
     break_statement: (_) => seq('break', ';'),
 
     continue_statement: (_) => seq('continue', ';'),
+
+    // At the start of a statement `asm` is a statement that ends with its
+    // body's `}`. The higher precedence picks it over an expression statement
+    // wherever the next token could start either, as the compiler does.
+    asm_statement: ($) => prec(1, seq(...asmParts($))),
 
     if_statement: ($) =>
       seq(
@@ -528,6 +557,7 @@ module.exports = grammar({
         $.lambda_expression,
         $.builtin_expression,
         $.capture_expression,
+        $.asm_expression,
       ),
 
     self_expression: (_) => 'self',
@@ -711,6 +741,61 @@ module.exports = grammar({
           field('operand', $._expression),
         ),
       ),
+
+    asm_expression: ($) => seq(...asmParts($)),
+
+    asm_inputs: ($) => seq('(', commaSep($.asm_input), ')'),
+
+    asm_input: ($) =>
+      seq(
+        field('value', $._expression),
+        field('mode', choice('in', 'inout')),
+        field('location', $.identifier),
+      ),
+
+    asm_outputs: ($) => seq('(', commaSep1($.asm_output), ')'),
+
+    asm_output: ($) =>
+      seq(
+        field('name', $.identifier),
+        ':',
+        field('type', $._type),
+        'in',
+        field('location', $.identifier),
+      ),
+
+    asm_clobbers: ($) => seq('clobber', '(', commaSep1($.identifier), ')'),
+
+    // The body is assembly text. Every piece after the opening `{` is an
+    // immediate token so `extras` cannot swallow the whitespace and newlines
+    // that separate instructions. `{{` and `}}` are escaped braces and win over
+    // a lone `{` or `}` as the longer match, the same greedy pairing the
+    // compiler's lexer does. `//` and `/* */` comments are the ordinary comment
+    // extras, so braces inside them never open a hole or close the body.
+    asm_body: ($) =>
+      seq(
+        '{',
+        repeat(
+          choice(
+            $.asm_hole,
+            $.asm_escape,
+            $._asm_text,
+            $._asm_slash,
+          ),
+        ),
+        token.immediate('}'),
+      ),
+
+    // A `/` is text unless it starts a comment. The text token takes one when
+    // something other than a brace, `/` or `*` follows it, and this token takes
+    // the one left before a brace.
+    _asm_text: (_) => token.immediate(prec(1, /([^{}\/]|\/[^{}\/*])+/)),
+
+    _asm_slash: (_) => token.immediate('/'),
+
+    asm_escape: (_) => token.immediate(choice('{{', '}}')),
+
+    asm_hole: ($) => seq(token.immediate('{'), field('name', $.identifier), '}'),
 
     record_init: ($) =>
       seq(

@@ -3,8 +3,9 @@
 This document mirrors the syntax accepted by the reference compiler
 (`ignisc.rs`, `crates/ignis_parser`). It is the contract this tree-sitter
 grammar is written against. Tokens the lexer reserves but the parser never
-consumes (`..`, `..=`, `...`, `#`, `is`, `in`, `this`, `when`, `meta`,
-`decorator`, `declare`) are intentionally excluded.
+consumes (`..`, `..=`, `...`, `#`, `is`, `this`, `when`, `meta`,
+`decorator`, `declare`) are intentionally excluded. `in` appears only in
+`asm` operands.
 
 ## Source structure
 
@@ -56,7 +57,8 @@ consumes (`..`, `..=`, `...`, `#`, `is`, `in`, `this`, `when`, `meta`,
 <enum-body>      ::= "{" (<attribute> | <enum-variant> | <field> | <method>)* "}"
 <enum-variant>   ::= <identifier> ("(" <type> ("," <type>)* ","? ")")? ","?
 
-<extern>         ::= "extern" <path> "{" (<attribute> | <extern-fn> | <extern-const>)* "}"
+<extern>         ::= "extern" <path> "{" (<attribute> | <extern-fn>
+                     | <extern-const> | <record>)* "}"
 <extern-fn>      ::= "function" <identifier> <parameters> ":" <type> ";"
 <extern-const>   ::= "const" <identifier> ":" <type> ";"
 
@@ -85,7 +87,7 @@ boolean literal at parse time.
 ```bnf
 <statement>      ::= <let> | <let-else> | <const> | <expr-statement>
                    | <return> | <defer> | <break> | <continue>
-                   | <if> | <while> | <for> | <for-of> | <block>
+                   | <if> | <while> | <for> | <for-of> | <asm> | <block>
                    | <conditional-block> | <attribute>
 
 <let>            ::= "let" "mut"? <identifier> (":" <type>)?
@@ -111,6 +113,9 @@ boolean literal at parse time.
 
 <block>          ::= "{" <statement>* "}"
 ```
+
+`asm` at the start of a statement is a statement that ends with its body's
+`}`, with no `;`. Anywhere else it is a primary expression.
 
 ## Expressions
 
@@ -143,7 +148,7 @@ Assignment and ternary are right-associative; the rest are left-associative.
                    | <unary> | <binary> | <assignment> | <ternary>
                    | <cast> | <call> | <member> | <index> | <postfix>
                    | <match> | <lambda> | <builtin> | <capture>
-                   | <record-init>
+                   | <record-init> | <asm>
 
 <unit>           ::= "(" ")"
 <group>          ::= "(" <expression> ")"
@@ -167,7 +172,19 @@ Assignment and ternary are right-associative; the rest are left-associative.
 <record-init>    ::= <path> <type-args>? "{" (<init-field>
                      ("," <init-field>)* ","?)? "}"
 <init-field>     ::= <identifier> ":" <expression>
+
+<asm>            ::= "asm" "pure"? "(" (<asm-input> ("," <asm-input>)* ","?)? ")"
+                     ("->" "(" <asm-output> ("," <asm-output>)* ","? ")")?
+                     ("clobber" "(" <identifier> ("," <identifier>)* ","? ")")?
+                     <asm-body>
+<asm-input>      ::= <expression> ("in" | "inout") <identifier>
+<asm-output>     ::= <identifier> ":" <type> "in" <identifier>
 ```
+
+`pure`, `inout` and `clobber` are reserved only in these places. A location
+after `in` or `inout` is a register name or one of the classes `reg`, `mem`
+and `imm`; a clobber is a register name, `memory` or `flags`. The compiler's
+analyzer, not the grammar, decides which names are valid.
 
 `2(x)` (a literal directly followed by a call) is parsed by the compiler
 as implicit multiplication; this grammar keeps it a call node.
@@ -225,7 +242,14 @@ those variants but the parser never produces them.
 <char>           ::= "'" (char | escape | "\u{" hex+ "}") "'"
 <atom>           ::= ":" <identifier>
 <boolean>        ::= "true" | "false"
+<asm-body>       ::= "{" ("{{" | "}}" | <comment> | "{" <identifier> "}"
+                     | [^{}])* "}"               ; `{{` and `}}` pair greedily
 ```
+
+An `asm` body is assembly text. `{name}` is a hole and `{{`/`}}` are literal
+braces, paired left to right, so the body's closing `}` cannot be directly
+followed by another `}`. Braces inside `//` and `/* */` comments count for
+nothing.
 
 Comments: `//`, `/* */` (non-nesting). Doc comments: `///`, `//!`,
 `/** */`, `/*! */`.

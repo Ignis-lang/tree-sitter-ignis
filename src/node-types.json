@@ -54,6 +54,10 @@
         "named": true
       },
       {
+        "type": "asm_expression",
+        "named": true
+      },
+      {
         "type": "assignment_expression",
         "named": true
       },
@@ -224,6 +228,10 @@
     "named": true,
     "subtypes": [
       {
+        "type": "asm_statement",
+        "named": true
+      },
+      {
         "type": "attribute",
         "named": true
       },
@@ -363,6 +371,274 @@
           {
             "type": "integer_literal",
             "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "asm_body",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "asm_escape",
+          "named": true
+        },
+        {
+          "type": "asm_hole",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "asm_clobbers",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "asm_expression",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "asm_body",
+            "named": true
+          }
+        ]
+      },
+      "clobbers": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "asm_clobbers",
+            "named": true
+          }
+        ]
+      },
+      "inputs": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "asm_inputs",
+            "named": true
+          }
+        ]
+      },
+      "outputs": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "asm_outputs",
+            "named": true
+          }
+        ]
+      },
+      "pure": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "pure",
+            "named": false
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "asm_hole",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "asm_input",
+    "named": true,
+    "fields": {
+      "location": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "mode": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "in",
+            "named": false
+          },
+          {
+            "type": "inout",
+            "named": false
+          }
+        ]
+      },
+      "value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "_expression",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "asm_inputs",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "asm_input",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "asm_output",
+    "named": true,
+    "fields": {
+      "location": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "type": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "_type",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "asm_outputs",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "asm_output",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "asm_statement",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "asm_body",
+            "named": true
+          }
+        ]
+      },
+      "clobbers": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "asm_clobbers",
+            "named": true
+          }
+        ]
+      },
+      "inputs": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "asm_inputs",
+            "named": true
+          }
+        ]
+      },
+      "outputs": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "asm_outputs",
+            "named": true
+          }
+        ]
+      },
+      "pure": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "pure",
+            "named": false
           }
         ]
       }
@@ -1177,6 +1453,10 @@
         },
         {
           "type": "extern_function",
+          "named": true
+        },
+        {
+          "type": "record_declaration",
           "named": true
         }
       ]
@@ -3117,6 +3397,14 @@
     "named": false
   },
   {
+    "type": "asm",
+    "named": false
+  },
+  {
+    "type": "asm_escape",
+    "named": true
+  },
+  {
     "type": "atom",
     "named": false
   },
@@ -3139,6 +3427,10 @@
   {
     "type": "char_literal",
     "named": true
+  },
+  {
+    "type": "clobber",
+    "named": false
   },
   {
     "type": "comment",
@@ -3243,7 +3535,15 @@
     "named": false
   },
   {
+    "type": "in",
+    "named": false
+  },
+  {
     "type": "inline",
+    "named": false
+  },
+  {
+    "type": "inout",
     "named": false
   },
   {
@@ -3288,6 +3588,10 @@
   },
   {
     "type": "public",
+    "named": false
+  },
+  {
+    "type": "pure",
     "named": false
   },
   {
