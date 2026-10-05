@@ -41,3 +41,25 @@ function main(): void {
 }
 
 ---
+
+==================
+asm requires a body
+:error
+==================
+
+function main(): void {
+  asm (x in rax);
+}
+
+---
+
+==================
+asm output list cannot be empty
+:error
+==================
+
+function main(): void {
+  asm () -> () { nop }
+}
+
+---
