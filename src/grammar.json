@@ -1124,6 +1124,10 @@
               {
                 "type": "SYMBOL",
                 "name": "extern_const"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "record_declaration"
               }
             ]
           }

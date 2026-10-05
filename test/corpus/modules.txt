@@ -162,3 +162,47 @@ extern std::io {
       (extern_const
         (identifier)
         (primitive_type)))))
+
+==================
+extern records
+==================
+
+extern Native {
+  @cLayout
+  record Handler {
+    public apply: (i32) -> i32;
+    public bias: i32;
+  }
+
+  function install(handler: *Handler): void;
+}
+
+---
+
+(source_file
+  (extern_declaration
+    (identifier)
+    (extern_body
+      (attribute
+        (identifier))
+      (record_declaration
+        (identifier)
+        (declaration_body
+          (field_declaration
+            (member_modifier)
+            (identifier)
+            (function_type
+              (primitive_type)
+              (primitive_type)))
+          (field_declaration
+            (member_modifier)
+            (identifier)
+            (primitive_type))))
+      (extern_function
+        (identifier)
+        (parameters
+          (parameter
+            (identifier)
+            (pointer_type
+              (identifier))))
+        (primitive_type)))))

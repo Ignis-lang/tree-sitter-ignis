@@ -290,7 +290,14 @@ module.exports = grammar({
     extern_body: ($) =>
       seq(
         '{',
-        repeat(choice($.attribute, $.extern_function, $.extern_const)),
+        repeat(
+          choice(
+            $.attribute,
+            $.extern_function,
+            $.extern_const,
+            $.record_declaration,
+          ),
+        ),
         '}',
       ),
 

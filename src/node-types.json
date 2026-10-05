@@ -1178,6 +1178,10 @@
         {
           "type": "extern_function",
           "named": true
+        },
+        {
+          "type": "record_declaration",
+          "named": true
         }
       ]
     }

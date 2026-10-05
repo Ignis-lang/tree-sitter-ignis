@@ -199,3 +199,31 @@ record Header {
       (field_declaration
         (identifier)
         (primitive_type)))))
+
+==================
+c layout record
+==================
+
+@cLayout
+record Table {
+  public first: (i32) -> i32;
+  count: u32;
+}
+
+---
+
+(source_file
+  (attribute
+    (identifier))
+  (record_declaration
+    (identifier)
+    (declaration_body
+      (field_declaration
+        (member_modifier)
+        (identifier)
+        (function_type
+          (primitive_type)
+          (primitive_type)))
+      (field_declaration
+        (identifier)
+        (primitive_type)))))
