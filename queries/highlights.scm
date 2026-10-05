@@ -26,6 +26,34 @@
 (atom_literal
   name: (identifier) @constant)
 
+; Inline assembly. The body text is left to the injected assembly parser.
+
+(asm_hole
+  [
+    "{"
+    "}"
+  ] @punctuation.special)
+
+(asm_hole
+  name: (identifier) @variable)
+
+(asm_escape) @string.escape
+
+(asm_input
+  location: (identifier) @variable.builtin)
+
+(asm_output
+  name: (identifier) @variable)
+
+(asm_output
+  type: (identifier) @type)
+
+(asm_output
+  location: (identifier) @variable.builtin)
+
+(asm_clobbers
+  (identifier) @variable.builtin)
+
 ; Types
 
 (primitive_type) @type.builtin
@@ -261,6 +289,15 @@
   "continue"
   "defer"
 ] @keyword
+
+[
+  "asm"
+  "clobber"
+  "in"
+  "inout"
+] @keyword
+
+"pure" @keyword.modifier
 
 "as" @keyword.operator
 

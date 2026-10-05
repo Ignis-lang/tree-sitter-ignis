@@ -41,6 +41,11 @@
 (for_of_statement
   name: (identifier) @local.definition.var)
 
+(asm_statement
+  outputs: (asm_outputs
+    (asm_output
+      name: (identifier) @local.definition.var)))
+
 (type_definition
   name: (identifier) @local.definition.type)
 
